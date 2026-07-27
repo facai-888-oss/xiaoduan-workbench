@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>小段是富婆 💕 专属工作台</title>
+<style>
+/* ===== 全局重置 & 基础 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --pink-light: #FFF0F5;
+  --pink-soft: #FFD9E6;
+  --pink-main: #FFB6C1;
+  --pink-deep: #FF85A8;
+  --pink-hot: #FF69B4;
+  --pink-grad: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD9E6 100%);
+  --pink-grad-deep: linear-gradient(135deg, #FF85A8 0%, #FF69B4 100%);
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(255, 182, 193, 0.5);
+  --shadow-soft: 0 8px 32px rgba(255, 132, 174, 0.15);
+  --shadow-hover: 0 12px 40px rgba(255, 132, 174, 0.25);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --text-main: #6B4658;
+  --text-sub: #9B7A8B;
+  --sidebar-width: 260px;
+}
+
+body {
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  background: linear-gradient(160deg, #FFF0F5 0%, #FFE4EF 30%, #FFD9EC 60%, #FFF0F5 100%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== 浮动emoji装饰 ===== */
+.float-decor {
+  position: fixed;
+  pointer-events: none;
+  font-size: 28px;
+  opacity: 0.3;
+  z-index: 0;
+  animation: floatRotate 12s ease-in-out infinite;
+}
+@keyframes floatRotate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(15deg); }
+}
+
+/* ===== 主布局：左侧导航 + 右侧内容 ===== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 侧边栏 ===== */
+.sidebar {
+  width: var(--sidebar-width);
+  background: linear-gradient(180deg, rgba(255,182,193,0.45), rgba(255,240,245,0.6));
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-right: 1px solid var(--card-border);
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+  box-shadow: 4px 0 24px rgba(255,132,174,0.1);
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.sidebar-title {
+  font-size: 1.5em;
+  font-weight: 800;
+  background: var(--pink-grad-deep);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+.sidebar-crown { font-size: 0.6em; }
+.sidebar-subtitle {
+  font-size: 0.78em;
+  color: var(--text-sub);
+  margin-top: 4px;
+}
+.sidebar-date {
+  font-size: 0.85em;
+  color: var(--pink-deep);
+  font-weight: 600;
+  margin-top: 8px;
+}
+.sidebar-time {
+  font-size: 0.85em;
+  color: var(--pink-hot);
+  font-weight: 700;
+}
+
+.sidebar-nav {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nav-item {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--pink-grad-deep);
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nav-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--pink-hot);
+}
+.nav-item:hover::before,
+.nav-item.active::before {
+  opacity: 1;
+}
+.nav-item.active {
+  background: rgba(255, 105, 180, 0.15);
+  border-color: var(--pink-hot);
+  box-shadow: 0 4px 20px rgba(255, 132, 174, 0.25);
+  transform: translateX(4px);
+}
+.nav-icon { font-size: 1.6em; flex-shrink: 0; }
+.nav-text { font-size: 0.92em; font-weight: 700; color: var(--text-main); }
+.nav-item.active .nav-text { color: var(--pink-hot); }
+.nav-badge {
+  font-size: 0.68em;
+  background: var(--pink-soft);
+  color: var(--pink-deep);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-left: auto;
+}
+.nav-item.active .nav-badge {
+  background: var(--pink-hot);
+  color: white;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.75em;
+  color: var(--text-sub);
+}
+.sidebar-emojis {
+  font-size: 1.2em;
+  margin-bottom: 4px;
+  animation: wiggle 3s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(-8deg) scale(1.1); }
+}
+
+/* ===== 右侧主内容区 ===== */
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 30px 28px 60px;
+  min-height: 100vh;
+}
+
+/* 板块容器 */
+.panel { display: none; }
+.panel.active { display: block; animation: slideIn 0.4s ease; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+  margin-bottom: 24px;
+}
+.panel-title {
+  font-size: 1.8em;
+  font-weight: 800;
+  background: var(--pink-grad-deep);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+.panel-desc {
+  font-size: 0.92em;
+  color: var(--text-sub);
+  margin-top: 6px;
+}
+
+/* ===== 板块一：每日任务 ===== */
+.task-progress-bar {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  height: 32px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: relative;
+}
+.task-progress-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: var(--pink-grad-deep);
+  border-radius: 50px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.7;
+}
+.task-progress-text {
+  position: relative; z-index: 1;
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.95em;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+.task-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.task-card::after {
+  content: '';
+  position: absolute;
+  top: -40%; right: -40%;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(255,182,193,0.25), transparent);
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+.task-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+.task-card:hover::after { width: 160px; height: 160px; }
+.task-card.completed {
+  background: rgba(255, 230, 240, 0.8);
+  border-color: var(--pink-hot);
+}
+.task-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.task-checkbox {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 3px solid var(--pink-main);
+  background: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  font-size: 1.4em;
+  color: transparent;
+}
+.task-card.completed .task-checkbox {
+  background: var(--pink-grad-deep);
+  border-color: var(--pink-hot);
+  color: white;
+}
+.task-icon { font-size: 2em; flex-shrink: 0; }
+.task-info { flex: 1; }
+.task-title { font-size: 1.05em; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
+.task-card.completed .task-title { text-decoration: line-through; color: var(--text-sub); }
+.task-desc { font-size: 0.82em; color: var(--text-sub); }
+.task-tag {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--pink-soft);
+  color: var(--pink-deep);
+  padding: 3px 10px;
+  border-radius: 16px;
+  font-size: 0.72em;
+  font-weight: 600;
+}
+
+/* ===== 板块二：抖音文案 ===== */
+.douyin-top-bar {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-soft);
+}
+.persona-tag {
+  display: inline-block;
+  background: var(--pink-grad-deep);
+  color: white;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+.persona-label {
+  font-weight: 700;
+  color: var(--pink-deep);
+  font-size: 0.95em;
+}
+.rule-badge {
+  display: inline-block;
+  background: var(--pink-hot);
+  color: white;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.douyin-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.content-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+.content-card-title {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--pink-deep);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-action {
+  background: var(--pink-grad-deep);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+.btn-action:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(255, 132, 174, 0.4);
+}
+.btn-action.outline {
+  background: rgba(255, 105, 180, 0.12);
+  color: var(--pink-hot);
+  border: 1.5px solid var(--pink-hot);
+}
+.btn-action.outline:hover {
+  background: var(--pink-hot);
+  color: white;
+}
+
+.content-body {
+  font-size: 0.9em;
+  line-height: 1.8;
+  color: var(--text-main);
+  white-space: pre-wrap;
+}
+.content-body .hot-title {
+  color: var(--pink-hot);
+  font-weight: 700;
+  font-size: 1.05em;
+}
+.content-body .label {
+  color: var(--pink-deep);
+  font-weight: 700;
+  display: inline-block;
+  margin-top: 10px;
+}
+.content-body .highlight {
+  background: rgba(255,182,193,0.35);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.method-section {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-soft);
+}
+.method-title {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--pink-deep);
+  margin-bottom: 14px;
+}
+.method-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.88em;
+}
+.step-num {
+  background: var(--pink-grad-deep);
+  color: white;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.refresh-indicator {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.82em;
+  color: var(--text-sub);
+}
+
+/* ===== 板块三：英语四级备考 ===== */
+.study-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.day-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.day-card.today {
+  background: var(--pink-grad-deep);
+  color: white;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(255, 132, 174, 0.4);
+}
+.day-card.today .day-title,
+.day-card.today .day-theme,
+.day-card.today .day-task,
+.day-card.today .day-label { color: white; }
+.day-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.day-card.today:hover { transform: scale(1.08) translateY(-4px); }
+.day-label { font-size: 0.78em; color: var(--text-sub); font-weight: 600; }
+.day-title { font-size: 1.05em; font-weight: 700; color: var(--pink-deep); margin: 4px 0; }
+.day-theme { font-size: 0.88em; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+.day-task { font-size: 0.72em; color: var(--text-sub); line-height: 1.5; }
+
+.words-section {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+.words-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.words-title { font-size: 1.15em; font-weight: 700; color: var(--pink-deep); }
+.words-progress {
+  background: var(--pink-soft);
+  border-radius: 50px;
+  padding: 4px 16px;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: var(--pink-deep);
+}
+.words-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+/* 单词卡片 - 增强版 */
+.word-card {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1.5px solid var(--pink-soft);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+.word-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.25);
+  border-color: var(--pink-main);
+}
+.word-card.mastered {
+  background: rgba(255, 240, 245, 0.6);
+  border-color: var(--pink-hot);
+}
+.word-card.mastered .word-en {
+  text-decoration: line-through;
+  color: var(--text-sub);
+}
+.word-card.mastered::after {
+  content: '✓ 已掌握';
+  position: absolute;
+  top: 6px; right: 8px;
+  font-size: 0.68em;
+  color: var(--pink-hot);
+  font-weight: 700;
+  background: rgba(255, 105, 180, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.word-top-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.word-en { font-size: 1.2em; font-weight: 700; color: var(--text-main); }
+.word-phonetic { font-size: 0.82em; color: var(--text-sub); }
+.word-pos {
+  display: inline-block;
+  background: var(--pink-soft);
+  color: var(--pink-deep);
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-size: 0.72em;
+  font-weight: 600;
+}
+.word-cn { font-size: 0.92em; color: var(--text-main); margin-bottom: 6px; }
+
+.word-example {
+  font-size: 0.78em;
+  color: var(--text-sub);
+  line-height: 1.5;
+  border-left: 2px solid var(--pink-main);
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+.word-example-cn {
+  font-size: 0.72em;
+  color: var(--text-sub);
+  margin-left: 10px;
+}
+
+.word-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.word-btn {
+  background: rgba(255,182,193,0.25);
+  border: 1px solid var(--pink-main);
+  border-radius: 10px;
+  padding: 3px 10px;
+  font-size: 0.72em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--pink-deep);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.word-btn:hover {
+  background: var(--pink-grad-deep);
+  color: white;
+  border-color: var(--pink-hot);
+  transform: scale(1.05);
+}
+
+/* 拼写练习模态 */
+.spell-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,182,193,0.3);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.spell-modal.show { display: flex; }
+.spell-box {
+  background: white;
+  border-radius: 30px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255,132,174,0.3);
+  animation: bounceIn 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
+  max-width: 420px;
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.spell-prompt { font-size: 1.1em; font-weight: 700; color: var(--pink-deep); margin-bottom: 12px; }
+.spell-hint { font-size: 0.88em; color: var(--text-sub); margin-bottom: 16px; }
+.spell-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--pink-main);
+  border-radius: 16px;
+  font-size: 1.15em;
+  text-align: center;
+  outline: none;
+  color: var(--text-main);
+  font-weight: 700;
+  background: rgba(255,240,245,0.5);
+  transition: border-color 0.3s ease;
+}
+.spell-input:focus { border-color: var(--pink-hot); }
+.spell-input.correct { border-color: #4CAF50; background: rgba(76,175,80,0.1); }
+.spell-input.wrong { border-color: #f44336; background: rgba(244,67,54,0.08); }
+.spell-result { font-size: 0.92em; margin-top: 12px; font-weight: 600; }
+.spell-result.ok { color: #4CAF50; }
+.spell-result.no { color: #f44336; }
+.spell-close-btn {
+  margin-top: 16px;
+  background: var(--pink-grad-deep);
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.spell-close-btn:hover { transform: scale(1.1); }
+
+/* ===== 庆祝弹窗 ===== */
+.celebrate-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,182,193,0.3);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.celebrate-modal.show { display: flex; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.celebrate-box {
+  background: white;
+  border-radius: 30px;
+  padding: 40px 56px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255,132,174,0.3);
+  animation: bounceIn 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.celebrate-emojis { font-size: 3em; margin-bottom: 10px; }
+.celebrate-text {
+  font-size: 1.6em; font-weight: 800;
+  background: var(--pink-grad-deep);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.celebrate-sub { color: var(--text-sub); font-size: 1em; }
+.celebrate-close {
+  margin-top: 20px;
+  background: var(--pink-grad-deep);
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.celebrate-close:hover { transform: scale(1.1); }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--pink-grad-deep);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(255,132,174,0.4);
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ===== 响应式 ===== */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 18px 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .sidebar-header { margin-bottom: 0; width: auto; }
+  .sidebar-nav { margin-top: 0; flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .nav-item { padding: 10px 12px; border-radius: 12px; }
+  .sidebar-footer { display: none; }
+  .main-content { margin-left: 0; padding: 24px 16px 40px; }
+  .task-grid { grid-template-columns: 1fr; }
+  .douyin-content-grid { grid-template-columns: 1fr; }
+  .study-week { grid-template-columns: repeat(4, 1fr); }
+  .day-card { padding: 10px 6px; }
+  .day-task { display: none; }
+  .words-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .study-week { grid-template-columns: repeat(2, 1fr); }
+  .words-grid { grid-template-columns: 1fr; }
+  .sidebar { flex-direction: column; }
+  .sidebar-nav { flex-direction: column; }
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--pink-light); }
+::-webkit-scrollbar-thumb { background: var(--pink-main); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--pink-deep); }
+</style>
+</head>
+<body>
+
+<!-- 浮动emoji -->
+<div class="float-decor" style="top:8%;left:42%;animation-delay:0s;">🌸</div>
+<div class="float-decor" style="top:22%;right:6%;animation-delay:1s;">💕</div>
+<div class="float-decor" style="top:48%;right:4%;animation-delay:2s;">✨</div>
+<div class="float-decor" style="top:68%;left:38%;animation-delay:0.5s;">🎀</div>
+<div class="float-decor" style="top:85%;right:8%;animation-delay:1.5s;">🍓</div>
+<div class="float-decor" style="top:35%;right:2%;animation-delay:2.5s;">🧸</div>
+<div class="float-decor" style="top:92%;left:36%;animation-delay:3s;">💖</div>
+
+<div class="app-layout">
+  <!-- ===== 左侧导航栏 ===== -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title"><span class="sidebar-crown">👑</span>小段是富婆</div>
+      <div class="sidebar-subtitle">✨ 专属个人成长工作台</div>
+      <div class="sidebar-date" id="sidebar-date">📅 加载中</div>
+      <div class="sidebar-time" id="sidebar-time">⏰ --:--:--</div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-item active" data-panel="panel-tasks" onclick="switchPanel('panel-tasks', this)">
+        <span class="nav-icon">📝</span>
+        <span class="nav-text">每日必完成任务</span>
+        <span class="nav-badge" id="task-badge">0/3</span>
+      </div>
+      <div class="nav-item" data-panel="panel-douyin" onclick="switchPanel('panel-douyin', this)">
+        <span class="nav-icon">🎬</span>
+        <span class="nav-text">抖音文案创作</span>
+        <span class="nav-badge">每日9点</span>
+      </div>
+      <div class="nav-item" data-panel="panel-cet4" onclick="switchPanel('panel-cet4', this)">
+        <span class="nav-icon">📖</span>
+        <span class="nav-text">英语四级备考</span>
+        <span class="nav-badge" id="word-badge">0/10</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-emojis">🌸💕✨🧸</div>
+      每天进步一点点 💪
+    </div>
+  </div>
+
+  <!-- ===== 右侧内容区 ===== -->
+  <div class="main-content">
+
+    <!-- 板块1：每日必完成任务 -->
+    <div class="panel active" id="panel-tasks">
+      <div class="panel-header">
+        <div class="panel-title">📝 每日必完成任务清单</div>
+        <div class="panel-desc">每天完成这三件事，你就离富婆更近一步啦~</div>
+      </div>
+      <div class="task-progress-bar">
+        <div class="task-progress-fill" id="task-progress-fill" style="width:0%;"></div>
+        <span class="task-progress-text" id="task-progress-text">今日进度：0 / 3</span>
+      </div>
+      <div class="task-grid" id="task-grid"></div>
+    </div>
+
+    <!-- 板块2：抖音文案创作 -->
+    <div class="panel" id="panel-douyin">
+      <div class="panel-header">
+        <div class="panel-title">🎬 抖音文案创作专区</div>
+        <div class="panel-desc">每天9点拆解爆款 + 结合小段人设二次创作</div>
+      </div>
+      <div class="douyin-top-bar">
+        <span class="persona-label">🧑‍🎓 我的人设：</span>
+        <span class="persona-tag">护理专升本</span>
+        <span class="persona-tag">在校大学生</span>
+        <span class="persona-tag">真实接地气</span>
+        <span class="persona-tag">拒绝空洞鸡汤</span>
+        <span class="persona-tag">实拍口播</span>
+        <span class="rule-badge" style="margin-left:auto;" id="auto-update-badge">⏰ 每天0点自动更新</span>
+      </div>
+      <div class="douyin-content-grid">
+        <div class="content-card">
+          <div class="content-card-title">
+            <span>🔥 今日爆款拆解</span>
+            <button class="btn-action" onclick="refreshContent()">🔄 换一组</button>
+          </div>
+          <div class="content-body" id="hot-analysis"></div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-title">
+            <span>✍️ 小段专属二次创作</span>
+            <button class="btn-action outline" onclick="copyMyCopy()">📋 一键复制</button>
+          </div>
+          <div class="content-body" id="my-copy"></div>
+        </div>
+      </div>
+      <div class="method-section">
+        <div class="method-title">🔬 文案拆解方法论</div>
+        <div class="method-step"><span class="step-num">1</span><span><b>钩子开场</b>：前3秒抓眼球，制造悬念或共鸣</span></div>
+        <div class="method-step"><span class="step-num">2</span><span><b>痛点共鸣</b>：直击目标用户真实困境</span></div>
+        <div class="method-step"><span class="step-num">3</span><span><b>价值输出</b>：给出可落地的具体方法</span></div>
+        <div class="method-step"><span class="step-num">4</span><span><b>金句升华</b>：一句能被截图转发的记忆点</span></div>
+        <div class="method-step"><span class="step-num">5</span><span><b>行动召唤</b>：引导关注、评论、收藏</span></div>
+      </div>
+      <div class="refresh-indicator" id="refresh-indicator">💡 点击「换一组」可切换不同爆款拆解内容，每次刷新都换新文案</div>
+    </div>
+
+    <!-- 板块3：英语四级备考 -->
+    <div class="panel" id="panel-cet4">
+      <div class="panel-header">
+        <div class="panel-title">📖 英语四级备考专区</div>
+        <div class="panel-desc">零基础系统化学习 · 7天周计划 · 每天听说读写练</div>
+      </div>
+      <div class="study-week" id="study-week"></div>
+      <div class="words-section">
+        <div class="words-header">
+          <div class="words-title">📚 今日单词 · <span id="word-day-label">Day 1</span></div>
+          <div class="words-progress" id="words-progress">已掌握 0 / 10</div>
+        </div>
+        <div class="words-grid" id="words-grid"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 庆祝弹窗 -->
+<div class="celebrate-modal" id="celebrate-modal">
+  <div class="celebrate-box">
+    <div class="celebrate-emojis">🎉🌸✨💕</div>
+    <div class="celebrate-text">今日任务全部完成！</div>
+    <div class="celebrate-sub">小段今天也是超棒的富婆预备役！明天继续加油~ 💪</div>
+    <button class="celebrate-close" onclick="closeCelebrate()">好哒~</button>
+  </div>
+</div>
+
+<!-- 拼写练习弹窗 -->
+<div class="spell-modal" id="spell-modal">
+  <div class="spell-box">
+    <div class="spell-prompt" id="spell-prompt">拼写练习 📝</div>
+    <div class="spell-hint" id="spell-hint"></div>
+    <input class="spell-input" id="spell-input" type="text" autocomplete="off" placeholder="输入英文单词..." onkeydown="if(event.key==='Enter')checkSpell()">
+    <div class="spell-result" id="spell-result"></div>
+    <button class="spell-close-btn" onclick="closeSpell()">继续学习</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 实时时间 =====
+function updateDateTime() {
+  const now = new Date();
+  const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+  const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekdays[now.getDay()]}`;
+  const timeStr = now.toTimeString().slice(0, 8);
+  document.getElementById('sidebar-date').textContent = '📅 ' + dateStr;
+  document.getElementById('sidebar-time').textContent = '⏰ ' + timeStr;
+}
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
+// ===== 工具 =====
+function getTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+}
+function getWeekday() { return new Date().getDay(); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== 板块切换 =====
+function switchPanel(panelId, navEl) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+}
+
+// ===== 板块一：每日任务 =====
+const tasks = [
+  { id:'task1', icon:'📸', title:'拍摄穿搭、好物照片', desc:'发布得物平台', tag:'得物·穿搭好物' },
+  { id:'task2', icon:'🎬', title:'录制女性成长口播视频', desc:'发布抖音平台', tag:'抖音·口播视频' },
+  { id:'task3', icon:'📖', title:'英语四级单词背诵', desc:'每日固定背诵10个单词', tag:'四级·每日10词' },
+];
+
+function renderTasks() {
+  const grid = document.getElementById('task-grid');
+  const todayKey = getTodayKey();
+  grid.innerHTML = tasks.map(t => {
+    const done = localStorage.getItem(`${todayKey}-${t.id}`) === 'done';
+    return `
+      <div class="task-card ${done?'completed':''}" onclick="toggleTask('${t.id}')">
+        <div class="task-card-top">
+          <div class="task-checkbox">${done?'✓':''}</div>
+          <span class="task-icon">${t.icon}</span>
+          <div class="task-info">
+            <div class="task-title">${t.title}</div>
+            <div class="task-desc">${t.desc}</div>
+            <span class="task-tag">${t.tag}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+  updateTaskProgress();
+}
+
+function toggleTask(taskId) {
+  const todayKey = getTodayKey();
+  const key = `${todayKey}-${taskId}`;
+  if (localStorage.getItem(key) === 'done') {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.setItem(key, 'done');
+    showToast('✅ 任务完成！棒棒哒~');
+  }
+  renderTasks();
+}
+
+function updateTaskProgress() {
+  const todayKey = getTodayKey();
+  const doneCount = tasks.filter(t => localStorage.getItem(`${todayKey}-${t.id}`) === 'done').length;
+  const total = tasks.length;
+  const percent = (doneCount / total) * 100;
+  document.getElementById('task-progress-fill').style.width = percent + '%';
+  document.getElementById('task-progress-text').textContent = `今日进度：${doneCount} / ${total}`;
+  document.getElementById('task-badge').textContent = `${doneCount}/${total}`;
+  if (doneCount === total) {
+    setTimeout(() => document.getElementById('celebrate-modal').classList.add('show'), 600);
+  }
+}
+
+function closeCelebrate() {
+  document.getElementById('celebrate-modal').classList.remove('show');
+}
+
+// ===== 板块二：抖音文案（多套文案池，刷新真正换内容） =====
+const douyinPool = [
+  {
+    hotAnalysis: `🔥 爆款文案：《女孩子不要太懂事，懂事的人最吃亏》
+
+📌 文案原文精华：
+"太懂事的女孩子，往往活得最累。别人请你帮忙你从不拒绝，别人情绪不好你第一个去哄，别人犯错你先找自己的原因。你以为这叫善良，其实这叫内耗。"
+
+🔍 拆解分析：
+1. 钩子开场：「太懂事的女孩子，往往活得最累」——反差+痛点
+2. 痛点共鸣：三个具体场景，还原讨好型人格日常
+3. 价值输出：重新定义善良vs内耗
+4. 金句升华：你以为这叫善良，其实这叫内耗
+5. 行动召唤：评论区引导你也是这样的人吗
+
+📊 数据表现：点赞 12.3w · 收藏 3.1w · 评论 2400+`,
+    myCopy: `✍️ 小段专属版：《学护理后才懂，太懂事的人最容易被忽略》
+
+🎬 口播文案：
+
+实习的时候，带教老师让谁去换药，我永远第一个举手。
+同学忘交作业，我半夜帮她补。
+小组作业，分工不下来的活儿最后都是我的。
+
+我以为这叫勤快，叫靠谱。
+直到评优的时候，没有一个人想到我。
+
+后来我想明白了：
+你的懂事如果没有边界，就会被当成理所当然。
+
+从今天起，学会说一句：这个我也忙不过来，你找别人吧。
+
+善良要有锋芒，否则就是对自己的消耗。
+我是小段，护理专升本在校生，教你做个有底线的温柔女孩。
+
+💡 创作说明：
+• 结合护理实习场景，比原版更有说服力
+• 评优没被想到——专升本学生强共鸣
+• 金句善良要有锋芒——可截图传播
+• 适合30-45秒口播实拍`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《30岁前，请逼自己养成这5个习惯》
+
+📝原文精华：不是你不够努力，是你努力的方向错了。这5个习惯，第3个我后悔没早十年知道——
+
+【5维度拆解】
+1.钩子：「后悔没早十年知道」制造紧迫感+好奇心
+2.痛点：直击「努力无结果」的普遍焦虑
+3.价值：5个具体习惯，承诺干货密度
+4.金句：「方向比速度重要，选择比努力值钱」
+5.召唤：「第3个习惯一定要看到最后」引导完播
+
+📊数据表现：点赞128万|收藏34万|完播率42%`,
+    myCopy: `📖创作说明：结合护理专升本学习场景，将通用习惯替换为医学生可落地的版本。
+
+---
+
+护理专升本两年，我最大的感悟就是：不是你不够拼，是你拼错了地方。
+
+今天分享5个让我从专科逆袭到本科的习惯：
+
+第1个，每天早上6点背10个护考高频考点。不是背单词，是背考点——因为护考不考你认不认识这个词，考的是你会不会用。
+
+第2个，把临床实习的每个操作都拍下来回看。第一次扎针手抖？没关系，录像不会骗你，看一遍就知道问题在哪。
+
+第3个，我后悔没早点做的——学会拒绝带教老师的无效跑腿。你不是去科室当勤杂工的，你是去学技术的。态度好不等于啥都干。
+
+第4个，每周写一次实习复盘笔记，不是流水账，是「今天哪个操作我没做好、为什么、下次怎么改」。
+
+第5个，把专升本复习和护考复习合二为一。别傻乎乎分两轮准备，重合的知识点占60%以上。
+
+方向比速度重要，选择比努力值钱。护理这条路，别用蛮力。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《为什么你越懂事，越没人疼？》
+
+📝原文精华：懂事的孩子，都是在替别人活。你从不提要求，别人就真以为你没有要求。最后活成了一个「好人」，却活不成自己。
+
+【5维度拆解】
+1.钩子：反常识观点——「懂事」居然是贬义？
+2.痛点：讨好型人格的深层委屈
+3.价值：揭示「懂事」背后的心理机制
+4.金句：「你不提要求，别人就真以为你没有要求」
+5.召唤：「评论区告诉我，你是不是也这样」
+
+📊数据表现：点赞89万|评论5.2万|转发12万`,
+    myCopy: `📖创作说明：结合护理实习中「老好人」被使唤的真实场景，引发共鸣。
+
+---
+
+实习第一个月我就发现一件事：科室里越好说话的实习生，干的杂活越多。
+
+换药、铺床、跑腿、取快递……你笑着应下每一件事，带教老师也笑着把活儿都给你。
+
+你觉得这是在表现自己。但你想想，那些核心操作，轮到你了吗？
+
+懂事不是错，错的是你用懂事代替了表达。你不提要求，别人就真以为你没有要求。你不争机会，别人就真以为你不需要。
+
+我以前也是那种「好的好的没问题」的人。后来我想通了——我是来学扎针的，不是来当科室NPC的。
+
+从那以后，我开始主动问：老师，这个静脉穿刺我能试试吗？
+
+第一次被拒绝，第二次被拒绝，第三次，老师让了位。
+
+懂事的孩子，别再替别人活了。你得先活成自己，才有人真正疼你。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《情绪稳定，是一个人最顶级的自律》
+
+📝原文精华：你不是脾气好，你是不会发脾气。真正的情绪稳定不是忍，是看透之后的从容。别把「忍」当修养，那叫内伤。
+
+【5维度拆解】
+1.钩子：颠覆认知——「脾气好」≠情绪稳定
+2.痛点：长期压抑情绪的隐性伤害
+3.价值：区分「忍」和「稳」，给出新标准
+4.金句：「别把忍当修养，那叫内伤」
+5.召唤：「点赞收藏，下次想发脾气时看看」
+
+📊数据表现：点赞203万|收藏56万|分享28万`,
+    myCopy: `📖创作说明：结合护理临床中面对患者/家属指责时的情绪管理，更有代入感。
+
+---
+
+实习的时候被患者家属指着鼻子骂，我忍了。
+
+带教当着全科室面批评我操作不规范，我也忍了。
+
+我以为这就是情绪稳定。
+
+直到有天夜里值班，一个人对着窗户莫名其妙哭了半小时，我才明白——我那不叫稳定，那叫内伤。
+
+真正的情绪稳定不是忍，是你在被骂的那一刻，脑子能转过来：这件事是不是我的错？是，那就改；不是，那就放下。
+
+后来家属再投诉我，我不哭了。我说：叔叔，您说的这个问题我记下来了，我去跟带教确认一下操作规范，稍后给您回复。
+
+他愣了。
+
+情绪稳定不是不生气，是生气的时候还知道自己该干什么。
+
+别把忍当修养，忍出来的都是病，护士见得最多的就是这种。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《月入3000和月入3万的女人，差在哪？》
+
+📝原文精华：差的不是能力，是信息差。你身边最亲近的5个人，决定了你的认知天花板。你想挣更多钱？先换圈子。
+
+【5维度拆解】
+1.钩子：数字对比制造冲击力
+2.痛点：收入焦虑+社交焦虑叠加
+3.价值：揭示「圈子决定天花板」的底层逻辑
+4.金句：「你身边5个人，就是你的认知天花板」
+5.召唤：「评论区说说，你身边最影响你的人是谁」
+
+📊数据表现：点赞156万|评论8.7万|转发19万`,
+    myCopy: `📖创作说明：结合护理行业薪资现状和专升本后圈层变化，更接地气。
+
+---
+
+我专科实习的时候，身边讨论最多的是：哪个科室轻松、哪个带教好说话、怎么才能少上夜班。
+
+专升本之后，我发现身边的人讨论的是：要不要考研究生、三甲医院招聘有什么条件、护师证怎么提前准备。
+
+同一个专业，圈子一换，认知天花板就变了。
+
+不是说专科的姐妹不好，而是你天天跟「差不多就行」的人在一起，你自己也就「差不多」了。
+
+我以前觉得护士就是打针发药，月薪三四千，正常。现在我身边有人去考了专科护理硕士，有人进了省级三甲，有人转行做了医疗器械。
+
+你身边最亲近的5个人，就是你的天花板。
+
+想挣更多钱？先看看你天天跟谁聊天。聊的不是八卦就是抱怨，那你就还在原地。
+
+别怕换圈子被说势利，成长本来就是一场筛选。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《我不怕别人看不起我，我怕我自己看不起自己》
+
+📝原文精华：别人看不起你，你还能怼回去。自己看不起自己，你连还嘴的力气都没有。最狠的贬低，从来不是别人给的。
+
+【5维度拆解】
+1.钩子：对比句式——别人的贬低vs自我贬低
+2.痛点：自我否定比外界评价更致命
+3.价值：引导关注内在自我评价体系
+4.金句：「最狠的贬低，从来不是别人给的」
+5.召唤：「转发给那个需要看到的人」
+
+📊数据表现：点赞97万|收藏22万|完播率38%`,
+    myCopy: `📖创作说明：结合专升本学历焦虑，讲述从自我否定到自我接纳的过程。
+
+---
+
+专升本上岸那天，我没有发朋友圈。
+
+因为我怕。怕别人说「不就是专升本吗，又不是正经本科」。
+
+实习的时候，有个患者问我学历，我说了之后他「哦」了一声，那个语气我记到现在。
+
+很长一段时间，我在科室里不敢主动说话，怕暴露自己学历不行。操作明明做得很好，也不敢举手说「我来」。
+
+后来带教跟我说了一句话：你手上的技术，又不看你的毕业证。
+
+我突然醒了。别人看不起你，你还能怼回去。但你自己看不起自己，你连还嘴的力气都没有。
+
+最狠的贬低，从来不是别人给的，是你自己给自己的。
+
+从那天起，我不再躲。穿刺、换药、抢救配合，我抢着上。学历是起点不是终点，手上的本事才是底气。
+
+专升本怎么了？我凭本事考上的，凭本事实习的。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《攒钱，是普通人最大的安全感》
+
+📝原文精华：你不需要赚很多钱才开始攒钱。月薪3000也能攒，攒的是习惯。卡里有3万和卡里有300，你走路的姿势都不一样。
+
+【5维度拆解】
+1.钩子：「走路的姿势都不一样」具象化
+2.痛点：月光族的安全感缺失
+3.价值：强调攒钱习惯>攒钱金额
+4.金句：「卡里有钱的人，腰杆子都是直的」
+5.召唤：「评论区说说你现在存了多少钱」
+
+📊数据表现：点赞112万|收藏41万|转发15万`,
+    myCopy: `📖创作说明：结合护理实习期低收入+备考支出的真实消费场景。
+
+---
+
+实习的时候，我没有工资。
+
+每天公交来回4块，午饭在科室扒拉两口盒饭，省到什么程度呢——实习结束我存了2000块。
+
+2000块多吗？不多。但你知道那种感觉吗——卡里有钱和卡里没钱，你走路的姿势都不一样。
+
+我室友实习期花呗欠了8000，分期还到专升本开学还在还。每天复习到半夜还在焦虑下个月账单。
+
+专升本备考那段时间，报班要钱、买资料要钱、吃饭要钱。就因为我那2000块，我没有向家里开口。
+
+你不向家里伸手要钱的那一刻，你就真正开始长大了。
+
+攒钱不是让你抠搜过日子，是让你在关键时刻有底气说「不用」。
+
+带教让你帮忙跑腿买奶茶，你能说不用，因为你不需要靠她那一杯奶茶的钱。
+
+卡里有钱的人，腰杆子是直的。3万也好，300也好，先攒起来。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《社交恐惧不是病，是你太在意别人的看法》
+
+📝原文精华：你以为你怕的是社交，其实你怕的是被评价。你不是不会说话，你是每说一句话都在想「他会不会觉得我蠢」。累不累？
+
+【5维度拆解】
+1.钩子：重新定义社恐——不是怕人，是怕评价
+2.痛点：社交中过度自我监控的疲惫感
+3.价值：揭示社恐本质，减轻自我攻击
+4.金句：「你不是不会说话，你是太会察言观色」
+5.召唤：「点赞+关注，下期讲怎么破局」
+
+📊数据表现：点赞76万|评论3.1万|完播率35%`,
+    myCopy: `📖创作说明：结合护理实习中需要频繁与患者沟通的场景，让社恐更具体。
+
+---
+
+我以前特别怕跟患者聊天。
+
+不是不会说话，是每句话都在想：他会不会觉得我问多了？会不会嫌我烦？会不会投诉我态度不好？
+
+一次健康宣教，我准备了三版说辞，最后还是紧张到结巴。患者反倒安慰我：小姑娘别紧张，慢慢说。
+
+那一刻我意识到——我以为我怕的是社交，其实我怕的是被评价。
+
+你不是不会说话，你是太会察言观色。你把每个人的表情都当成了对你的判决书。
+
+后来我换了个思路：我是来干活的，不是来讨人喜欢的。该说的健康宣教我说清楚，该提醒的注意事项我提醒到。他满不满意是他的事，我尽没尽到责任是我的事。
+
+你猜怎么着？投诉少了，表扬多了。
+
+因为放松状态下说出的话，永远比紧张状态下挤出的笑更让人舒服。
+
+社恐不是病，放下面子就好了。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《你不需要好看，你需要的是被记住》
+
+📝原文精华：好看的人太多了，被记住的人太少了。别花两个小时化妆，花两个小时长本事。脸会老，本事不会。
+
+【5维度拆解】
+1.钩子：反潮流——在颜值时代说「别太在意外表」
+2.痛点：容貌焦虑下的时间/金钱消耗
+3.价值：重新定义「被记住」的标准
+4.金句：「脸会老，本事不会」
+5.召唤：「收藏这条，化妆前看一遍」
+
+📊数据表现：点赞134万|收藏38万|转发21万`,
+    myCopy: `📖创作说明：结合护理实习要求素颜/淡妆的真实情境，降低容貌焦虑。
+
+---
+
+护理实习要求素颜、不戴首饰、头发扎起来。
+
+第一天进科室，我觉得自己丑死了。素颜面对所有人，脸上每一个毛孔都无处遁形。
+
+我花了两个月才适应。适应之后我发现一件事——没有一个患者在意你化没化妆。
+
+他们在意的是：你扎针疼不疼、你换药细不细心、你回答问题耐不耐心。
+
+好看的人太多了，被记住的人太少了。被记住的不是你今天涂了什么口红，是你那一次夜班守了一整晚没合眼。
+
+我不反对化妆，但别花两个小时化一个只为去科室实习的妆。那两个小时，背10个药理机制不香吗？
+
+脸会老，本事不会。
+
+你现在素颜站在病床前不丢人，十年后还是只会素颜站在病床前，才丢人。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《原生家庭不好的人，这辈子就完了吗？》
+
+📝原文精华：原生家庭是发牌的人，但打牌的人是你。拿到烂牌不代表你一定会输，只代表你需要比别人多想几步。
+
+【5维度拆解】
+1.钩子：直击原生家庭焦虑最核心的恐惧
+2.痛点：出身不好导致的宿命感
+3.价值：用「打牌」比喻重新定义命运
+4.金句：「拿到烂牌不代表一定会输」
+5.召唤：「评论区说说你的故事，我每条都看」
+
+📊数据表现：点赞189万|评论6.8万|转发33万`,
+    myCopy: `📖创作说明：结合护理专业学生中农村/普通家庭出身的真实困境。
+
+---
+
+我家在农村，父母务农，供我读专科已经吃力了。
+
+我说要专升本的时候，我妈沉默了很久，说了一句：你自己想好了就行，钱的事家里想办法。
+
+那句话我记一辈子。不是因为感动，是因为我听出了其中的为难。
+
+原生家庭不好的人，很早就学会了看人脸色。你不敢要，不敢选，不敢赌。你觉得自己不配。
+
+但你想清楚一件事：原生家庭是发牌的人，打牌的人是你。
+
+拿到烂牌不代表一定输，只代表你需要比别人多想几步。
+
+我选择了护理这条路，不是因为热爱，是因为它务实。学一门手艺，先养活自己，再谈理想。
+
+专升本期间我拿了奖学金，实习期间我没向家里要过一分钱。
+
+你问原生家庭不好的人这辈子完了吗？
+
+没完。但你要比别人更狠、更清醒、更能扛。
+
+这不是鸡汤，这是护理实习连值7天夜班后我悟出来的。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《别在深夜做任何决定》
+
+📝原文精华：夜晚的你不是你，是情绪的放大器。白天你想的是「怎么办」，晚上你想的是「算了」。别在最脆弱的时候做最重要的选择。
+
+【5维度拆解】
+1.钩子：直接给行为指令，简洁有力
+2.痛点：深夜emo导致的冲动决策
+3.价值：揭示情绪与时间的关系
+4.金句：「夜晚不是你，是情绪的放大器」
+5.召唤：「收藏这条，深夜想退学/分手/辞职时看」
+
+📊数据表现：点赞167万|收藏62万|转发24万`,
+    myCopy: `📖创作说明：结合护理专升本备考深夜焦虑想放弃的真实瞬间。
+
+---
+
+专升本备考第三个月，我每天晚上11点准时开始emo。
+
+背不完的政治、做错的英语阅读、护考知识点全混在一起。一到深夜就觉得自己考不上，想放弃。
+
+有天凌晨1点，我编辑了一条朋友圈：「算了，不考了」。打了半天，没发。
+
+第二天早上醒来再看那条草稿，只有一个念头：幸好没发。
+
+白天你想的是「怎么办」，晚上你想的是「算了」。夜晚的你不是你，是情绪的放大器。
+
+后来我给自己定了个规矩：任何关于放弃、关于结束、关于重大改变的决定，不允许在晚上10点以后做。
+
+想退学？明天早上再说。想不考了？明天早上再说。想跟室友翻脸？明天早上再说。
+
+结果到了第二天早上，90%的事情你都不想干了。
+
+深夜是用来睡觉的，不是用来做决定的。
+
+这条送给所有备考中深夜emo的姐妹，收藏起来，下次想放弃时看看。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《30岁了还单身，是不是有问题？》
+
+📝原文精华：不是你有问题，是你终于学会了不将就。20岁你怕没人要，30岁你怕选错人。前者是没见过世面，后者是见过之后的选择。
+
+【5维度拆解】
+1.钩子：替30岁单身女性发声，制造认同
+2.痛点：年龄焦虑+婚恋焦虑
+3.价值：重新定义「不将就」
+4.金句：「20岁怕没人要，30岁怕选错人」
+5.召唤：「评论区说出你的年龄和状态」
+
+📊数据表现：点赞145万|评论9.2万|转发18万`,
+    myCopy: `📖创作说明：结合护理行业工作忙导致婚恋延迟的实际情况，更贴行业。
+
+---
+
+我妈上周又打电话了，问我什么时候找对象。
+
+我说妈我实习白班夜班倒着来，哪有时间谈恋爱？她说那你以后上班了更忙。
+
+她说得对。护士这个职业，想找个理解你三班倒的人，真不容易。
+
+但我不想因为「不好找」就凑合。
+
+20岁的时候我也怕没人要，怕自己不够好看不够温柔。快专升本毕业了，我反而不怕了。
+
+因为我现在怕的不是没人要，是选错人。
+
+见过科室里凌晨三点还在抢救的同行，你就知道——你需要的不是一个催你回家做饭的人，是一个你下夜班回来给你热好饭的人。
+
+前者是完成任务，后者是过日子。
+
+单身不是有问题，是你终于学会了不将就。
+
+别急，先把专升本考完，把手艺练好。你好了，遇到的人才配得上你。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《你消费的不是物品，是情绪》
+
+📝原文精华：你买那件衣服不是因为缺衣服，是因为今天心情不好。你以为购物在治愈你，其实购物在消耗你。真正的解药不是花钱，是花时间。
+
+【5维度拆解】
+1.钩子：重新定义消费行为——不是购物，是情绪补偿
+2.痛点：冲动消费后的空虚感
+3.价值：区分「需要」和「情绪缺口」
+4.金句：「购物在消耗你，不是治愈你」
+5.召唤：「评论区算算你一个月花了多少情绪消费」
+
+📊数据表现：点赞98万|收藏27万|转发16万`,
+    myCopy: `📖创作说明：结合护理实习期用购物缓解压力的真实消费习惯。
+
+---
+
+实习期最累的那一个月，我在淘宝下了23单。
+
+小零食、手机壳、发卡、本子、贴纸……加起来不到300块，但每一样都是深夜下班后躺在床上下的单。
+
+买的那一刻确实开心，快递到了拆开也开心。然后呢？
+
+然后23样东西，有一半我现在都没用过。
+
+我后来复盘了一下：我消费的不是物品，是情绪。那个月我连续上了4个大夜班，我不缺东西，我缺的是被照顾的感觉。
+
+我以为购物在治愈我，其实购物在消耗我。钱花完了，情绪并没有真正好转。
+
+后来我换了个方式。累的时候不打开淘宝，打开备忘录写下今天发生了什么。
+
+写完发现，真正让我难受的不是没买到东西，是那天有个患者走了我没救回来。
+
+那种情绪不是一件衣服能填的。
+
+别用花钱代替花时间，你的情绪值得你认真对待。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《真正的独立，不是什么都自己扛》
+
+📝原文精华：独立不是不需要别人，是知道自己什么时候需要别人。什么都自己扛不是坚强，是逞强。逞强的人，最后都崩了。
+
+【5维度拆解】
+1.钩子：颠覆「独立=不依赖」的固有认知
+2.痛点：过度逞强导致的心理崩溃
+3.价值：重新定义独立——「会求助」才是真独立
+4.金句：「逞强的人，最后都崩了」
+5.召唤：「转发给你身边那个什么都不说的人」
+
+📊数据表现：点赞176万|收藏44万|转发29万`,
+    myCopy: `📖创作说明：结合护理实习中独自扛操作失误压力的真实经历。
+
+---
+
+实习的时候我犯了一个错，给患者量错了血压数值，记成了上一个患者的。
+
+幸好带教核对的时候发现了。她没有骂我，但我那天一晚上没睡。
+
+第二天我在科室表现得跟没事一样。第三天也是。第四天，我在更衣室一个人哭了半小时。
+
+我以为这叫独立。什么都自己消化，不麻烦别人。
+
+后来带教找到我说：你是不是还在想那个事？我说没有。她说：有就是有，说出来我才知道怎么帮你。
+
+那一刻我突然明白了——独立不是不需要别人，是知道自己什么时候需要别人。
+
+什么都自己扛不是坚强，是逞强。逞强的人最后都崩了。
+
+从那以后我学会了一件事：遇到搞不定的操作，直接说「老师，这个我不太确定，您能再看一下吗」。
+
+这不是示弱，这是对患者负责，也是对自己负责。
+
+会求助的人，才是真独立。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《别跟消耗你的人纠缠》
+
+📝原文精华：跟烂人烂事纠缠，你赢了也是输。你花一小时说服一个不理解你的人，这一小时你本可以用来变强。时间花在哪，结果就在哪。
+
+【5维度拆解】
+1.钩子：「赢了也是输」制造反差
+2.痛点：与无效人际纠缠的时间焦虑
+3.价值：强调时间分配>情绪争辩
+4.金句：「时间花在哪，结果就在哪」
+5.召唤：「评论区艾特那个人，提醒他别再纠缠了」
+
+📊数据表现：点赞121万|收藏35万|转发22万`,
+    myCopy: `📖创作说明：结合护理实习中与室友/同学间消耗性关系的场景。
+
+---
+
+专升本宿舍有个室友，每天复习到一半就开始跟我抱怨。
+
+「这个太难了不想背了」「考不上怎么办」「你说我们这个专业有前途吗」……
+
+一开始我还认真安慰她，后来发现自己也被搞焦虑了。跟她聊完半小时，我一个字都看不进去。
+
+我跟她说：我们各背各的吧，有不会的再讨论。她说我变了，说我变冷漠了。
+
+我差点就信了。后来我想明白了一件事——跟消耗你的人纠缠，你赢了也是输。
+
+你花一小时安慰一个不想努力的人，这一小时你本可以背完一章生理学。
+
+时间花在哪，结果就在哪。
+
+后来我考上了，她没考上。不是我比她聪明，是我的时间没花在纠缠上。
+
+不是让你冷漠，是让你拎得清。能一起走的人，自然一起走。拖你后腿的人，早点松手。
+
+专升本就两年，经不起消耗。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《你的自卑，不是因为你差》
+
+📝原文精华：自卑的人不是不够好，是标准定太高。你拿自己的起步跟别人的终点比，当然觉得自己不行。跟昨天的自己比，你已经走了很远。
+
+【5维度拆解】
+1.钩子：反转归因——自卑源于高标准而非不够好
+2.痛点：持续自我贬低的心理循环
+3.价值：提供「纵向比较」替代「横向比较」
+4.金句：「拿起步比终点，当然觉得自己不行」
+5.召唤：「评论区写下你今天比昨天进步了什么」
+
+📊数据表现：点赞103万|收藏31万|转发14万`,
+    myCopy: `📖创作说明：结合专科护理与本科护理对比中产生的自卑心理。
+
+---
+
+专升本开学第一天，我坐在教室里不敢说话。
+
+因为旁边的同学是四年制本科护理，我是专升本考上来的。我怕她们觉得我底子差。
+
+上药理学的时候，老师随口说了一个知识点，旁边的同学脱口而出答案。我连题目都没听清。
+
+那一瞬间我想：我果然不行。
+
+但后来冷静想了想——她们学了四年，我才刚补上。拿我的起步跟她们的终点比，我当然觉得自己不行。
+
+这不是自卑，这是参考系选错了。
+
+我应该跟谁比？跟去年那个还在实习时连药名都背不全的自己比。
+
+那个我，现在能跟上药理学课堂了。能跟上，不就是进步吗？
+
+自卑的人不是不够好，是标准定太高。你总是看自己还差多少，从不看自己已经走了多远。
+
+跟昨天的自己比，你已经走了很远。
+
+别再用别人的终点惩罚自己的起步了。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《自律的最高境界，不是坚持，是习惯》
+
+📝原文精华：靠意志力自律的人，一定会崩。因为意志力是消耗品，用完就没了。真正自律的人不靠咬牙坚持，靠的是把行为变成不需要思考的习惯。
+
+【5维度拆解】
+1.钩子：颠覆「自律=坚持」的常识
+2.痛点：坚持不下去的自我否定
+3.价值：用「习惯系统」替代「意志力消耗」
+4.金句：「意志力是消耗品，用完就没了」
+5.召唤：「关注我，下期分享怎么建立习惯系统」
+
+📊数据表现：点赞92万|收藏48万|转发11万`,
+    myCopy: `📖创作说明：结合护理专升本备考中靠习惯而非意志力坚持复习的实战经验。
+
+---
+
+专升本备考第一个月，我靠意志力学习。
+
+每天逼自己坐到书桌前，咬牙看书两小时。一个礼拜就废了，看到政治就想吐。
+
+第二个月我换了个方法。不逼自己学两小时，改成每天吃完早饭后背15个护考知识点。
+
+15分钟，不多不少。不管那天状态多差，15分钟我总能耗。
+
+一个月后我发现——我不需要逼自己了，吃完早饭坐下来翻书，已经变成了自动反应。跟刷牙一样，不需要思考。
+
+靠意志力自律的人一定会崩。因为意志力是消耗品，用完就没了。
+
+你今天上班被骂了，意志力归零，还学个屁。
+
+但习惯不需要意志力。你不需要心情好才刷牙，也不需要状态佳才背那15分钟。
+
+自律的最高境界不是坚持，是把行为变成不需要思考的习惯。
+
+别再跟自己较劲了，把目标缩小到不可能失败的程度，让它自动运转就行。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《学会说「不」，是你最大的成长》
+
+📝原文精华：你什么都答应，别人就觉得你的时间不值钱。你不是好脾气，你是没有边界。学会说不，不是得罪人，是让人开始尊重你。
+
+【5维度拆解】
+1.钩子：「说不是成长」制造反差认同
+2.痛点：老好人式的边界缺失
+3.价值：重新定义拒绝——不是得罪，是尊重
+4.金句：「你什么都答应，别人就觉得你的时间不值钱」
+5.召唤：「评论区说说你不敢拒绝的事」
+
+📊数据表现：点赞87万|评论4.1万|转发13万`,
+    myCopy: `📖创作说明：结合护理实习中被要求额外加班/跑腿时学会拒绝的场景。
+
+---
+
+实习的时候我什么都答应。
+
+带教让我帮另一个实习生顶班？好。护士长让我帮忙整理库房？好。同事让我帮忙取快递？好。
+
+结果一个月下来，我干了最多杂活，学到的核心操作最少。
+
+有天我连续上了6天班，第7天护士长说能不能再顶一个班。我说：不好意思，明天我有事来不了。
+
+说完之后我心里怦怦跳，怕她对我有意见。
+
+结果呢？什么事都没有。第二天该怎样还是怎样。
+
+我发现一个道理：你什么都答应，别人就觉得你的时间不值钱。你偶尔拒绝一次，别人反而开始尊重你。
+
+不是让你什么事都拒绝，是让你学会区分：这件事对我有没有用？有用就做，没用就说不行。
+
+你的时间也是有限的。你把时间花在取药跑腿上，就没时间练核心操作。
+
+学会说不，不是得罪人，是让人开始尊重你。
+
+从今天开始，试着拒绝一件你不想做的事。你会发现天塌不下来。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《别用别人的尺子量自己》
+
+📝原文精华：你焦虑不是因为你不优秀，是因为你总在跟别人比。有人22岁结婚，有人32岁才遇到对的人。你的节奏不需要跟任何人同步，花有花期，你也有。
+
+【5维度拆解】
+1.钩子：用「尺子」比喻比较行为，形象直观
+2.痛点：同辈压力下的焦虑
+3.价值：强调个人节奏的独特性
+4.金句：「花有花期，你也有」
+5.召唤：「收藏这条，焦虑时翻出来看」
+
+📊数据表现：点赞158万|收藏52万|转发26万`,
+    myCopy: `📖创作说明：结合护理专升本与同龄已工作/结婚同学之间的对比焦虑。
+
+---
+
+刷朋友圈看到专科同学晒工资条，5000多。
+
+再看看自己，还在专升本，没收入，还在花家里的钱。
+
+那一瞬间我心态崩了。我想：我多读这两年到底值不值？
+
+后来又刷到一条——另一个同学晒了结婚证。我更慌了：人家都结婚了，我还在背生理学。
+
+但冷静下来想：她5000多的工资，是每天上12小时班换来的。我现在的没收入，是暂时的。
+
+两年后我本科毕业，进三甲的概率比现在大得多。到那时候，我的起跑线就变了。
+
+你焦虑不是因为你不优秀，是因为你总在跟别人比。你用她的工资量你的存款，用她的婚姻量你的感情。
+
+尺子都错了，量出来能不焦虑吗？
+
+有人22岁结婚，有人32岁才遇到对的人。有人专科毕业就赚钱，有人专升本再考研。
+
+你的节奏不需要跟任何人同步。花有花期，你也有。
+
+别用别人的尺子量自己，你按自己的节奏走，总会到的。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《真正厉害的人，都不着急》
+
+📝原文精华：着急是本能，不着急是本事。你越急越容易出错，越出错越急。打破这个死循环只有一个方法：把注意力从「结果」转到「当下」。
+
+【5维度拆解】
+1.钩子：「着急是本能，不着急是本事」对仗有力
+2.痛点：急躁→出错→更急躁的恶性循环
+3.价值：转移注意力焦点的实操方法
+4.金句：「越急越出错，越出错越急」
+5.召唤：「关注我，下期讲怎么练定力」
+
+📊数据表现：点赞114万|收藏36万|转发19万`,
+    myCopy: `📖创作说明：结合护理实习中因急躁导致操作失误的真实案例。
+
+---
+
+实习的时候我因为着急出过一次事。
+
+那天科室特别忙，我负责给三个患者换药。第二个患者催我快点，我就加快了速度。结果拆敷料的时候手一滑，扯到了伤口。
+
+患者疼得倒吸一口气。我整个人愣在那里。
+
+带教接手处理完之后跟我说了一句话：着急是本能，不着急是本事。
+
+你越急越容易出错，越出错越急。这是死循环。
+
+从那以后我给自己定了个规矩：不管多忙，每一个操作都按标准流程来，一步都不省。
+
+哪怕后面排了10个患者等着，我这个换药该几分钟就几分钟。
+
+因为你省的那30秒，可能要用30年来还。
+
+真正厉害的人都不着急。不是他们不忙，是他们的注意力在「当下这一步」，不在「还有多少没做完」。
+
+把手上的每一步做好，结果自然不会差。
+
+护理这行，急不得。急了，出的是事故。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《你以为的极限，只是你的舒适区边界》
+
+📝原文精华：你觉得你到极限了？不，你只是到了舒适区的边缘。真正成长发生在舒适区外面。你不走出去，永远不知道自己能走多远。
+
+【5维度拆解】
+1.钩子：重新定义「极限」——不是极限，是边界
+2.痛点：自我设限导致的能力停滞
+3.价值：区分舒适区与极限，激发行动力
+4.金句：「不走出去，永远不知道自己能走多远」
+5.召唤：「评论区说说你最近一次跳出舒适区是什么时候」
+
+📊数据表现：点赞79万|收藏24万|转发9万`,
+    myCopy: `📖创作说明：结合护理实习中从不敢操作到主动挑战难操作的成长经历。
+
+---
+
+实习第二个月，带教问我：静脉穿刺你试过吗？
+
+我第一反应是摆手：不行不行，我没做过。
+
+他说：你没做过怎么知道不行？
+
+我被将了一军，硬着头皮上。第一次没扎进去。第二次也没扎进去。第三次，进去了。
+
+患者说：小姑娘第三次就成功了，不错。
+
+我那一刻手还在抖，但心里已经稳了。因为我知道了一件事：我以为的极限，只是我舒适区的边界。
+
+我不敢扎针不是因为我做不到，是因为我没做过。没做过就觉得做不到，这叫自我设限。
+
+从那以后我主动申请各种操作。导尿、插胃管、吸痰……每一个我以前觉得「好可怕」的操作，做了之后发现：就那样。
+
+不是说不紧张，是说紧张了也能做。
+
+你不走出去，永远不知道自己能走多远。
+
+别把舒适区的边界当成自己的极限。你的极限，比你以为的远得多。
+
+从今天开始，去做一件你觉得做不到的事。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《低质量的社交，不如高质量的独处》
+
+📝原文精华：你怕一个人吃饭、一个人走路、一个人待着。但你想想，你那些「一起」的时候真的开心吗？为了不孤独而凑的热闹，比孤独本身更消耗人。
+
+【5维度拆解】
+1.钩子：直面「怕独处」的心理
+2.痛点：低质量社交中的能量消耗
+3.价值：重新定义独处的价值
+4.金句：「为了不孤独凑的热闹，比孤独更消耗人」
+5.召唤：「点赞收藏，一个人吃饭时看」
+
+📊数据表现：点赞136万|收藏43万|转发20万`,
+    myCopy: `📖创作说明：结合护理专升本备考中独自复习vs合群社交的取舍。
+
+---
+
+专升本备考的时候，室友们经常约着一起自习。
+
+去了几次我发现——到了图书馆就是聊天，聊半小时才开始看书，看半小时又开始聊。
+
+效率低到我自己都看不下去。
+
+后来我开始一个人去。室友说我不合群，我说我想换个方式试试。
+
+一个人坐在图书馆角落里，没人跟我说话，我也不用在意别人看不看我。一上午背了30个考点。
+
+以前一上午能背10个就谢天谢地了。
+
+我才意识到——我怕的不是一个人学习，我怕的是被别人觉得我不合群。
+
+但你想想，你那些「一起」的时候真的开心吗？为了不孤独凑的热闹，比孤独本身更消耗人。
+
+你假装合群的那两个小时，本来可以背完一章解剖学。
+
+低质量的社交不如高质量的独处。不是让你断绝社交，是让你分清：什么时候需要人陪，什么时候你需要一个人。
+
+备考期，就是你需要一个人的时候。
+
+别怕独处，独处是你弯道超车的最好时机。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《别在该赚钱的年纪，只想着谈恋爱》
+
+📝原文精华：20多岁的你，最该投资的是自己，不是一段不确定的关系。谈恋爱可以，但别把它当成人生主线。你的底气不来自谁爱你，来自你能养活自己。
+
+【5维度拆解】
+1.钩子：直接价值输出——赚钱>恋爱
+2.痛点：年轻人精力/时间分配错位
+3.价值：重新排序人生优先级
+4.金句：「底气不来自谁爱你，来自你能养活自己」
+5.召唤：「转发给你那个恋爱脑闺蜜」
+
+📊数据表现：点赞127万|评论5.6万|转发17万`,
+    myCopy: `📖创作说明：结合护理专升本期间恋爱与学业冲突的真实场景。
+
+---
+
+专升本第一学期，我差点因为一段感情放弃备考。
+
+他说：你那么拼干什么，考不上我养你。
+
+我信了。那一个月复习进度几乎为零。
+
+后来他跟我说分手的时候，我脑子里第一个念头是：完了，我什么都没了。
+
+感情没了，复习也落下了。两个都空。
+
+那之后我用了两个月才追回进度。也是那两个月我想明白了一件事——20多岁的我，最该投资的是自己。
+
+不是我冷血不想谈恋爱，是我终于知道：把所有希望压在别人身上，是最蠢的事。
+
+他说养你的时候是真心的，他走的时候也是真的。
+
+但你的护师证不会走，你的本科学历不会走，你手上的技术不会走。
+
+你的底气不来自谁爱你，来自你能养活自己。
+
+谈恋爱可以，但别把它当成人生主线。你的主线是你自己。
+
+后来我再遇到说「我养你」的人，我只回一句：谢谢，我自己能养。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《你不需要所有人都喜欢你》
+
+📝原文精华：世界上有两种人：喜欢你的人和对你无感的人。没有第三种。所以你讨好所有人的结果，就是谁都不真的喜欢你。做你自己，喜欢你的自然会留下。
+
+【5维度拆解】
+1.钩子：简化人际关系——只有两种人
+2.痛点：讨好型人格的疲惫
+3.价值：放下「被所有人喜欢」的执念
+4.金句：「讨好所有人的结果，是谁都不喜欢你」
+5.召唤：「评论区说说你曾经讨好过谁」
+
+📊数据表现：合力94万|收藏28万|转发12万`,
+    myCopy: `📖创作说明：结合护理实习中想讨好带教和患者却被误解的真实经历。
+
+---
+
+实习的时候我特别想被所有人喜欢。
+
+带教喜欢什么样的学生？我研究。患者喜欢什么样的护士？我模仿。同事喜欢什么样的实习生？我配合。
+
+结果我活成了一个四不像。带教觉得我太刻意，患者觉得我假热情，同事觉得我没主见。
+
+有天一个老护士跟我说：你别这么累，做你自己就行。
+
+我说：做我自己他们会喜欢我吗？
+
+她说：不一定。但你现在的样子，也没见谁真喜欢你。
+
+扎心了。但她说的是事实。
+
+世界上只有两种人：喜欢你的人和对你无感的人。没有第三种叫「可以被讨好成喜欢你」。
+
+你讨好所有人的结果，就是谁都不真喜欢你。因为你没有特点，没有棱角，谁也记不住你。
+
+后来我不再演了。话不多就是不多，操作慢就是多练。有人觉得我闷，也有人觉得我靠谱。
+
+喜欢你的人自然留下，对你无感的人你留不住。
+
+别再费劲讨好了，把力气花在变强上。你强了，自然有人喜欢。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《人生没有白走的路，每一步都算数》
+
+📝原文精华：你现在经历的一切，好的坏的，以后都会变成你的底气。别急着要结果，先走好眼前的路。回头看你走过的每一步，没有一步是白走的。
+
+【5维度拆解】
+1.钩子：经典金句开门见山
+2.痛点：看不到结果的迷茫和怀疑
+3.价值：赋予当下经历以意义
+4.金句：「每一步都算数」
+5.召唤：「评论区说说你走过的最难的路」
+
+📊数据表现：点赞211万|收藏67万|转发41万`,
+    myCopy: `📖创作说明：结合护理专科→实习→专升本的完整路径，串联每一步的意义。
+
+---
+
+高考那年我没考上本科，去了专科护理。
+
+我妈哭了一晚上，说以后怎么办。我也觉得自己完了。
+
+专科三年，我浑浑噩噩过了两年半。直到实习进了医院，看到一个专升本的学姐已经是带教老师了，我才醒过来——原来路没断。
+
+然后我开始备考专升本。白天实习，晚上看书，周末刷题。
+
+那时候我经常怀疑：这值得吗？多读两年有什么用？
+
+现在专升本快毕业了，我可以回答这个问题：值得。
+
+不是因为我现在多了不起，是因为我走过的每一步，都在为今天铺路。
+
+专科三年让我有了临床基础，实习让我见识了真实的护理工作，专升本让我补上了理论短板。
+
+缺了哪一步，我都不是现在的我。
+
+人生没有白走的路。你现在觉得没用的经历，以后某一天会连成线。
+
+别急着要结果，先走好眼前的路。
+
+每一步都算数。你走的路不会骗你。`,
+  },
+  {
+    hotAnalysis: `🔥爆款标题：《学会跟自己和解，是一生的功课》
+
+📝原文精华：你不是不优秀，你是对自己太狠。允许自己偶尔失败，允许自己没那么快，允许自己跟别人不一样。和解不是躺平，是放过自己之后，轻装上阵。
+
+【5维度拆解】
+1.钩子：「和解」vs「躺平」制造认知冲突
+2.痛点：完美主义导致的自我攻击
+3.价值：赋予「允许失败」的合理性
+4.金句：「和解不是躺平，是放过自己后轻装上阵」
+5.召唤：「点赞收藏，对自己太狠的时候看看」
+
+📊数据表现：点赞143万|收藏49万|转发23万`,
+    myCopy: `📖创作说明：结合护理专升本备考中追求完美导致崩溃后学会接纳自己的经历。
+
+---
+
+专升本第一次模考，我英语只考了58分。
+
+那天我在图书馆坐了两个小时，没翻一页书。脑子里全是：你怎么这么差？别人都能考70多，你为什么不行？
+
+然后我开始疯狂加码。每天背200个单词，刷3套阅读。一周后，我彻底崩了——坐在书桌前，一个字都看不进去，盯着墙发呆。
+
+那一刻我突然意识到：我不是不努力，我是对自己太狠了。
+
+我们总以为逼自己就是好事，但人不是机器，绷太紧会断。
+
+后来我学会了一件事：允许自己偶尔考不好。允许自己某天效率低。允许自己背了又忘。
+
+这不是躺平，是放过自己之后，轻装上阵。
+
+第二次模考我考了65分。不是最高，但比58好。我不跟考70多的人比了，我跟58分的自己比。
+
+学会跟自己和解，是一生的功课。尤其在我们这个专业——你不可能每个操作都完美，你不可能每次考试都第一。
+
+允许自己不完美，你才能走得更远。
+
+你已经很努力了，别再为难自己了。`,
+  }
+];
+
+// 每日自动切换文案：根据当天日期计算索引，每天0点自动换到下一组
+// 以2026-07-26为起始日（第0组），之后每天递增，循环切换5组文案
+function getTodayDouyinIndex() {
+  const startDate = new Date('2026-07-26');
+  const today = new Date();
+  startDate.setHours(0,0,0,0);
+  today.setHours(0,0,0,0);
+  const diffDays = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
+  return ((diffDays % douyinPool.length) + douyinPool.length) % douyinPool.length;
+}
+
+// 用户手动切换的偏移量（点"换一组"时累加，但每天会重置为自动值）
+let manualOffset = 0;
+let currentDouyinIndex = getTodayDouyinIndex();
+
+function renderDouyinContent() {
+  const item = douyinPool[currentDouyinIndex];
+  document.getElementById('hot-analysis').innerHTML = item.hotAnalysis;
+  document.getElementById('my-copy').innerHTML = item.myCopy;
+  const todayAutoIndex = getTodayDouyinIndex();
+  const isAuto = (currentDouyinIndex === todayAutoIndex);
+  const autoLabel = isAuto ? '✅ 今日自动更新' : '🔄 手动切换中';
+  document.getElementById('refresh-indicator').textContent =
+    `📅 ${autoLabel} · 当前第 ${currentDouyinIndex + 1} / ${douyinPool.length} 组文案 · 每天0点自动更新下一组 · 共26组文案，可用近一个月`;
+}
+
+function refreshContent() {
+  currentDouyinIndex = (currentDouyinIndex + 1) % douyinPool.length;
+  showToast('🔄 切换到第 ' + (currentDouyinIndex + 1) + ' 组文案！');
+  renderDouyinContent();
+}
+
+function copyMyCopy() {
+  const text = document.getElementById('my-copy').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('📋 文案已复制到剪贴板！');
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showToast('📋 文案已复制到剪贴板！');
+  });
+}
+
+// ===== 板块三：英语四级备考 =====
+const studyPlan = [
+  { day:'周一', icon:'📚', theme:'词汇+听力', task:'背10个高频词\n听1段短对话' },
+  { day:'周二', icon:'🎧', theme:'听力+口语', task:'精听短对话\n跟读模仿发音' },
+  { day:'周三', icon:'📖', theme:'阅读+词汇', task:'仔细阅读精练\n长难句拆解+新词' },
+  { day:'周四', icon:'✍️', theme:'写作+翻译', task:'模板句型背诵\n翻译练习5句' },
+  { day:'周五', icon:'🔄', theme:'翻译+拼写', task:'核心语法复习\n单词拼写训练' },
+  { day:'周六', icon:'📝', theme:'真题模考', task:'完整真题计时\n查漏补缺' },
+  { day:'周日', icon:'🎯', theme:'复盘总结', task:'错题回顾\n薄弱项强化' },
+];
+
+function renderStudyPlan() {
+  const today = getWeekday();
+  const todayIndex = today === 0 ? 6 : today - 1;
+  const week = document.getElementById('study-week');
+  week.innerHTML = studyPlan.map((d, i) => `
+    <div class="day-card ${i === todayIndex ? 'today' : ''}">
+      <div class="day-label">${d.icon}</div>
+      <div class="day-title">${d.day}</div>
+      <div class="day-theme">${d.theme}</div>
+      <div class="day-task">${d.task.replace(/\n/g,'<br>')}</div>
+    </div>
+  `).join('');
+}
+
+// 70个四级常考高频词（7天 x 10个）—— 零基础友好，含词性、中英例句
+const allWords = [
+  // Day1 周一·词汇基础
+  [
+    {en:'abandon',phonetic:'/əˈbændən/',pos:'v.',cn:'放弃；抛弃',ex:'Don\'t abandon your dreams.',exCn:'不要放弃你的梦想。'},
+    {en:'available',phonetic:'/əˈveɪləbl/',pos:'adj.',cn:'可用的；有空的',ex:'Is the room available?',exCn:'这个房间有空吗？'},
+    {en:'benefit',phonetic:'/ˈbenɪfɪt/',pos:'n./v.',cn:'好处；受益',ex:'Exercise benefits your health.',exCn:'运动有益健康。'},
+    {en:'challenge',phonetic:'/ˈtʃælɪndʒ/',pos:'n./v.',cn:'挑战',ex:'Life is full of challenges.',exCn:'生活充满了挑战。'},
+    {en:'communicate',phonetic:'/kəˈmjuːnɪkeɪt/',pos:'v.',cn:'交流；沟通',ex:'We communicate by phone.',exCn:'我们通过电话交流。'},
+    {en:'concern',phonetic:'/kənˈsɜːn/',pos:'n./v.',cn:'关心；担忧',ex:'This concerns all of us.',exCn:'这关系到我们所有人。'},
+    {en:'determine',phonetic:'/dɪˈtɜːmɪn/',pos:'v.',cn:'决定；确定',ex:'Hard work determines success.',exCn:'努力决定成功。'},
+    {en:'efficient',phonetic:'/ɪˈfɪʃnt/',pos:'adj.',cn:'高效的',ex:'This method is very efficient.',exCn:'这个方法非常高效。'},
+    {en:'emphasis',phonetic:'/ˈemfəsɪs/',pos:'n.',cn:'重点；强调',ex:'Put emphasis on practice.',exCn:'把重点放在练习上。'},
+    {en:'familiar',phonetic:'/fəˈmɪliər/',pos:'adj.',cn:'熟悉的',ex:'I am familiar with this area.',exCn:'我对这个地区很熟悉。'},
+  ],
+  // Day2 周二·听力+口语
+  [
+    {en:'generally',phonetic:'/ˈdʒenərəli/',pos:'adv.',cn:'通常；一般地',ex:'Generally, it rains in spring.',exCn:'通常春天会下雨。'},
+    {en:'ignore',phonetic:'/ɪɡˈnɔːr/',pos:'v.',cn:'忽视；不理',ex:'Don\'t ignore the warning.',exCn:'不要忽视警告。'},
+    {en:'impact',phonetic:'/ˈɪmpækt/',pos:'n./v.',cn:'影响；冲击',ex:'The impact was huge.',exCn:'影响非常大。'},
+    {en:'interpret',phonetic:'/ɪnˈtɜːprɪt/',pos:'v.',cn:'解释；翻译',ex:'How do you interpret this?',exCn:'你怎么解释这个？'},
+    {en:'maintain',phonetic:'/meɪnˈteɪn/',pos:'v.',cn:'维持；保持',ex:'Maintain a good habit.',exCn:'保持一个好习惯。'},
+    {en:'obvious',phonetic:'/ˈɒbviəs/',pos:'adj.',cn:'明显的',ex:'The answer is obvious.',exCn:'答案很明显。'},
+    {en:'particular',phonetic:'/pəˈtɪkjələr/',pos:'adj.',cn:'特别的；特定的',ex:'Is there a particular reason?',exCn:'有特别的原因吗？'},
+    {en:'quality',phonetic:'/ˈkwɒləti/',pos:'n.',cn:'质量；品质',ex:'Focus on quality, not quantity.',exCn:'关注质量，而非数量。'},
+    {en:'recognize',phonetic:'/ˈrekəɡnaɪz/',pos:'v.',cn:'认出；识别',ex:'I recognize her voice.',exCn:'我认出了她的声音。'},
+    {en:'significant',phonetic:'/sɪɡˈnɪfɪkənt/',pos:'adj.',cn:'重要的；显著的',ex:'This is a significant change.',exCn:'这是一个重要的变化。'},
+  ],
+  // Day3 周三·阅读+词汇
+  [
+    {en:'approach',phonetic:'/əˈprəʊtʃ/',pos:'n./v.',cn:'方法；接近',ex:'We need a new approach.',exCn:'我们需要一个新方法。'},
+    {en:'assume',phonetic:'/əˈsjuːm/',pos:'v.',cn:'假设；承担',ex:'Don\'t assume anything.',exCn:'不要假设任何事情。'},
+    {en:'achieve',phonetic:'/əˈtʃiːv/',pos:'v.',cn:'实现；达到',ex:'You can achieve your goals.',exCn:'你能实现你的目标。'},
+    {en:'contribute',phonetic:'/kənˈtrɪbjuːt/',pos:'v.',cn:'贡献；捐献',ex:'Everyone should contribute.',exCn:'每个人都应该贡献。'},
+    {en:'distinguish',phonetic:'/dɪˈstɪŋɡwɪʃ/',pos:'v.',cn:'区分；辨别',ex:'Can you distinguish the two?',exCn:'你能区分这两个吗？'},
+    {en:'establish',phonetic:'/ɪˈstæblɪʃ/',pos:'v.',cn:'建立；设立',ex:'Establish good relationships.',exCn:'建立良好的关系。'},
+    {en:'investigate',phonetic:'/ɪnˈvestɪɡeɪt/',pos:'v.',cn:'调查；研究',ex:'We need to investigate this.',exCn:'我们需要调查这件事。'},
+    {en:'perspective',phonetic:'/pəˈspektɪv/',pos:'n.',cn:'视角；观点',ex:'See it from a new perspective.',exCn:'从新视角看这件事。'},
+    {en:'relevant',phonetic:'/ˈreləvənt/',pos:'adj.',cn:'相关的',ex:'Is this information relevant?',exCn:'这个信息相关吗？'},
+    {en:'strategy',phonetic:'/ˈstrætədʒi/',pos:'n.',cn:'策略；战略',ex:'We need a better strategy.',exCn:'我们需要更好的策略。'},
+  ],
+  // Day4 周四·写作+翻译
+  [
+    {en:'apparent',phonetic:'/əˈpærənt/',pos:'adj.',cn:'明显的；表面上的',ex:'The problem is apparent.',exCn:'问题很明显。'},
+    {en:'circumstance',phonetic:'/ˈsɜːkəmstəns/',pos:'n.',cn:'情况；环境',ex:'Under any circumstance, don\'t give up.',exCn:'在任何情况下都不要放弃。'},
+    {en:'consequence',phonetic:'/ˈkɒnsɪkwəns/',pos:'n.',cn:'后果；结果',ex:'Think about the consequences.',exCn:'考虑一下后果。'},
+    {en:'demonstrate',phonetic:'/ˈdemənstreɪt/',pos:'v.',cn:'证明；展示',ex:'Let me demonstrate how it works.',exCn:'让我展示它是怎么工作的。'},
+    {en:'eliminate',phonetic:'/ɪˈlɪmɪneɪt/',pos:'v.',cn:'消除；排除',ex:'Eliminate all distractions.',exCn:'消除所有干扰。'},
+    {en:'fundamental',phonetic:'/ˌfʌndəˈmentl/',pos:'adj.',cn:'基本的；根本的',ex:'This is a fundamental principle.',exCn:'这是一个基本原则。'},
+    {en:'indicate',phonetic:'/ˈɪndɪkeɪt/',pos:'v.',cn:'表明；指示',ex:'Data indicates a trend.',exCn:'数据表明一种趋势。'},
+    {en:'precise',phonetic:'/prɪˈsaɪs/',pos:'adj.',cn:'精确的',ex:'Be precise in your answer.',exCn:'回答要精确。'},
+    {en:'sufficient',phonetic:'/səˈfɪʃnt/',pos:'adj.',cn:'足够的',ex:'Is the evidence sufficient?',exCn:'证据够吗？'},
+    {en:'voluntary',phonetic:'/ˈvɒləntəri/',pos:'adj.',cn:'自愿的；志愿的',ex:'It\'s a voluntary activity.',exCn:'这是一个志愿活动。'},
+  ],
+  // Day5 周五·翻译+拼写
+  [
+    {en:'acquire',phonetic:'/əˈkwaɪər/',pos:'v.',cn:'获得；学到',ex:'She acquired new skills.',exCn:'她学到了新技能。'},
+    {en:'adapt',phonetic:'/əˈdæpt/',pos:'v.',cn:'适应；改编',ex:'Adapt to the new environment.',exCn:'适应新环境。'},
+    {en:'attitude',phonetic:'/ˈætɪtjuːd/',pos:'n.',cn:'态度；看法',ex:'A positive attitude matters.',exCn:'积极的态度很重要。'},
+    {en:'budget',phonetic:'/ˈbʌdʒɪt/',pos:'n./v.',cn:'预算；规划',ex:'Stick to your budget.',exCn:'按预算执行。'},
+    {en:'capable',phonetic:'/ˈkeɪpəbl/',pos:'adj.',cn:'有能力的',ex:'She is capable of doing it.',exCn:'她有能力做这件事。'},
+    {en:'conscious',phonetic:'/ˈkɒnʃəs/',pos:'adj.',cn:'意识到的；有意的',ex:'Be conscious of your health.',exCn:'注意你的健康。'},
+    {en:'domestic',phonetic:'/dəˈmestɪk/',pos:'adj.',cn:'国内的；家庭的',ex:'Domestic flights are cheaper.',exCn:'国内航班更便宜。'},
+    {en:'essential',phonetic:'/ɪˈsenʃl/',pos:'adj.',cn:'必要的；本质的',ex:'Sleep is essential.',exCn:'睡眠是必要的。'},
+    {en:'implement',phonetic:'/ˈɪmplɪment/',pos:'v.',cn:'实施；执行',ex:'Implement the plan step by step.',exCn:'逐步执行计划。'},
+    {en:'perspective',phonetic:'/pəˈspektɪv/',pos:'n.',cn:'视角；观点',ex:'Change your perspective.',exCn:'改变你的视角。'},
+  ],
+  // Day6 周六·真题模考
+  [
+    {en:'advantage',phonetic:'/ədˈvɑːntɪdʒ/',pos:'n.',cn:'优势；好处',ex:'Take advantage of every chance.',exCn:'利用每一个机会。'},
+    {en:'consider',phonetic:'/kənˈsɪdər/',pos:'v.',cn:'考虑；认为',ex:'Consider all options first.',exCn:'先考虑所有选项。'},
+    {en:'describe',phonetic:'/dɪˈskraɪb/',pos:'v.',cn:'描述；描写',ex:'Can you describe the scene?',exCn:'你能描述这个场景吗？'},
+    {en:'evaluate',phonetic:'/ɪˈvæljueɪt/',pos:'v.',cn:'评估；评价',ex:'Evaluate your own progress.',exCn:'评估你自己的进步。'},
+    {en:'influence',phonetic:'/ˈɪnfluəns/',pos:'n./v.',cn:'影响',ex:'Parents influence their children.',exCn:'父母影响他们的孩子。'},
+    {en:'occupy',phonetic:'/ˈɒkjupaɪ/',pos:'v.',cn:'占据；占用',ex:'Work occupies most of my time.',exCn:'工作占据了我大部分时间。'},
+    {en:'prevent',phonetic:'/prɪˈvent/',pos:'v.',cn:'防止；预防',ex:'Prevent diseases by exercise.',exCn:'通过运动预防疾病。'},
+    {en:'recommend',phonetic:'/ˌrekəˈmend/',pos:'v.',cn:'推荐；建议',ex:'I recommend this book.',exCn:'我推荐这本书。'},
+    {en:'solve',phonetic:'/sɒlv/',pos:'v.',cn:'解决；解答',ex:'We must solve this problem.',exCn:'我们必须解决这个问题。'},
+    {en:'tradition',phonetic:'/trəˈdɪʃn/',pos:'n.',cn:'传统；惯例',ex:'Follow the tradition.',exCn:'遵循传统。'},
+  ],
+  // Day7 周日·复盘总结
+  [
+    {en:'acknowledge',phonetic:'/əkˈnɒlɪdʒ/',pos:'v.',cn:'承认；致谢',ex:'Acknowledge your mistakes.',exCn:'承认你的错误。'},
+    {en:'compare',phonetic:'/kəmˈpeər/',pos:'v.',cn:'比较；对比',ex:'Don\'t compare yourself to others.',exCn:'不要和别人比较。'},
+    {en:'confident',phonetic:'/ˈkɒnfɪdənt/',pos:'adj.',cn:'自信的',ex:'Be confident in yourself.',exCn:'对自己要有信心。'},
+    {en:'develope',phonetic:'/dɪˈveləp/',pos:'v.',cn:'发展；开发',ex:'Develop your potential.',exCn:'发展你的潜力。'},
+    {en:'identify',phonetic:'/aɪˈdentɪfaɪ/',pos:'v.',cn:'识别；确认',ex:'Identify the key points.',exCn:'识别关键点。'},
+    {en:'motivation',phonetic:'/ˌməʊtɪˈveɪʃn/',pos:'n.',cn:'动机；动力',ex:'Find your motivation.',exCn:'找到你的动力。'},
+    {en:'progress',phonetic:'/ˈprəʊɡres/',pos:'n./v.',cn:'进步；进展',ex:'You are making progress.',exCn:'你在进步。'},
+    {en:'reflect',phonetic:'/rɪˈflekt/',pos:'v.',cn:'反思；反映',ex:'Reflect on your week.',exCn:'回顾这一周。'},
+    {en:'strengthen',phonetic:'/ˈstreŋθn/',pos:'v.',cn:'加强；巩固',ex:'Strengthen your weak areas.',exCn:'巩固你的薄弱项。'},
+    {en:'ultimate',phonetic:'/ˈʌltɪmət/',pos:'adj.',cn:'最终的；极限的',ex:'The ultimate goal is passing CET-4.',exCn:'最终目标是通过四级。'},
+  ],
+];
+
+// 拼写练习相关
+let currentSpellWord = null;
+
+function renderWords() {
+  const weekday = getWeekday();
+  const dayIndex = weekday === 0 ? 6 : weekday - 1;
+  const todayWords = allWords[dayIndex];
+  const todayKey = getTodayKey();
+
+  document.getElementById('word-day-label').textContent =
+    `Day ${dayIndex + 1}（${studyPlan[dayIndex].day}·${studyPlan[dayIndex].theme}）`;
+
+  const grid = document.getElementById('words-grid');
+  grid.innerHTML = todayWords.map((w, i) => {
+    const mastered = localStorage.getItem(`${todayKey}-word-${i}`) === 'mastered';
+    return `
+      <div class="word-card ${mastered?'mastered':''}" onclick="toggleWord(${i})">
+        <div class="word-top-row">
+          <span class="word-en">${w.en}</span>
+          <span class="word-phonetic">${w.phonetic}</span>
+        </div>
+        <div><span class="word-pos">${w.pos}</span><span class="word-cn">${w.cn}</span></div>
+        <div class="word-example">${w.ex}</div>
+        <div class="word-example-cn">${w.exCn}</div>
+        <div class="word-actions">
+          <button class="word-btn" onclick="speakWord('${w.en}')">🔊 听</button>
+          <button class="word-btn" onclick="speakWord('${w.en}')">🗣️ 说</button>
+          <button class="word-btn" onclick="openSpell(${i})">✍️ 写</button>
+        </div>
+      </div>`;
+  }).join('');
+  updateWordsProgress();
+}
+
+function toggleWord(index) {
+  const todayKey = getTodayKey();
+  const key = `${todayKey}-word-${index}`;
+  if (localStorage.getItem(key) === 'mastered') {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.setItem(key, 'mastered');
+    showToast('🌸 又掌握一个单词！');
+  }
+  renderWords();
+}
+
+function updateWordsProgress() {
+  const todayKey = getTodayKey();
+  const weekday = getWeekday();
+  const dayIndex = weekday === 0 ? 6 : weekday - 1;
+  const todayWords = allWords[dayIndex];
+  const count = todayWords.filter((_, i) => localStorage.getItem(`${todayKey}-word-${i}`) === 'mastered').length;
+  document.getElementById('words-progress').textContent = `已掌握 ${count} / 10`;
+  document.getElementById('word-badge').textContent = `${count}/10`;
+}
+
+// 🔊 听/说 - 使用浏览器语音合成朗读单词
+function speakWord(word) {
+  if ('speechSynthesis' in window) {
+    const utter = new SpeechSynthesisUtterance(word);
+    utter.lang = 'en-US';
+    utter.rate = 0.8; // 稍慢，零基础友好
+    utter.pitch = 1;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+    showToast('🔊 正在朗读：' + word);
+  } else {
+    showToast('⚠️ 当前浏览器不支持语音朗读');
+  }
+}
+
+// ✍️ 写 - 拼写练习弹窗
+function openSpell(wordIndex) {
+  const weekday = getWeekday();
+  const dayIndex = weekday === 0 ? 6 : weekday - 1;
+  const w = allWords[dayIndex][wordIndex];
+  currentSpellWord = w;
+
+  document.getElementById('spell-prompt').textContent = `拼写练习 📝`;
+  document.getElementById('spell-hint').textContent = `中文提示：${w.cn}（${w.pos}）· 请输入对应的英文单词`;
+  const input = document.getElementById('spell-input');
+  input.value = '';
+  input.className = 'spell-input';
+  document.getElementById('spell-result').textContent = '';
+  document.getElementById('spell-result').className = 'spell-result';
+  document.getElementById('spell-modal').classList.add('show');
+  setTimeout(() => input.focus(), 300);
+}
+
+function checkSpell() {
+  const input = document.getElementById('spell-input');
+  const result = document.getElementById('spell-result');
+  const answer = input.value.trim().toLowerCase();
+  const correct = currentSpellWord.en.toLowerCase();
+
+  if (answer === correct) {
+    input.className = 'spell-input correct';
+    result.textContent = '✅ 完全正确！太棒了！';
+    result.className = 'spell-result ok';
+    showToast('✅ 拼写正确！' + currentSpellWord.en);
+  } else {
+    input.className = 'spell-input wrong';
+    result.textContent = `❌ 正确答案是：${currentSpellWord.en}`;
+    result.className = 'spell-result no';
+  }
+}
+
+function closeSpell() {
+  document.getElementById('spell-modal').classList.remove('show');
+  currentSpellWord = null;
+}
+
+// ===== 初始化 =====
+renderTasks();
+renderDouyinContent();
+renderStudyPlan();
+renderWords();
+
+// ===== 跨天自动检测：每分钟检查一次，到了新一天自动切换文案 =====
+let lastCheckDate = getTodayKey();
+setInterval(() => {
+  const todayKey = getTodayKey();
+  if (todayKey !== lastCheckDate) {
+    // 跨天了！自动切换到今日对应的文案
+    lastCheckDate = todayKey;
+    currentDouyinIndex = getTodayDouyinIndex();
+    renderDouyinContent();
+    showToast('🌅 新的一天！文案已自动更新~');
+  }
+}, 60000); // 每分钟检查一次
+</script>
+</body>
+</html>
