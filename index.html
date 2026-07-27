@@ -10,98 +10,188 @@
 :root{
   --pink-light:#FFF0F5;--pink-soft:#FFD9E6;--pink-main:#FFB6C1;
   --pink-deep:#FF85A8;--pink-hot:#FF69B4;
+  --pink-grad:linear-gradient(135deg,#FFB6C1,#FFC0CB,#FFD9E6);
   --pink-grad-deep:linear-gradient(135deg,#FF85A8,#FF69B4);
-  --card-bg:rgba(255,255,255,0.72);--card-border:rgba(255,182,193,0.5);
-  --shadow-soft:0 8px 32px rgba(255,132,174,0.15);
-  --shadow-hover:0 12px 40px rgba(255,132,174,0.25);
-  --radius:20px;--radius-sm:12px;
-  --text-main:#6B4658;--text-sub:#9B7A8B;
-  --sidebar-w:220px;
+  --card-bg:rgba(255,255,255,0.78);--card-border:rgba(255,182,193,0.5);
+  --shadow-soft:0 6px 24px rgba(255,132,174,0.12);
+  --shadow-hover:0 10px 36px rgba(255,132,174,0.22);
+  --radius:22px;--radius-sm:14px;
+  --text-main:#5D3A4A;--text-sub:#9B7A8B;
 }
-body{font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;background:linear-gradient(160deg,#FFF0F5,#FFE4EF 30%,#FFD9EC 60%,#FFF0F5);background-attachment:fixed;color:var(--text-main);min-height:100vh}
-.float-decor{position:fixed;pointer-events:none;font-size:26px;opacity:0.28;z-index:0;animation:floatR 12s ease-in-out infinite}
-@keyframes floatR{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-22px) rotate(12deg)}
-
-.app-layout{display:flex;min-height:100vh;position:relative;z-index:1}
-
-.sidebar{
-  width:var(--sidebar-w);background:linear-gradient(180deg,rgba(255,182,193,0.4),rgba(255,240,245,0.5));
-  backdrop-filter:blur(12px);border-right:1px solid var(--card-border);
-  padding:24px 14px;display:flex;flex-direction:column;gap:10px;
-  position:fixed;left:0;top:0;height:100vh;z-index:10;
-  box-shadow:4px 0 20px rgba(255,132,174,0.08);
+body{
+  font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+  background:linear-gradient(160deg,#FFF0F5,#FFE4EF 30%,#FFD9EC 60%,#FFF0F5);
+  background-attachment:fixed;color:var(--text-main);min-height:100vh;
 }
-.sidebar-title{font-size:1.3em;font-weight:800;background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
-.sidebar-sub{font-size:0.7em;color:var(--text-sub);text-align:center;margin-top:2px}
-.sidebar-date{font-size:0.82em;color:var(--pink-deep);font-weight:600;text-align:center;margin-top:10px}
-.sidebar-time{font-size:0.82em;color:var(--pink-hot);font-weight:700;text-align:center}
+.float-decor{position:fixed;pointer-events:none;font-size:26px;opacity:0.22;z-index:0;animation:floatR 14s ease-in-out infinite}
+@keyframes floatR{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(10deg)}
 
-.sidebar-nav{margin-top:16px;display:flex;flex-direction:column;gap:10px}
-.nav-item{
-  background:var(--card-bg);border:1.5px solid var(--card-border);
-  border-radius:14px;padding:16px 12px;display:flex;align-items:center;
-  gap:10px;cursor:pointer;transition:all 0.35s ease;position:relative;overflow:hidden;
+.container{max-width:900px;margin:0 auto;padding:24px 20px 50px;position:relative;z-index:1}
+
+/* ===== 顶部 ===== */
+.header{text-align:center;margin-bottom:28px}
+.header-title{
+  font-size:2.4em;font-weight:900;
+  background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:3px;
 }
-.nav-item::before{content:'';position:absolute;left:0;top:0;width:4px;height:100%;background:var(--pink-grad-deep);border-radius:0 4px 4px 0;opacity:0;transition:opacity 0.3s}
-.nav-item:hover{transform:translateX(4px);box-shadow:var(--shadow-hover);border-color:var(--pink-hot)}
-.nav-item:hover::before,.nav-item.active::before{opacity:1}
-.nav-item.active{background:rgba(255,105,180,0.15);border-color:var(--pink-hot);box-shadow:0 4px 20px rgba(255,132,174,0.25);transform:translateX(4px)}
-.nav-icon{font-size:1.5em;flex-shrink:0}
-.nav-text{font-size:0.88em;font-weight:700;color:var(--text-main)}
-.nav-item.active .nav-text{color:var(--pink-hot)}
-.nav-badge{font-size:0.66em;background:var(--pink-soft);color:var(--pink-deep);padding:2px 7px;border-radius:10px;font-weight:600;margin-left:auto}
-.nav-item.active .nav-badge{background:var(--pink-hot);color:white}
+.header-sub{font-size:0.88em;color:var(--text-sub);margin-top:6px}
+.header-time{
+  display:inline-flex;align-items:center;gap:10px;margin-top:14px;
+  background:var(--card-bg);backdrop-filter:blur(8px);
+  padding:10px 24px;border-radius:50px;border:1px solid var(--card-border);
+  box-shadow:var(--shadow-soft);font-size:1em;font-weight:600;
+}
+#current-time{color:var(--pink-hot);font-weight:700}
 
-.sidebar-footer{margin-top:auto;text-align:center;padding:10px;font-size:0.72em;color:var(--text-sub)}
-.sidebar-footer-emoji{font-size:1.2em;animation:wiggle 3s ease-in-out infinite}
-@keyframes wiggle{0%,100%{transform:rotate(0deg) scale(1)}50%{transform:rotate(-8deg) scale(1.1)}
+/* ===== Tab切换 ===== */
+.tab-bar{
+  display:flex;gap:12px;margin-bottom:28px;
+  background:var(--card-bg);backdrop-filter:blur(10px);
+  border-radius:50px;padding:8px;border:1.5px solid var(--card-border);
+  box-shadow:var(--shadow-soft);
+}
+.tab-item{
+  flex:1;padding:14px 10px;border-radius:42px;text-align:center;
+  cursor:pointer;transition:all 0.35s ease;font-weight:700;font-size:1em;
+  color:var(--text-sub);border:2px solid transparent;
+}
+.tab-item:hover{color:var(--pink-deep);background:rgba(255,182,193,0.15)}
+.tab-item.active{
+  background:var(--pink-grad-deep);color:white;border-color:var(--pink-hot);
+  box-shadow:0 4px 18px rgba(255,132,174,0.35);
+  transform:scale(1.02);
+}
+.tab-icon{font-size:1.3em;display:block;margin-bottom:4px}
+.tab-text{display:block;font-size:0.92em}
+.tab-badge{
+  display:inline-block;font-size:0.68em;padding:2px 8px;
+  border-radius:10px;margin-top:4px;
+}
+.tab-item.active .tab-badge{background:rgba(255,255,255,0.3);color:white}
+.tab-item:not(.active) .tab-badge{background:var(--pink-soft);color:var(--pink-deep)}
 
-.main-content{margin-left:var(--sidebar-w);padding:28px 24px 50px;min-height:100vh}
+/* ===== 面板 ===== */
 .panel{display:none}
-.panel.active{display:block;animation:slideIn 0.35s ease}
-@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}
+.panel.active{display:block;animation:slideUp 0.4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}
 
-.panel-header{margin-bottom:20px}
-.panel-title{font-size:1.7em;font-weight:800;background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
-.panel-desc{font-size:0.88em;color:var(--text-sub);margin-top:4px}
+/* ===== 人设标签栏 ===== */
+.persona-bar{
+  background:var(--card-bg);backdrop-filter:blur(10px);
+  border:1.5px solid var(--card-border);border-radius:var(--radius);
+  padding:16px 22px;margin-bottom:22px;
+  box-shadow:var(--shadow-soft);display:flex;align-items:center;
+  gap:8px;flex-wrap:wrap;
+}
+.persona-label{font-weight:800;color:var(--pink-deep);font-size:1em}
+.persona-tag{
+  display:inline-block;background:var(--pink-grad-deep);color:white;
+  padding:6px 14px;border-radius:20px;font-size:0.82em;font-weight:700;
+  transition:transform 0.2s;cursor:default;
+}
+.persona-tag:hover{transform:scale(1.05)}
+.update-badge{
+  margin-left:auto;display:inline-flex;align-items:center;gap:4px;
+  background:var(--pink-hot);color:white;padding:6px 14px;
+  border-radius:14px;font-size:0.8em;font-weight:700;
+}
 
-.top-bar{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:var(--shadow-soft)}
-.persona-tag{display:inline-block;background:var(--pink-grad-deep);color:white;padding:4px 12px;border-radius:18px;font-size:0.78em;font-weight:600}
-.persona-label{font-weight:700;color:var(--pink-deep);font-size:0.9em}
-.rule-badge{display:inline-block;background:var(--pink-hot);color:white;padding:3px 10px;border-radius:12px;font-size:0.78em;font-weight:700}
-
-.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.content-card{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-soft)}
-.content-card-title{font-size:1em;font-weight:700;color:var(--pink-deep);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.btn-action{background:var(--pink-grad-deep);color:white;border:none;padding:5px 12px;border-radius:18px;font-size:0.78em;cursor:pointer;transition:all 0.3s;font-weight:600}
-.btn-action:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(255,132,174,0.4)}
-.btn-action.outline{background:rgba(255,105,180,0.12);color:var(--pink-hot);border:1.5px solid var(--pink-hot)}
+/* ===== 内容卡片 ===== */
+.section-card{
+  background:var(--card-bg);backdrop-filter:blur(10px);
+  border:1.5px solid var(--card-border);border-radius:var(--radius);
+  padding:26px 28px;margin-bottom:20px;box-shadow:var(--shadow-soft);
+}
+.section-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;flex-wrap:wrap;gap:8px;
+}
+.section-card-icon{font-size:1.5em;font-weight:800;color:var(--pink-hot)}
+.section-card-title{font-size:1.25em;font-weight:800;color:var(--pink-deep);flex:1}
+.btn-action{
+  background:var(--pink-grad-deep);color:white;border:none;
+  padding:8px 16px;border-radius:22px;font-size:0.85em;
+  cursor:pointer;transition:all 0.3s;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.btn-action:hover{transform:scale(1.06);box-shadow:0 4px 18px rgba(255,132,174,0.4)}
+.btn-action.outline{
+  background:rgba(255,105,180,0.1);color:var(--pink-hot);
+  border:2px solid var(--pink-hot);
+}
 .btn-action.outline:hover{background:var(--pink-hot);color:white}
-.content-body{font-size:0.88em;line-height:1.8;color:var(--text-main);white-space:pre-wrap}
-.content-body .hot-title{color:var(--pink-hot);font-weight:700;font-size:1em}
-.content-body .label{color:var(--pink-deep);font-weight:700;display:inline-block;margin-top:8px}
-.content-body .highlight{background:rgba(255,182,193,0.3);padding:2px 6px;border-radius:5px;font-weight:600}
 
-.method-card{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;margin-top:16px;box-shadow:var(--shadow-soft)}
-.method-title{font-size:1em;font-weight:700;color:var(--pink-deep);margin-bottom:12px}
-.method-step{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:0.85em}
-.step-num{background:var(--pink-grad-deep);color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.78em;font-weight:700}
-.refresh-indicator{margin-top:10px;text-align:center;font-size:0.78em;color:var(--text-sub)}
+/* ===== 文案内容排版 ===== */
+.content-text{font-size:1em;line-height:2;color:var(--text-main);white-space:pre-wrap}
+.content-text .hot-title{
+  color:var(--pink-hot);font-weight:900;font-size:1.2em;
+  display:block;margin-bottom:14px;padding-bottom:10px;
+  border-bottom:2px solid var(--pink-soft);
+}
+.content-text .label{
+  color:var(--pink-deep);font-weight:800;font-size:1em;
+  display:block;margin-top:16px;margin-bottom:6px;
+}
+.content-text .highlight{
+  background:rgba(255,182,193,0.35);padding:3px 8px;
+  border-radius:6px;font-weight:700;
+}
+.content-text .gold-sentence{
+  display:block;background:rgba(255,105,180,0.08);
+  border-left:4px solid var(--pink-hot);padding:10px 16px;
+  border-radius:8px;font-weight:700;font-size:1.05em;
+  color:var(--pink-deep);margin:10px 0;
+}
 
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--pink-grad-deep);color:white;padding:10px 26px;border-radius:50px;font-weight:600;box-shadow:0 8px 24px rgba(255,132,174,0.4);z-index:999;opacity:0;transition:all 0.4s}
+/* ===== 方法论卡片 ===== */
+.method-card{
+  background:var(--card-bg);backdrop-filter:blur(10px);
+  border:1.5px solid var(--card-border);border-radius:var(--radius);
+  padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow-soft);
+}
+.method-title{font-size:1.1em;font-weight:800;color:var(--pink-deep);margin-bottom:14px}
+.method-step{display:flex;align-items:flex-start;gap:12px;padding:8px 0;font-size:0.92em;line-height:1.6}
+.step-num{
+  background:var(--pink-grad-deep);color:white;width:26px;height:26px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:0.82em;font-weight:800;
+}
+.method-step b{color:var(--pink-deep)}
+
+/* ===== 底部提示 ===== */
+.refresh-indicator{
+  text-align:center;font-size:0.8em;color:var(--text-sub);
+  padding:12px;background:var(--card-bg);border-radius:var(--radius-sm);
+  border:1px solid var(--card-border);margin-top:16px;
+}
+
+/* ===== Toast ===== */
+.toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--pink-grad-deep);color:white;
+  padding:12px 28px;border-radius:50px;font-weight:700;
+  box-shadow:0 8px 24px rgba(255,132,174,0.4);z-index:999;
+  opacity:0;transition:all 0.4s;font-size:0.95em;
+}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-@media(max-width:900px){
-  .sidebar{width:100%;height:auto;position:relative;padding:14px 12px;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}
-  .sidebar-nav{margin-top:0;flex-direction:row;flex-wrap:wrap;gap:6px}
-  .nav-item{padding:8px 10px;border-radius:10px}
-  .sidebar-footer{display:none}
-  .main-content{margin-left:0;padding:20px 14px 40px}
-  .content-grid{grid-template-columns:1fr}
+/* ===== 响应式 ===== */
+@media(max-width:640px){
+  .header-title{font-size:1.8em}
+  .tab-bar{flex-direction:row;padding:6px}
+  .tab-item{padding:10px 8px}
+  .tab-icon{font-size:1.1em;margin-bottom:2px}
+  .tab-text{font-size:0.82em}
+  .tab-badge{font-size:0.6em}
+  .section-card{padding:18px 16px}
+  .persona-bar{padding:12px 14px}
+  .content-text{font-size:0.92em;line-height:1.8}
 }
-@media(max-width:480px){
-  .sidebar{flex-direction:column}
-  .sidebar-nav{flex-direction:column}
+@media(max-width:400px){
+  .header-title{font-size:1.5em}
+  .container{padding:16px 12px 40px}
 }
 ::-webkit-scrollbar{width:8px}
 ::-webkit-scrollbar-track{background:var(--pink-light)}
@@ -109,116 +199,131 @@ body{font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",
 </style>
 </head>
 <body>
-<div class="float-decor" style="top:8%;left:40%;animation-delay:0s">🌸</div>
-<div class="float-decor" style="top:22%;right:6%;animation-delay:1s">💕</div>
-<div class="float-decor" style="top:48%;right:3%;animation-delay:2s">✨</div>
-<div class="float-decor" style="top:68%;left:38%;animation-delay:0.5s">🎀</div>
-<div class="float-decor" style="top:85%;right:8%;animation-delay:1.5s">🧸</div>
-<div class="float-decor" style="top:35%;right:2%;animation-delay:2.5s">💖</div>
-<div class="float-decor" style="top:92%;left:35%;animation-delay:3s">🌺</div>
+<div class="float-decor" style="top:6%;left:38%;animation-delay:0s">🌸</div>
+<div class="float-decor" style="top:18%;right:5%;animation-delay:1s">💕</div>
+<div class="float-decor" style="top:45%;right:2%;animation-delay:2s">✨</div>
+<div class="float-decor" style="top:65%;left:36%;animation-delay:0.5s">🧸</div>
+<div class="float-decor" style="top:82%;right:6%;animation-delay:1.5s">💖</div>
 
-<div class="app-layout">
-  <div class="sidebar">
-    <div class="sidebar-title">👑小段能赚一千万</div>
-    <div class="sidebar-sub">自媒体成长总站 ✨</div>
-    <div class="sidebar-date" id="sidebar-date">📅 加载中</div>
-    <div class="sidebar-time" id="sidebar-time">⏰ --:--:--</div>
-    <div class="sidebar-nav">
-      <div class="nav-item active" onclick="switchPanel('panel-douyin',this)">
-        <span class="nav-icon">🎬</span><span class="nav-text">抖音口播专区</span><span class="nav-badge">每日9点</span>
-      </div>
-      <div class="nav-item" onclick="switchPanel('panel-xhs',this)">
-        <span class="nav-icon">📕</span><span class="nav-text">小红书文案区</span><span class="nav-badge">每日更新</span>
-      </div>
+<div class="container">
+  <!-- 顶部 -->
+  <div class="header">
+    <h1 class="header-title">👑 小段能赚一千万</h1>
+    <div class="header-sub">自媒体成长总站 · 每天进步一点点 ✨</div>
+    <div class="header-time">
+      <span id="current-date">📅 加载中</span>
+      <span>⏰</span>
+      <span id="current-time">--:--:--</span>
     </div>
-    <div class="sidebar-footer"><div class="sidebar-footer-emoji">🌸💕✨🧸</div>每天进步一点点 💪</div>
   </div>
 
-  <div class="main-content">
-    <!-- 抖音口播专区 -->
-    <div class="panel active" id="panel-douyin">
-      <div class="panel-header">
-        <div class="panel-title">🎬 抖音爆款口播专区</div>
-        <div class="panel-desc">每日9点准时更新 · 女性成长口播爆款拆解+二次创作</div>
-      </div>
-      <div class="top-bar">
-        <span class="persona-label">🧑‍🎓 人设：</span>
-        <span class="persona-tag">护理女大学生</span>
-        <span class="persona-tag">真实生活化</span>
-        <span class="persona-tag">拒绝鸡汤</span>
-        <span class="persona-tag">零夸大</span>
-        <span class="persona-tag">40-50秒口播</span>
-        <span class="rule-badge" style="margin-left:auto">⏰ 每日0点自动更新</span>
-      </div>
-      <div class="content-grid">
-        <div class="content-card">
-          <div class="content-card-title"><span>🔥 今日爆款拆解</span><button class="btn-action" onclick="refreshDouyin()">🔄 换一组</button></div>
-          <div class="content-body" id="dy-analysis"></div>
-        </div>
-        <div class="content-card">
-          <div class="content-card-title"><span>✍️ 小段专属二次创作</span><button class="btn-action outline" onclick="copyDouyin()">📋 一键复制</button></div>
-          <div class="content-body" id="dy-my-copy"></div>
-        </div>
-      </div>
-      <div class="method-card">
-        <div class="method-title">🔬 口播拆解方法论</div>
-        <div class="method-step"><span class="step-num">1</span><b>开头留人钩子</b>：前3秒制造悬念或共鸣</div>
-        <div class="method-step"><span class="step-num">2</span><b>文案节奏</b>：短句+断句，30秒讲清一件事</div>
-        <div class="method-step"><span class="step-num">3</span><b>情绪点</b>：1-2个情绪转折，让人被戳到</div>
-        <div class="method-step"><span class="step-num">4</span><b>结尾共鸣</b>：金句收尾，截图转发</div>
-        <div class="method-step"><span class="step-num">5</span><b>行动召唤</b>：引导关注、评论、收藏</div>
-      </div>
-      <div class="refresh-indicator" id="dy-indicator">💡 当前第1/26组 · 每天0点自动更新下一组</div>
+  <!-- Tab切换 -->
+  <div class="tab-bar">
+    <div class="tab-item active" onclick="switchTab('panel-douyin',this)">
+      <span class="tab-icon">🎬</span>
+      <span class="tab-text">抖音口播专区</span>
+      <span class="tab-badge">每日9点更新</span>
+    </div>
+    <div class="tab-item" onclick="switchTab('panel-xhs',this)">
+      <span class="tab-icon">📕</span>
+      <span class="tab-text">小红书文案区</span>
+      <span class="tab-badge">每日更新</span>
+    </div>
+  </div>
+
+  <!-- 抖音口播专区 -->
+  <div class="panel active" id="panel-douyin">
+    <div class="persona-bar">
+      <span class="persona-label">🧑‍🎓 人设：</span>
+      <span class="persona-tag">护理女大学生</span>
+      <span class="persona-tag">真实生活化</span>
+      <span class="persona-tag">拒绝鸡汤</span>
+      <span class="persona-tag">零夸大</span>
+      <span class="persona-tag">40-50秒口播</span>
+      <span class="update-badge">⏰ 每天0点自动更新</span>
     </div>
 
-    <!-- 小红书文案专区 -->
-    <div class="panel" id="panel-xhs">
-      <div class="panel-header">
-        <div class="panel-title">📕 小红书爆款文案专区</div>
-        <div class="panel-desc">每日更新 · 女生成长/治愈情绪/清醒三观笔记拆解+仿写</div>
+    <div class="section-card">
+      <div class="section-card-header">
+        <span class="section-card-icon">🔥</span>
+        <span class="section-card-title">今日爆款拆解</span>
+        <button class="btn-action" onclick="refreshDouyin()">🔄 换一组</button>
       </div>
-      <div class="top-bar">
-        <span class="persona-label">🧑‍🎓 人设：</span>
-        <span class="persona-tag">在校护理女生</span>
-        <span class="persona-tag">独居成长</span>
-        <span class="persona-tag">温柔治愈</span>
-        <span class="persona-tag">干净高级</span>
-        <span class="persona-tag">生活化</span>
-        <span class="rule-badge" style="margin-left:auto">⏰ 每日0点更新</span>
-      </div>
-      <div class="content-grid">
-        <div class="content-card">
-          <div class="content-card-title"><span>🔥 今日爆款笔记拆解</span><button class="btn-action" onclick="refreshXHS()">🔄 换一组</button></div>
-          <div class="content-body" id="xhs-analysis"></div>
-        </div>
-        <div class="content-card">
-          <div class="content-card-title"><span>✍️ 小段专属仿写文案</span><button class="btn-action outline" onclick="copyXHS()">📋 一键复制</button></div>
-          <div class="content-body" id="xhs-my-copy"></div>
-        </div>
-      </div>
-      <div class="method-card">
-        <div class="method-title">🔬 小红书爆款拆解方法论</div>
-        <div class="method-step"><span class="step-num">1</span><b>标题钩子</b>：数字/反问/情绪词开头</div>
-        <div class="method-step"><span class="step-num">2</span><b>排版逻辑</b>：短句+emoji分隔+编号列表</div>
-        <div class="method-step"><span class="step-num">3</span><b>图文氛围</b>：治愈/高级/生活化</div>
-        <div class="method-step"><span class="step-num">4</span><b>收藏核心</b>：可执行方法/清单</div>
-      </div>
-      <div class="refresh-indicator" id="xhs-indicator">💡 当前第1/26组 · 每天0点自动更新</div>
+      <div class="content-text" id="dy-analysis"></div>
     </div>
+
+    <div class="section-card">
+      <div class="section-card-header">
+        <span class="section-card-icon">✍️</span>
+        <span class="section-card-title">小段专属二次创作</span>
+        <button class="btn-action outline" onclick="copyDouyin()">📋 一键复制</button>
+      </div>
+      <div class="content-text" id="dy-my-copy"></div>
+    </div>
+
+    <div class="method-card">
+      <div class="method-title">🔬 口播拆解方法论</div>
+      <div class="method-step"><span class="step-num">1</span><b>开头留人钩子</b>：前3秒制造悬念或共鸣，让观众停下来</div>
+      <div class="method-step"><span class="step-num">2</span><b>文案节奏</b>：短句+断句，30秒讲清一件事</div>
+      <div class="method-step"><span class="step-num">3</span><b>情绪转折</b>：1-2个情绪转折点，让人"被戳到"</div>
+      <div class="method-step"><span class="step-num">4</span><b>结尾共鸣</b>：金句收尾，让人截图转发</div>
+      <div class="method-step"><span class="step-num">5</span><b>行动召唤</b>：引导关注、评论、收藏</div>
+    </div>
+
+    <div class="refresh-indicator" id="dy-indicator">💡 ✅ 今日自动更新 · 当前第1/26组 · 每天0点自动切换下一组</div>
+  </div>
+
+  <!-- 小红书文案专区 -->
+  <div class="panel" id="panel-xhs">
+    <div class="persona-bar">
+      <span class="persona-label">🧑‍🎓 人设：</span>
+      <span class="persona-tag">在校护理女生</span>
+      <span class="persona-tag">独居成长</span>
+      <span class="persona-tag">温柔治愈</span>
+      <span class="persona-tag">干净高级</span>
+      <span class="persona-tag">生活化</span>
+      <span class="update-badge">⏰ 每天0点更新</span>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header">
+        <span class="section-card-icon">🔥</span>
+        <span class="section-card-title">今日爆款笔记拆解</span>
+        <button class="btn-action" onclick="refreshXHS()">🔄 换一组</button>
+      </div>
+      <div class="content-text" id="xhs-analysis"></div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header">
+        <span class="section-card-icon">✍️</span>
+        <span class="section-card-title">小段专属仿写文案</span>
+        <button class="btn-action outline" onclick="copyXHS()">📋 一键复制</button>
+      </div>
+      <div class="content-text" id="xhs-my-copy"></div>
+    </div>
+
+    <div class="method-card">
+      <div class="method-title">🔬 小红书爆款拆解方法论</div>
+      <div class="method-step"><span class="step-num">1</span><b>标题钩子</b>：数字/反问/情绪词开头，让用户停下来</div>
+      <div class="method-step"><span class="step-num">2</span><b>排版逻辑</b>：短句+emoji分隔+编号列表，视觉干净</div>
+      <div class="method-step"><span class="step-num">3</span><b>图文氛围</b>：治愈/高级/生活化，配合配图风格</div>
+      <div class="method-step"><span class="step-num">4</span><b>收藏核心</b>：给出可执行的方法/清单，让人觉得有用</div>
+    </div>
+
+    <div class="refresh-indicator" id="xhs-indicator">💡 ✅ 今日自动更新 · 当前第1/26组 · 每天0点自动切换</div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-function updateTime(){const n=new Date(),wd=['周日','周一','周二','周三','周四','周五','周六'];document.getElementById('sidebar-date').textContent='📅 '+n.getFullYear()+'年'+(n.getMonth()+1)+'月'+n.getDate()+'日 '+wd[n.getDay()];document.getElementById('sidebar-time').textContent='⏰ '+n.toTimeString().slice(0,8)}
+function updateTime(){const n=new Date(),wd=['周日','周一','周二','周三','周四','周五','周六'];document.getElementById('current-date').textContent='📅 '+n.getFullYear()+'年'+(n.getMonth()+1)+'月'+n.getDate()+'日 '+wd[n.getDay()];document.getElementById('current-time').textContent=n.toTimeString().slice(0,8)}
 updateTime();setInterval(updateTime,1000);
-
 function getTodayKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
-function switchPanel(id,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById(id).classList.add('active');if(el)el.classList.add('active')}
+function switchTab(id,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');if(el)el.classList.add('active')}
 
-// ===== 抖音口播 =====
 const douyinPool=[
   {hotAnalysis:`🔥 爆款标题：
 别让原生家庭的伤，成为你一生的枷锁
@@ -1679,11 +1784,10 @@ const douyinPool=[
 ];
 function getTodayDYIndex(){const s=new Date('2026-07-27');s.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);const d=Math.floor((t-s)/(24*60*60*1000));return((d%douyinPool.length)+douyinPool.length)%douyinPool.length}
 let dyIdx=getTodayDYIndex();
-function renderDouyin(){if(!douyinPool.length)return;const it=douyinPool[dyIdx];document.getElementById('dy-analysis').innerHTML=it.hotAnalysis;document.getElementById('dy-my-copy').innerHTML=it.myCopy;const auto=dyIdx===getTodayDYIndex();document.getElementById('dy-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(dyIdx+1)+'/'+douyinPool.length+'组 · 每天0点自动更新')}
+function renderDouyin(){if(!douyinPool.length)return;const it=douyinPool[dyIdx];document.getElementById('dy-analysis').innerHTML=it.hotAnalysis;document.getElementById('dy-my-copy').innerHTML=it.myCopy;const auto=dyIdx===getTodayDYIndex();document.getElementById('dy-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(dyIdx+1)+'/'+douyinPool.length+'组 · 每天0点自动切换下一组')}
 function refreshDouyin(){dyIdx=(dyIdx+1)%douyinPool.length;showToast('🔄 切换到第'+(dyIdx+1)+'组！');renderDouyin()}
-function copyDouyin(){navigator.clipboard.writeText(document.getElementById('dy-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 请手动复制'))}
+function copyDouyin(){navigator.clipboard.writeText(document.getElementById('dy-my-copy').innerText).then(()=>showToast('📋 文案已复制到剪贴板！')).catch(()=>showToast('📋 请手动复制'))}
 
-// ===== 小红书 =====
 const xhsPool=[
   {hotAnalysis:`【爆款标题】"原来独居女生真的可以慢慢把自己养好"
 【内容摘要】分享独居一年来的变化：从外卖依赖到学会做饭、从熬夜到早起、从焦虑到自洽，用before/after对比呈现成长轨迹
@@ -2411,11 +2515,10 @@ const xhsPool=[
 ];
 function getTodayXHSIndex(){const s=new Date('2026-07-27');s.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);const d=Math.floor((t-s)/(24*60*60*1000));return((d%xhsPool.length)+xhsPool.length)%xhsPool.length}
 let xhsIdx=getTodayXHSIndex();
-function renderXHS(){if(!xhsPool.length)return;const it=xhsPool[xhsIdx];document.getElementById('xhs-analysis').innerHTML=it.hotAnalysis;document.getElementById('xhs-my-copy').innerHTML=it.myCopy;const auto=xhsIdx===getTodayXHSIndex();document.getElementById('xhs-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(xhsIdx+1)+'/'+xhsPool.length+'组 · 每天0点自动更新')}
+function renderXHS(){if(!xhsPool.length)return;const it=xhsPool[xhsIdx];document.getElementById('xhs-analysis').innerHTML=it.hotAnalysis;document.getElementById('xhs-my-copy').innerHTML=it.myCopy;const auto=xhsIdx===getTodayXHSIndex();document.getElementById('xhs-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(xhsIdx+1)+'/'+xhsPool.length+'组 · 每天0点自动切换')}
 function refreshXHS(){xhsIdx=(xhsIdx+1)%xhsPool.length;showToast('🔄 切换到第'+(xhsIdx+1)+'组！');renderXHS()}
-function copyXHS(){navigator.clipboard.writeText(document.getElementById('xhs-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 请手动复制'))}
+function copyXHS(){navigator.clipboard.writeText(document.getElementById('xhs-my-copy').innerText).then(()=>showToast('📋 文案已复制到剪贴板！')).catch(()=>showToast('📋 请手动复制'))}
 
-// 跨天检测
 let lastDay=getTodayKey();
 setInterval(()=>{const d=getTodayKey();if(d!==lastDay){lastDay=d;dyIdx=getTodayDYIndex();xhsIdx=getTodayXHSIndex();renderDouyin();renderXHS();showToast('🌅 新的一天！内容已自动更新~')}},60000);
 </script>
