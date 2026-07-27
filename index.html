@@ -6,246 +6,141 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>小段能赚一千万 💕 自媒体成长总站</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --pink-light: #FFF0F5; --pink-soft: #FFD9E6; --pink-main: #FFB6C1;
-  --pink-deep: #FF85A8; --pink-hot: #FF69B4;
-  --pink-grad: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD9E6 100%);
-  --pink-grad-deep: linear-gradient(135deg, #FF85A8 0%, #FF69B4 100%);
-  --card-bg: rgba(255,255,255,0.72); --card-border: rgba(255,182,193,0.5);
-  --shadow-soft: 0 8px 32px rgba(255,132,174,0.15);
-  --shadow-hover: 0 12px 40px rgba(255,132,174,0.25);
-  --radius: 20px; --radius-sm: 12px;
-  --text-main: #6B4658; --text-sub: #9B7A8B;
-  --sidebar-w: 240px;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --pink-light:#FFF0F5;--pink-soft:#FFD9E6;--pink-main:#FFB6C1;
+  --pink-deep:#FF85A8;--pink-hot:#FF69B4;
+  --pink-grad-deep:linear-gradient(135deg,#FF85A8,#FF69B4);
+  --card-bg:rgba(255,255,255,0.72);--card-border:rgba(255,182,193,0.5);
+  --shadow-soft:0 8px 32px rgba(255,132,174,0.15);
+  --shadow-hover:0 12px 40px rgba(255,132,174,0.25);
+  --radius:20px;--radius-sm:12px;
+  --text-main:#6B4658;--text-sub:#9B7A8B;
+  --sidebar-w:220px;
 }
-body {
-  font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
-  background: linear-gradient(160deg, #FFF0F5, #FFE4EF 30%, #FFD9EC 60%, #FFF0F5);
-  background-attachment: fixed; color: var(--text-main); min-height: 100vh;
+body{font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;background:linear-gradient(160deg,#FFF0F5,#FFE4EF 30%,#FFD9EC 60%,#FFF0F5);background-attachment:fixed;color:var(--text-main);min-height:100vh}
+.float-decor{position:fixed;pointer-events:none;font-size:26px;opacity:0.28;z-index:0;animation:floatR 12s ease-in-out infinite}
+@keyframes floatR{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-22px) rotate(12deg)}
+
+.app-layout{display:flex;min-height:100vh;position:relative;z-index:1}
+
+.sidebar{
+  width:var(--sidebar-w);background:linear-gradient(180deg,rgba(255,182,193,0.4),rgba(255,240,245,0.5));
+  backdrop-filter:blur(12px);border-right:1px solid var(--card-border);
+  padding:24px 14px;display:flex;flex-direction:column;gap:10px;
+  position:fixed;left:0;top:0;height:100vh;z-index:10;
+  box-shadow:4px 0 20px rgba(255,132,174,0.08);
 }
-.float-decor { position: fixed; pointer-events: none; font-size: 26px; opacity: 0.28; z-index: 0; animation: floatR 12s ease-in-out infinite; }
-@keyframes floatR { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-22px) rotate(12deg)} }
+.sidebar-title{font-size:1.3em;font-weight:800;background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.sidebar-sub{font-size:0.7em;color:var(--text-sub);text-align:center;margin-top:2px}
+.sidebar-date{font-size:0.82em;color:var(--pink-deep);font-weight:600;text-align:center;margin-top:10px}
+.sidebar-time{font-size:0.82em;color:var(--pink-hot);font-weight:700;text-align:center}
 
-.app-layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
-
-/* ===== 侧边栏 ===== */
-.sidebar {
-  width: var(--sidebar-w); background: linear-gradient(180deg, rgba(255,182,193,0.4), rgba(255,240,245,0.5));
-  backdrop-filter: blur(12px); border-right: 1px solid var(--card-border);
-  padding: 22px 14px; display: flex; flex-direction: column; gap: 6px;
-  position: fixed; left: 0; top: 0; height: 100vh; z-index: 10;
-  box-shadow: 4px 0 20px rgba(255,132,174,0.08);
+.sidebar-nav{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.nav-item{
+  background:var(--card-bg);border:1.5px solid var(--card-border);
+  border-radius:14px;padding:16px 12px;display:flex;align-items:center;
+  gap:10px;cursor:pointer;transition:all 0.35s ease;position:relative;overflow:hidden;
 }
-.sidebar-title { font-size: 1.35em; font-weight: 800; background: var(--pink-grad-deep); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; }
-.sidebar-sub { font-size: 0.72em; color: var(--text-sub); text-align: center; margin-top: 2px; }
-.sidebar-date { font-size: 0.82em; color: var(--pink-deep); font-weight: 600; text-align: center; margin-top: 10px; }
-.sidebar-time { font-size: 0.82em; color: var(--pink-hot); font-weight: 700; text-align: center; }
+.nav-item::before{content:'';position:absolute;left:0;top:0;width:4px;height:100%;background:var(--pink-grad-deep);border-radius:0 4px 4px 0;opacity:0;transition:opacity 0.3s}
+.nav-item:hover{transform:translateX(4px);box-shadow:var(--shadow-hover);border-color:var(--pink-hot)}
+.nav-item:hover::before,.nav-item.active::before{opacity:1}
+.nav-item.active{background:rgba(255,105,180,0.15);border-color:var(--pink-hot);box-shadow:0 4px 20px rgba(255,132,174,0.25);transform:translateX(4px)}
+.nav-icon{font-size:1.5em;flex-shrink:0}
+.nav-text{font-size:0.88em;font-weight:700;color:var(--text-main)}
+.nav-item.active .nav-text{color:var(--pink-hot)}
+.nav-badge{font-size:0.66em;background:var(--pink-soft);color:var(--pink-deep);padding:2px 7px;border-radius:10px;font-weight:600;margin-left:auto}
+.nav-item.active .nav-badge{background:var(--pink-hot);color:white}
 
-.sidebar-nav { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
-.nav-item {
-  background: var(--card-bg); border: 1.5px solid var(--card-border);
-  border-radius: 14px; padding: 14px 12px; display: flex; align-items: center;
-  gap: 10px; cursor: pointer; transition: all 0.35s ease; position: relative; overflow: hidden;
+.sidebar-footer{margin-top:auto;text-align:center;padding:10px;font-size:0.72em;color:var(--text-sub)}
+.sidebar-footer-emoji{font-size:1.2em;animation:wiggle 3s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(0deg) scale(1)}50%{transform:rotate(-8deg) scale(1.1)}
+
+.main-content{margin-left:var(--sidebar-w);padding:28px 24px 50px;min-height:100vh}
+.panel{display:none}
+.panel.active{display:block;animation:slideIn 0.35s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}
+
+.panel-header{margin-bottom:20px}
+.panel-title{font-size:1.7em;font-weight:800;background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+.panel-desc{font-size:0.88em;color:var(--text-sub);margin-top:4px}
+
+.top-bar{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:var(--shadow-soft)}
+.persona-tag{display:inline-block;background:var(--pink-grad-deep);color:white;padding:4px 12px;border-radius:18px;font-size:0.78em;font-weight:600}
+.persona-label{font-weight:700;color:var(--pink-deep);font-size:0.9em}
+.rule-badge{display:inline-block;background:var(--pink-hot);color:white;padding:3px 10px;border-radius:12px;font-size:0.78em;font-weight:700}
+
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.content-card{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-soft)}
+.content-card-title{font-size:1em;font-weight:700;color:var(--pink-deep);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.btn-action{background:var(--pink-grad-deep);color:white;border:none;padding:5px 12px;border-radius:18px;font-size:0.78em;cursor:pointer;transition:all 0.3s;font-weight:600}
+.btn-action:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(255,132,174,0.4)}
+.btn-action.outline{background:rgba(255,105,180,0.12);color:var(--pink-hot);border:1.5px solid var(--pink-hot)}
+.btn-action.outline:hover{background:var(--pink-hot);color:white}
+.content-body{font-size:0.88em;line-height:1.8;color:var(--text-main);white-space:pre-wrap}
+.content-body .hot-title{color:var(--pink-hot);font-weight:700;font-size:1em}
+.content-body .label{color:var(--pink-deep);font-weight:700;display:inline-block;margin-top:8px}
+.content-body .highlight{background:rgba(255,182,193,0.3);padding:2px 6px;border-radius:5px;font-weight:600}
+
+.method-card{background:var(--card-bg);backdrop-filter:blur(10px);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;margin-top:16px;box-shadow:var(--shadow-soft)}
+.method-title{font-size:1em;font-weight:700;color:var(--pink-deep);margin-bottom:12px}
+.method-step{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:0.85em}
+.step-num{background:var(--pink-grad-deep);color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.78em;font-weight:700}
+.refresh-indicator{margin-top:10px;text-align:center;font-size:0.78em;color:var(--text-sub)}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--pink-grad-deep);color:white;padding:10px 26px;border-radius:50px;font-weight:600;box-shadow:0 8px 24px rgba(255,132,174,0.4);z-index:999;opacity:0;transition:all 0.4s}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:900px){
+  .sidebar{width:100%;height:auto;position:relative;padding:14px 12px;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}
+  .sidebar-nav{margin-top:0;flex-direction:row;flex-wrap:wrap;gap:6px}
+  .nav-item{padding:8px 10px;border-radius:10px}
+  .sidebar-footer{display:none}
+  .main-content{margin-left:0;padding:20px 14px 40px}
+  .content-grid{grid-template-columns:1fr}
 }
-.nav-item::before { content:''; position:absolute; left:0; top:0; width:4px; height:100%; background:var(--pink-grad-deep); border-radius:0 4px 4px 0; opacity:0; transition:opacity 0.3s; }
-.nav-item:hover { transform:translateX(4px); box-shadow:var(--shadow-hover); border-color:var(--pink-hot); }
-.nav-item:hover::before, .nav-item.active::before { opacity:1; }
-.nav-item.active { background:rgba(255,105,180,0.15); border-color:var(--pink-hot); box-shadow:0 4px 20px rgba(255,132,174,0.25); transform:translateX(4px); }
-.nav-icon { font-size: 1.5em; flex-shrink: 0; }
-.nav-text { font-size: 0.88em; font-weight: 700; color: var(--text-main); }
-.nav-item.active .nav-text { color: var(--pink-hot); }
-.nav-badge { font-size:0.66em; background:var(--pink-soft); color:var(--pink-deep); padding:2px 7px; border-radius:10px; font-weight:600; margin-left:auto; }
-.nav-item.active .nav-badge { background:var(--pink-hot); color:white; }
-.sidebar-footer { margin-top:auto; text-align:center; padding:10px; font-size:0.72em; color:var(--text-sub); }
-
-/* ===== 主内容 ===== */
-.main-content { margin-left: var(--sidebar-w); padding: 28px 24px 50px; min-height: 100vh; }
-.panel { display: none; }
-.panel.active { display: block; animation: slideIn 0.35s ease; }
-@keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-.panel-title { font-size:1.7em; font-weight:800; background:var(--pink-grad-deep); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:inline-block; }
-.panel-desc { font-size:0.88em; color:var(--text-sub); margin-top:4px; }
-
-/* ===== 通用卡片 ===== */
-.card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow-soft); transition:all 0.3s ease; }
-.card:hover { box-shadow:var(--shadow-hover); }
-
-/* ===== 板块1: 每日任务 ===== */
-.task-progress-bar { background:var(--card-bg); border-radius:50px; height:30px; margin-bottom:20px; overflow:hidden; border:1px solid var(--card-border); box-shadow:var(--shadow-soft); display:flex; align-items:center; padding:0 18px; position:relative; }
-.task-progress-fill { position:absolute; left:0; top:0; height:100%; background:var(--pink-grad-deep); border-radius:50px; transition:width 0.6s ease; opacity:0.7; }
-.task-progress-text { position:relative; z-index:1; font-weight:700; font-size:0.9em; }
-.task-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.task-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1.5px solid var(--card-border); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow-soft); transition:all 0.4s ease; cursor:pointer; position:relative; overflow:hidden; }
-.task-card::after { content:''; position:absolute; top:-40%;right:-40%; width:80px;height:80px; background:radial-gradient(circle,rgba(255,182,193,0.2),transparent); border-radius:50%; }
-.task-card:hover { transform:translateY(-5px) scale(1.01); box-shadow:var(--shadow-hover); }
-.task-card.completed { background:rgba(255,230,240,0.8); border-color:var(--pink-hot); }
-.task-top { display:flex; align-items:center; gap:14px; }
-.task-checkbox { width:40px;height:40px; border-radius:50%; border:3px solid var(--pink-main); background:rgba(255,255,255,0.6); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.3s; font-size:1.3em; color:transparent; }
-.task-card.completed .task-checkbox { background:var(--pink-grad-deep); border-color:var(--pink-hot); color:white; }
-.task-icon { font-size:1.8em; flex-shrink:0; }
-.task-title { font-size:1em; font-weight:700; }
-.task-card.completed .task-title { text-decoration:line-through; color:var(--text-sub); }
-.task-desc { font-size:0.82em; color:var(--text-sub); }
-.task-tag { display:inline-block; margin-top:6px; background:var(--pink-soft); color:var(--pink-deep); padding:2px 10px; border-radius:16px; font-size:0.72em; font-weight:600; }
-
-/* ===== 板块2: 抖音口播 ===== */
-.top-bar { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow-soft); }
-.persona-tag { display:inline-block; background:var(--pink-grad-deep); color:white; padding:4px 12px; border-radius:18px; font-size:0.78em; font-weight:600; }
-.persona-label { font-weight:700; color:var(--pink-deep); font-size:0.9em; }
-.rule-badge { display:inline-block; background:var(--pink-hot); color:white; padding:3px 10px; border-radius:12px; font-size:0.78em; font-weight:700; }
-
-.content-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.content-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow-soft); }
-.content-card-title { font-size:1em; font-weight:700; color:var(--pink-deep); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
-.btn-action { background:var(--pink-grad-deep); color:white; border:none; padding:5px 12px; border-radius:18px; font-size:0.78em; cursor:pointer; transition:all 0.3s; font-weight:600; }
-.btn-action:hover { transform:scale(1.06); box-shadow:0 4px 16px rgba(255,132,174,0.4); }
-.btn-action.outline { background:rgba(255,105,180,0.12); color:var(--pink-hot); border:1.5px solid var(--pink-hot); }
-.btn-action.outline:hover { background:var(--pink-hot); color:white; }
-.content-body { font-size:0.88em; line-height:1.8; color:var(--text-main); white-space:pre-wrap; }
-.content-body .hot-title { color:var(--pink-hot); font-weight:700; font-size:1em; }
-.content-body .label { color:var(--pink-deep); font-weight:700; display:inline-block; margin-top:8px; }
-.content-body .highlight { background:rgba(255,182,193,0.3); padding:2px 6px; border-radius:5px; font-weight:600; }
-
-.method-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:22px; margin-top:16px; box-shadow:var(--shadow-soft); }
-.method-title { font-size:1em; font-weight:700; color:var(--pink-deep); margin-bottom:12px; }
-.method-step { display:flex; align-items:flex-start; gap:10px; padding:6px 0; font-size:0.85em; }
-.step-num { background:var(--pink-grad-deep); color:white; width:22px;height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.78em; font-weight:700; }
-.refresh-indicator { margin-top:10px; text-align:center; font-size:0.78em; color:var(--text-sub); }
-
-/* ===== 板块3: 小红书 ===== */
-.xhs-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.xhs-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow-soft); }
-
-/* ===== 板块4: 英语四级 ===== */
-.study-week { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:24px; }
-.day-card { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius-sm); padding:12px 6px; text-align:center; transition:all 0.3s; }
-.day-card.today { background:var(--pink-grad-deep); color:white; transform:scale(1.06); box-shadow:0 8px 24px rgba(255,132,174,0.4); }
-.day-card.today .day-title,.day-card.today .day-theme,.day-card.today .day-task,.day-card.today .day-label { color:white; }
-.day-card:hover { transform:translateY(-3px); }
-.day-label { font-size:0.75em; color:var(--text-sub); font-weight:600; }
-.day-title { font-size:1em; font-weight:700; color:var(--pink-deep); margin:3px 0; }
-.day-theme { font-size:0.85em; font-weight:600; margin-bottom:4px; }
-.day-task { font-size:0.7em; color:var(--text-sub); line-height:1.4; }
-
-.words-section { background:var(--card-bg); backdrop-filter:blur(10px); border:1px solid var(--card-border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow-soft); }
-.words-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
-.words-title { font-size:1.1em; font-weight:700; color:var(--pink-deep); }
-.words-progress { background:var(--pink-soft); border-radius:50px; padding:4px 14px; font-size:0.88em; font-weight:700; color:var(--pink-deep); }
-.words-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
-.word-card { background:rgba(255,255,255,0.5); border:1.5px solid var(--pink-soft); border-radius:var(--radius-sm); padding:14px; transition:all 0.3s; cursor:pointer; position:relative; }
-.word-card:hover { transform:scale(1.02); box-shadow:0 4px 14px rgba(255,182,193,0.2); border-color:var(--pink-main); }
-.word-card.mastered { background:rgba(255,240,245,0.6); border-color:var(--pink-hot); }
-.word-card.mastered .word-en { text-decoration:line-through; color:var(--text-sub); }
-.word-card.mastered::after { content:'✓已掌握'; position:absolute; top:5px;right:8px; font-size:0.65em; color:var(--pink-hot); font-weight:700; background:rgba(255,105,180,0.08); padding:2px 6px; border-radius:8px; }
-.word-top { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
-.word-en { font-size:1.15em; font-weight:700; }
-.word-phonetic { font-size:0.8em; color:var(--text-sub); }
-.word-pos { display:inline-block; background:var(--pink-soft); color:var(--pink-deep); padding:1px 7px; border-radius:7px; font-size:0.7em; font-weight:600; }
-.word-cn { font-size:0.9em; margin-bottom:5px; }
-.word-example { font-size:0.75em; color:var(--text-sub); border-left:2px solid var(--pink-main); padding-left:7px; line-height:1.5; margin-bottom:4px; }
-.word-example-cn { font-size:0.7em; color:var(--text-sub); margin-left:9px; }
-.word-actions { display:flex; gap:5px; margin-top:5px; }
-.word-btn { background:rgba(255,182,193,0.2); border:1px solid var(--pink-main); border-radius:9px; padding:3px 8px; font-size:0.7em; cursor:pointer; transition:all 0.2s; color:var(--pink-deep); font-weight:600; }
-.word-btn:hover { background:var(--pink-grad-deep); color:white; border-color:var(--pink-hot); transform:scale(1.04); }
-
-/* ===== 弹窗 ===== */
-.modal { display:none; position:fixed; top:0;left:0; width:100%;height:100%; background:rgba(255,182,193,0.3); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; }
-.modal.show { display:flex; animation:fadeIn 0.4s ease; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.modal-box { background:white; border-radius:28px; padding:36px 48px; text-align:center; box-shadow:0 20px 60px rgba(255,132,174,0.3); animation:bounceIn 0.5s cubic-bezier(0.68,-0.55,0.265,1.55); }
-@keyframes bounceIn { 0%{transform:scale(0.3);opacity:0} 100%{transform:scale(1);opacity:1} }
-.modal-close { margin-top:18px; background:var(--pink-grad-deep); color:white; border:none; padding:10px 28px; border-radius:25px; font-size:1em; cursor:pointer; font-weight:600; transition:all 0.3s; }
-.modal-close:hover { transform:scale(1.1); }
-.spell-input { width:100%; padding:11px 14px; border:2px solid var(--pink-main); border-radius:14px; font-size:1.1em; text-align:center; outline:none; background:rgba(255,240,245,0.5); }
-.spell-input:focus { border-color:var(--pink-hot); }
-.spell-input.correct { border-color:#4CAF50; background:rgba(76,175,80,0.1); }
-.spell-input.wrong { border-color:#f44336; background:rgba(244,67,54,0.08); }
-.spell-result { font-size:0.88em; margin-top:10px; font-weight:600; }
-.spell-result.ok { color:#4CAF50; }
-.spell-result.no { color:#f44336; }
-
-/* Toast */
-.toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--pink-grad-deep); color:white; padding:10px 26px; border-radius:50px; font-weight:600; box-shadow:0 8px 24px rgba(255,132,174,0.4); z-index:999; opacity:0; transition:all 0.4s; }
-.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
-
-/* ===== 响应式 ===== */
-@media (max-width:900px) {
-  .sidebar { width:100%; height:auto; position:relative; padding:14px 12px; flex-direction:row; flex-wrap:wrap; align-items:center; gap:6px; }
-  .sidebar-nav { margin-top:0; flex-direction:row; flex-wrap:wrap; gap:6px; }
-  .nav-item { padding:8px 10px; border-radius:10px; }
-  .sidebar-footer { display:none; }
-  .main-content { margin-left:0; padding:20px 14px 40px; }
-  .task-grid { grid-template-columns:1fr; }
-  .content-grid { grid-template-columns:1fr; }
-  .xhs-grid { grid-template-columns:1fr; }
-  .study-week { grid-template-columns:repeat(4,1fr); }
-  .day-card { padding:8px 4px; }
-  .day-task { display:none; }
-  .words-grid { grid-template-columns:1fr 1fr; }
+@media(max-width:480px){
+  .sidebar{flex-direction:column}
+  .sidebar-nav{flex-direction:column}
 }
-@media (max-width:480px) {
-  .study-week { grid-template-columns:repeat(2,1fr); }
-  .words-grid { grid-template-columns:1fr; }
-  .sidebar { flex-direction:column; }
-  .sidebar-nav { flex-direction:column; }
-}
-::-webkit-scrollbar { width:8px; }
-::-webkit-scrollbar-track { background:var(--pink-light); }
-::-webkit-scrollbar-thumb { background:var(--pink-main); border-radius:8px; }
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--pink-light)}
+::-webkit-scrollbar-thumb{background:var(--pink-main);border-radius:8px}
 </style>
 </head>
 <body>
-<div class="float-decor" style="top:8%;left:40%;animation-delay:0s;">🌸</div>
-<div class="float-decor" style="top:22%;right:6%;animation-delay:1s;">💕</div>
-<div class="float-decor" style="top:48%;right:3%;animation-delay:2s;">✨</div>
-<div class="float-decor" style="top:68%;left:38%;animation-delay:0.5s;">🎀</div>
-<div class="float-decor" style="top:85%;right:8%;animation-delay:1.5s;">🧸</div>
-<div class="float-decor" style="top:35%;right:2%;animation-delay:2.5s;">💖</div>
-<div class="float-decor" style="top:92%;left:35%;animation-delay:3s;">🌺</div>
+<div class="float-decor" style="top:8%;left:40%;animation-delay:0s">🌸</div>
+<div class="float-decor" style="top:22%;right:6%;animation-delay:1s">💕</div>
+<div class="float-decor" style="top:48%;right:3%;animation-delay:2s">✨</div>
+<div class="float-decor" style="top:68%;left:38%;animation-delay:0.5s">🎀</div>
+<div class="float-decor" style="top:85%;right:8%;animation-delay:1.5s">🧸</div>
+<div class="float-decor" style="top:35%;right:2%;animation-delay:2.5s">💖</div>
+<div class="float-decor" style="top:92%;left:35%;animation-delay:3s">🌺</div>
 
 <div class="app-layout">
-  <!-- 侧边栏 -->
   <div class="sidebar">
     <div class="sidebar-title">👑小段能赚一千万</div>
     <div class="sidebar-sub">自媒体成长总站 ✨</div>
     <div class="sidebar-date" id="sidebar-date">📅 加载中</div>
     <div class="sidebar-time" id="sidebar-time">⏰ --:--:--</div>
     <div class="sidebar-nav">
-      <div class="nav-item active" data-panel="panel-tasks" onclick="switchPanel('panel-tasks',this)">
-        <span class="nav-icon">📝</span><span class="nav-text">每日必做任务</span><span class="nav-badge" id="task-badge">0/2</span>
-      </div>
-      <div class="nav-item" data-panel="panel-douyin" onclick="switchPanel('panel-douyin',this)">
+      <div class="nav-item active" onclick="switchPanel('panel-douyin',this)">
         <span class="nav-icon">🎬</span><span class="nav-text">抖音口播专区</span><span class="nav-badge">每日9点</span>
       </div>
-      <div class="nav-item" data-panel="panel-xhs" onclick="switchPanel('panel-xhs',this)">
+      <div class="nav-item" onclick="switchPanel('panel-xhs',this)">
         <span class="nav-icon">📕</span><span class="nav-text">小红书文案区</span><span class="nav-badge">每日更新</span>
       </div>
-      <div class="nav-item" data-panel="panel-cet4" onclick="switchPanel('panel-cet4',this)">
-        <span class="nav-icon">📖</span><span class="nav-text">英语四级备考</span><span class="nav-badge" id="word-badge">0/10</span>
-      </div>
     </div>
-    <div class="sidebar-footer">🌸💕✨每天进步一点点💪</div>
+    <div class="sidebar-footer"><div class="sidebar-footer-emoji">🌸💕✨🧸</div>每天进步一点点 💪</div>
   </div>
 
-  <!-- 主内容 -->
   <div class="main-content">
-
-    <!-- 板块1: 每日任务 -->
-    <div class="panel active" id="panel-tasks">
-      <div class="panel-title">📝 每日必做任务</div>
-      <div class="panel-desc">每天完成这两件核心任务，离一千万更近一步~</div>
-      <div class="task-progress-bar">
-        <div class="task-progress-fill" id="task-fill" style="width:0%"></div>
-        <span class="task-progress-text" id="task-text">今日进度：0 / 2</span>
+    <!-- 抖音口播专区 -->
+    <div class="panel active" id="panel-douyin">
+      <div class="panel-header">
+        <div class="panel-title">🎬 抖音爆款口播专区</div>
+        <div class="panel-desc">每日9点准时更新 · 女性成长口播爆款拆解+二次创作</div>
       </div>
-      <div class="task-grid" id="task-grid"></div>
-    </div>
-
-    <!-- 板块2: 抖音口播 -->
-    <div class="panel" id="panel-douyin">
-      <div class="panel-title">🎬 抖音爆款口播专区</div>
-      <div class="panel-desc">每日9点准时更新 · 女性成长口播爆款拆解+二次创作</div>
       <div class="top-bar">
         <span class="persona-label">🧑‍🎓 人设：</span>
         <span class="persona-tag">护理女大学生</span>
@@ -253,7 +148,7 @@ body {
         <span class="persona-tag">拒绝鸡汤</span>
         <span class="persona-tag">零夸大</span>
         <span class="persona-tag">40-50秒口播</span>
-        <span class="rule-badge" style="margin-left:auto;" id="dy-badge">⏰ 每日0点自动更新</span>
+        <span class="rule-badge" style="margin-left:auto">⏰ 每日0点自动更新</span>
       </div>
       <div class="content-grid">
         <div class="content-card">
@@ -267,28 +162,31 @@ body {
       </div>
       <div class="method-card">
         <div class="method-title">🔬 口播拆解方法论</div>
-        <div class="method-step"><span class="step-num">1</span><b>开头留人钩子</b>：前3秒制造悬念或共鸣，让观众停下来</div>
-        <div class="method-step"><span class="step-num">2</span><b>文案节奏</b>：短句+断句，30秒内讲清一件事</div>
-        <div class="method-step"><span class="step-num">3</span><b>情绪点</b>：制造1-2个情绪转折，让观众"被戳到"</div>
-        <div class="method-step"><span class="step-num">4</span><b>结尾共鸣</b>：金句收尾，让人截图转发</div>
+        <div class="method-step"><span class="step-num">1</span><b>开头留人钩子</b>：前3秒制造悬念或共鸣</div>
+        <div class="method-step"><span class="step-num">2</span><b>文案节奏</b>：短句+断句，30秒讲清一件事</div>
+        <div class="method-step"><span class="step-num">3</span><b>情绪点</b>：1-2个情绪转折，让人被戳到</div>
+        <div class="method-step"><span class="step-num">4</span><b>结尾共鸣</b>：金句收尾，截图转发</div>
         <div class="method-step"><span class="step-num">5</span><b>行动召唤</b>：引导关注、评论、收藏</div>
       </div>
       <div class="refresh-indicator" id="dy-indicator">💡 当前第1/26组 · 每天0点自动更新下一组</div>
     </div>
 
-    <!-- 板块3: 小红书 -->
+    <!-- 小红书文案专区 -->
     <div class="panel" id="panel-xhs">
-      <div class="panel-title">📕 小红书爆款文案专区</div>
-      <div class="panel-desc">每日更新 · 女生成长/治愈情绪/清醒三观类笔记拆解+仿写</div>
+      <div class="panel-header">
+        <div class="panel-title">📕 小红书爆款文案专区</div>
+        <div class="panel-desc">每日更新 · 女生成长/治愈情绪/清醒三观笔记拆解+仿写</div>
+      </div>
       <div class="top-bar">
         <span class="persona-label">🧑‍🎓 人设：</span>
         <span class="persona-tag">在校护理女生</span>
         <span class="persona-tag">独居成长</span>
         <span class="persona-tag">温柔治愈</span>
         <span class="persona-tag">干净高级</span>
-        <span class="rule-badge" style="margin-left:auto;">⏰ 每日0点更新</span>
+        <span class="persona-tag">生活化</span>
+        <span class="rule-badge" style="margin-left:auto">⏰ 每日0点更新</span>
       </div>
-      <div class="xhs-grid">
+      <div class="content-grid">
         <div class="content-card">
           <div class="content-card-title"><span>🔥 今日爆款笔记拆解</span><button class="btn-action" onclick="refreshXHS()">🔄 换一组</button></div>
           <div class="content-body" id="xhs-analysis"></div>
@@ -300,93 +198,29 @@ body {
       </div>
       <div class="method-card">
         <div class="method-title">🔬 小红书爆款拆解方法论</div>
-        <div class="method-step"><span class="step-num">1</span><b>标题钩子</b>：数字/反问/情绪词开头，让用户停下来</div>
-        <div class="method-step"><span class="step-num">2</span><b>排版逻辑</b>：短句+emoji分隔+编号列表，视觉干净</div>
-        <div class="method-step"><span class="step-num">3</span><b>图文氛围</b>：治愈/高级/生活化，配合配图风格</div>
-        <div class="method-step"><span class="step-num">4</span><b>收藏核心</b>：给出可执行的方法/清单，让用户觉得"有用"</div>
+        <div class="method-step"><span class="step-num">1</span><b>标题钩子</b>：数字/反问/情绪词开头</div>
+        <div class="method-step"><span class="step-num">2</span><b>排版逻辑</b>：短句+emoji分隔+编号列表</div>
+        <div class="method-step"><span class="step-num">3</span><b>图文氛围</b>：治愈/高级/生活化</div>
+        <div class="method-step"><span class="step-num">4</span><b>收藏核心</b>：可执行方法/清单</div>
       </div>
       <div class="refresh-indicator" id="xhs-indicator">💡 当前第1/26组 · 每天0点自动更新</div>
     </div>
-
-    <!-- 板块4: 英语四级 -->
-    <div class="panel" id="panel-cet4">
-      <div class="panel-title">📖 英语四级备考</div>
-      <div class="panel-desc">零基础系统化 · 7天周计划 · 每天听说读写练</div>
-      <div class="study-week" id="study-week"></div>
-      <div class="words-section">
-        <div class="words-header">
-          <div class="words-title">📚 今日单词 · <span id="word-day-label">Day 1</span></div>
-          <div class="words-progress" id="words-progress">已掌握 0/10</div>
-        </div>
-        <div class="words-grid" id="words-grid"></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- 庆祝弹窗 -->
-<div class="modal" id="celebrate-modal">
-  <div class="modal-box">
-    <div style="font-size:2.8em;margin-bottom:8px;">🎉🌸✨💕</div>
-    <div style="font-size:1.5em;font-weight:800;background:var(--pink-grad-deep);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">今日任务全部完成！</div>
-    <div style="color:var(--text-sub);margin-top:6px;">小段今天又是离一千万更近一步！明天继续💪</div>
-    <button class="modal-close" onclick="closeCelebrate()">好哒~</button>
-  </div>
-</div>
-
-<!-- 拼写弹窗 -->
-<div class="modal" id="spell-modal">
-  <div class="modal-box" style="max-width:400px;">
-    <div style="font-size:1.1em;font-weight:700;color:var(--pink-deep);margin-bottom:10px;" id="spell-prompt">拼写练习 📝</div>
-    <div style="font-size:0.85em;color:var(--text-sub);margin-bottom:14px;" id="spell-hint"></div>
-    <input class="spell-input" id="spell-input" type="text" autocomplete="off" placeholder="输入英文单词..." onkeydown="if(event.key==='Enter')checkSpell()">
-    <div class="spell-result" id="spell-result"></div>
-    <button class="modal-close" onclick="closeSpell()">继续学习</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== 实时时间 =====
-function updateTime(){
-  const now=new Date();
-  const wd=['周日','周一','周二','周三','周四','周五','周六'];
-  document.getElementById('sidebar-date').textContent='📅 '+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日 '+wd[now.getDay()];
-  document.getElementById('sidebar-time').textContent='⏰ '+now.toTimeString().slice(0,8);
-}
-updateTime(); setInterval(updateTime,1000);
+function updateTime(){const n=new Date(),wd=['周日','周一','周二','周三','周四','周五','周六'];document.getElementById('sidebar-date').textContent='📅 '+n.getFullYear()+'年'+(n.getMonth()+1)+'月'+n.getDate()+'日 '+wd[n.getDay()];document.getElementById('sidebar-time').textContent='⏰ '+n.toTimeString().slice(0,8)}
+updateTime();setInterval(updateTime,1000);
 
-function getTodayKey(){ const n=new Date(); return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(); }
-function getWeekday(){ return new Date().getDay(); }
-function showToast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
-function switchPanel(id,el){ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el)el.classList.add('active'); }
+function getTodayKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function switchPanel(id,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById(id).classList.add('active');if(el)el.classList.add('active')}
 
-// ===== 板块1: 每日任务 =====
-const tasks=[
-  {id:'t1',icon:'🎬',title:'录制女性成长口播视频',desc:'发布抖音平台',tag:'抖音·口播'},
-  {id:'t2',icon:'📖',title:'英语四级单词背诵',desc:'每日10个单词',tag:'四级·每日10词'},
-];
-function renderTasks(){
-  const k=getTodayKey(), g=document.getElementById('task-grid');
-  g.innerHTML=tasks.map(t=>{
-    const d=localStorage.getItem(k+'-'+t.id)=='done';
-    return `<div class="task-card ${d?'completed':''}" onclick="toggleTask('${t.id}')"><div class="task-top"><div class="task-checkbox">${d?'✓':''}</div><span class="task-icon">${t.icon}</span><div><div class="task-title">${t.title}</div><div class="task-desc">${t.desc}</div><span class="task-tag">${t.tag}</span></div></div></div>`;
-  }).join('');
-  const dc=tasks.filter(t=>localStorage.getItem(k+'-'+t.id)=='done').length;
-  document.getElementById('task-fill').style.width=(dc/tasks.length*100)+'%';
-  document.getElementById('task-text').textContent='今日进度：'+dc+' / '+tasks.length;
-  document.getElementById('task-badge').textContent=dc+'/'+tasks.length;
-  if(dc===tasks.length) setTimeout(()=>document.getElementById('celebrate-modal').classList.add('show'),500);
-}
-function toggleTask(id){ const k=getTodayKey(); if(localStorage.getItem(k+'-'+id)=='done'){localStorage.removeItem(k+'-'+id)}else{localStorage.setItem(k+'-'+id,'done');showToast('✅ 任务完成！')} renderTasks(); }
-function closeCelebrate(){ document.getElementById('celebrate-modal').classList.remove('show'); }
-
-// ===== 板块2: 抖音文案 =====
-const douyinPool = [
-  {
-    hotAnalysis: `🔥 爆款标题：
+// ===== 抖音口播 =====
+const douyinPool=[
+  {hotAnalysis:`🔥 爆款标题：
 别让原生家庭的伤，成为你一生的枷锁
 
 📌 原文精华：
@@ -399,8 +233,7 @@ const douyinPool = [
 【金句】你不是父母的续集，也不是子女的前传——极具传播力
 【召唤】引导评论区分享「你从原生家庭走出来的一件小事」
 
-📊 数据表现：点赞50w+，评论4.2w，转发18w，收藏12w`,
-    myCopy: `【原生家庭】
+📊 数据表现：点赞50w+，评论4.2w，转发18w，收藏12w`,myCopy:`【原生家庭】
 
 昨天舍友问我，你为什么从来不提你爸妈。
 
@@ -440,10 +273,8 @@ const douyinPool = [
 如果你的家庭也让你受过伤，别怕，你不是一个人。
 评论区说说，你走出来了吗？
 
-🎬 创作说明：从护理专业学生视角出发，用「舍友提问」自然引入话题，通过医院实习观察建立专业可信度，避免说教感。用「考护理」「想去社区医院」具体细节强化人设真实性。语气克制不煽情，符合大学生真实表达习惯。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：从护理专业学生视角出发，用「舍友提问」自然引入话题，通过医院实习观察建立专业可信度，避免说教感。用「考护理」「想去社区医院」具体细节强化人设真实性。语气克制不煽情，符合大学生真实表达习惯。`},
+  {hotAnalysis:`🔥 爆款标题：
 停止内耗后，我的人生像开了挂
 
 📌 原文精华：
@@ -456,8 +287,7 @@ const douyinPool = [
 【金句】你脑子里已经失败了一百次，但现实中你连第一步都没迈出去
 【召唤】引导做「3秒决策法」挑战
 
-📊 数据表现：点赞68w+，评论5.8w，转发22w，收藏26w`,
-    myCopy: `【停止内耗】
+📊 数据表现：点赞68w+，评论5.8w，转发22w，收藏26w`,myCopy:`【停止内耗】
 
 我以前有个毛病：
 
@@ -498,10 +328,8 @@ const douyinPool = [
 
 今天就试一次，三秒决策，别给自己犹豫的时间。
 
-🎬 创作说明：用「出门纠结穿衣」「发朋友圈反复修改」等大学生日常场景建立代入感。借助儿科实习场景自然引出金句，比直接说教更有说服力。「三秒决策法」简单可执行，适合普通女生模仿。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「出门纠结穿衣」「发朋友圈反复修改」等大学生日常场景建立代入感。借助儿科实习场景自然引出金句，比直接说教更有说服力。「三秒决策法」简单可执行，适合普通女生模仿。`},
+  {hotAnalysis:`🔥 爆款标题：
 普通女孩搞钱的第一步：先把自己当回事
 
 📌 原文精华：
@@ -514,8 +342,7 @@ const douyinPool = [
 【金句】你不敢谈钱，是因为你觉得自己不值那个价
 【召唤】引导评论「你最近一次为自己定价是多少」
 
-📊 数据表现：点赞42w+，评论3.6w，转发15w，收藏19w`,
-    myCopy: `【清醒搞钱】
+📊 数据表现：点赞42w+，评论3.6w，转发15w，收藏19w`,myCopy:`【清醒搞钱】
 
 大一的时候，有个学姐介绍我去做陪诊。
 
@@ -556,10 +383,8 @@ const douyinPool = [
 
 你第一次鼓起勇气谈钱是什么时候？评论区说说。
 
-🎬 创作说明：用「学姐介绍陪诊」「第一次讲价手抖」的真实细节建立可信度。结合护理专业背景，体现「不满足于固定工资」的清醒搞钱意识。语气真诚不鸡汤，符合在校大学生真实经历。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「学姐介绍陪诊」「第一次讲价手抖」的真实细节建立可信度。结合护理专业背景，体现「不满足于固定工资」的清醒搞钱意识。语气真诚不鸡汤，符合在校大学生真实经历。`},
+  {hotAnalysis:`🔥 爆款标题：
 情绪崩溃时，别找人倾诉，先做这件事
 
 📌 原文精华：
@@ -572,8 +397,7 @@ const douyinPool = [
 【金句】把自己当成一个病人来照顾
 【召唤】引导做「情绪急救三步法」
 
-📊 数据表现：点赞56w+，评论4.9w，转发20w，收藏23w`,
-    myCopy: `【情绪自愈】
+📊 数据表现：点赞56w+，评论4.9w，转发20w，收藏23w`,myCopy:`【情绪自愈】
 
 上周考试周，连着熬了三天夜。
 
@@ -619,10 +443,8 @@ const douyinPool = [
 
 先去吃一顿热乎的。
 
-🎬 创作说明：用「考试周崩溃」「楼梯间哭」等真实校园场景引发共鸣。利用护理专业身份提出「照顾病人vs照顾自己」的对比，自然强化人设。建议采用「先不找人，先照顾身体」的反常识观点，有记忆点。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「考试周崩溃」「楼梯间哭」等真实校园场景引发共鸣。利用护理专业身份提出「照顾病人vs照顾自己」的对比，自然强化人设。建议采用「先不找人，先照顾身体」的反常识观点，有记忆点。`},
+  {hotAnalysis:`🔥 爆款标题：
 我删掉了80%的朋友，生活反而更好了
 
 📌 原文精华：
@@ -635,8 +457,7 @@ const douyinPool = [
 【金句】那些需要你讨好才能维持的关系，消失了是好事
 【召唤】引导做「朋友圈断舍离」
 
-📊 数据表现：点赞38w+，评论3.1w，转发12w，收藏16w`,
-    myCopy: `【人际关系】
+📊 数据表现：点赞38w+，评论3.1w，转发12w，收藏16w`,myCopy:`【人际关系】
 
 大一刚入学的时候，我特别怕被孤立。
 
@@ -677,10 +498,8 @@ const douyinPool = [
 
 不需要所有人都喜欢你。
 
-🎬 创作说明：用「加三百个好友」「发烧无人问」形成强烈对比，增强感染力。叙事节奏从讨好→失望→觉醒→筛选，符合情感逻辑。结尾「就够了」克制收尾，不煽情。适合护理学生人设——一个普通人慢慢想通一件事的过程。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「加三百个好友」「发烧无人问」形成强烈对比，增强感染力。叙事节奏从讨好→失望→觉醒→筛选，符合情感逻辑。结尾「就够了」克制收尾，不煽情。适合护理学生人设——一个普通人慢慢想通一件事的过程。`},
+  {hotAnalysis:`🔥 爆款标题：
 我用了三年才明白：懂事，是对一个女孩最大的诅咒
 
 📌 原文精华：
@@ -693,8 +512,7 @@ const douyinPool = [
 【金句】懂事不是美德，是一种被驯化的恐惧
 【召唤】引导评论区分享「你因为懂事受过什么委屈」
 
-📊 数据表现：点赞72w+，评论8.5w，转发28w，收藏31w`,
-    myCopy: `【懂事诅咒】
+📊 数据表现：点赞72w+，评论8.5w，转发28w，收藏31w`,myCopy:`【懂事诅咒】
 
 从小到大，我听到最多的一句夸我的话是：
 
@@ -743,10 +561,8 @@ const douyinPool = [
 如果你也一直被夸懂事，我想跟你说：
 你不需要一直懂事的。
 
-🎬 创作说明：用「娃娃被送人」「选专业」「值夜班」三个递进场景贯穿人生不同阶段，强化「懂事」带来的长期影响。结尾「先说我考虑一下」给出具体可操作的小步骤，符合「普通女生慢慢改变」的真实节奏。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「娃娃被送人」「选专业」「值夜班」三个递进场景贯穿人生不同阶段，强化「懂事」带来的长期影响。结尾「先说我考虑一下」给出具体可操作的小步骤，符合「普通女生慢慢改变」的真实节奏。`},
+  {hotAnalysis:`🔥 爆款标题：
 别在低谷时谈恋爱，你遇到的不是爱情，是救生圈
 
 📌 原文精华：
@@ -759,8 +575,7 @@ const douyinPool = [
 【金句】稻草救不了命，只会让你沉得更深
 【召唤】引导分享「你最不应该开始的一段恋爱」
 
-📊 数据表现：点赞45w+，评论5.2w，转发16w，收藏20w`,
-    myCopy: `【独立人格】
+📊 数据表现：点赞45w+，评论5.2w，转发16w，收藏20w`,myCopy:`【独立人格】
 
 大一上学期，我差点谈恋爱。
 
@@ -804,10 +619,8 @@ const douyinPool = [
 先别急着找别人拉你。
 自己爬出来。
 
-🎬 创作说明：用「临床男生」「早晚安消息」还原校园常见快餐式暧昧关系，真实不夸张。通过「发烧失联→反省」完成认知转折。结尾「锦上添花不是雪中送炭」化用金句，口语化表达更自然。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「临床男生」「早晚安消息」还原校园常见快餐式暧昧关系，真实不夸张。通过「发烧失联→反省」完成认知转折。结尾「锦上添花不是雪中送炭」化用金句，口语化表达更自然。`},
+  {hotAnalysis:`🔥 爆款标题：
 当一个女生开始沉默，不是抑郁了，是升级了
 
 📌 原文精华：
@@ -820,8 +633,7 @@ const douyinPool = [
 【金句】真正重要的声音，只说给听得懂的人
 【召唤】引导评论「你是在哪个瞬间开始沉默的」
 
-📊 数据表现：点赞61w+，评论7.1w，转发25w，收藏28w`,
-    myCopy: `【沉默的力量】
+📊 数据表现：点赞61w+，评论7.1w，转发25w，收藏28w`,myCopy:`【沉默的力量】
 
 我以前特别怕冷场。
 
@@ -861,10 +673,8 @@ const douyinPool = [
 你不用变成那种八面玲珑的人。
 沉默不是缺点，是你的保护色。
 
-🎬 创作说明：从护理学生社交场景切入，用「拼命找话题→发现无人倾听」的真实体验引发共鸣。借助带教老师评价「话不多但踏实」正面肯定沉默的价值，自然不刻意。整体语气平实，不鼓吹也不贬低任何一种性格。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：从护理学生社交场景切入，用「拼命找话题→发现无人倾听」的真实体验引发共鸣。借助带教老师评价「话不多但踏实」正面肯定沉默的价值，自然不刻意。整体语气平实，不鼓吹也不贬低任何一种性格。`},
+  {hotAnalysis:`🔥 爆款标题：
 月薪三千时我焦虑，月薪一万时我才明白的事
 
 📌 原文精华：
@@ -877,8 +687,7 @@ const douyinPool = [
 【金句】钱解决了一部分问题，但焦虑的底色没变
 【召唤】引导分享「你涨工资后依然焦虑的事」
 
-📊 数据表现：点赞53w+，评论6.3w，转发19w，收藏24w`,
-    myCopy: `【消费观】
+📊 数据表现：点赞53w+，评论6.3w，转发19w，收藏24w`,myCopy:`【消费观】
 
 上学期我做家教攒了两千块钱。
 
@@ -917,10 +726,8 @@ const douyinPool = [
 先搞清楚你到底在焦虑什么，
 再决定要赚多少钱。
 
-🎬 创作说明：用「攒两千→花一千五→依然焦虑」的真实经历建立共鸣。通过「学姐穿三十块T恤也有气质」的观察引出核心观点，比直接说教更自然。结合护理学生兼职收入的实际消费场景，人设统一。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「攒两千→花一千五→依然焦虑」的真实经历建立共鸣。通过「学姐穿三十块T恤也有气质」的观察引出核心观点，比直接说教更自然。结合护理学生兼职收入的实际消费场景，人设统一。`},
+  {hotAnalysis:`🔥 爆款标题：
 别怕被人讨厌，那是你开始做自己的信号
 
 📌 原文精华：
@@ -933,8 +740,7 @@ const douyinPool = [
 【金句】被讨厌，是你终于不再讨好所有人的证据
 【召唤】引导分享「你第一次不在意别人眼光做的事」
 
-📊 数据表现：点赞49w+，评论4.5w，转发21w，收藏25w`,
-    myCopy: `【不怕被讨厌】
+📊 数据表现：点赞49w+，评论4.5w，转发21w，收藏25w`,myCopy:`【不怕被讨厌】
 
 我们宿舍四个人，以前吃饭都一起。
 
@@ -971,10 +777,8 @@ const douyinPool = [
 
 而你不需要走一样的路。
 
-🎬 创作说明：用「舍友背后议论」「期末成绩」制造冲突与反转，真实呈现宿舍人际关系困境。借助「考护士资格证」的具体目标赋予选择正当性，强化护理学生人设。语气克制不煽动对立，强调「走自己的路」而非贬低他人。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「舍友背后议论」「期末成绩」制造冲突与反转，真实呈现宿舍人际关系困境。借助「考护士资格证」的具体目标赋予选择正当性，强化护理学生人设。语气克制不煽动对立，强调「走自己的路」而非贬低他人。`},
+  {hotAnalysis:`🔥 爆款标题：
 普通女生逆袭的第一步：承认自己普通
 
 📌 原文精华：
@@ -987,8 +791,7 @@ const douyinPool = [
 【金句】先接受自己站在哪里，才知道下一步往哪走
 【召唤】引导分享「你接纳自己普通的那一刻」
 
-📊 数据表现：点赞41w+，评论3.8w，转发14w，收藏18w`,
-    myCopy: `【普通女生逆袭】
+📊 数据表现：点赞41w+，评论3.8w，转发14w，收藏18w`,myCopy:`【普通女生逆袭】
 
 刷短视频的时候，经常刷到一些女生。
 
@@ -1030,10 +833,8 @@ const douyinPool = [
 你不需要跟山顶的人比。
 你只需要确定，今天比昨天高了一点点。
 
-🎬 创作说明：用「刷短视频焦虑」「关手机反思」还原当代大学生被社交媒体裹挟的真实状态。用「多背20个单词」「多存300块」等微小进步重新定义「逆袭」，符合普通人设。全篇不贩卖焦虑不灌鸡汤，提供可模仿的行动框架。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「刷短视频焦虑」「关手机反思」还原当代大学生被社交媒体裹挟的真实状态。用「多背20个单词」「多存300块」等微小进步重新定义「逆袭」，符合普通人设。全篇不贩卖焦虑不灌鸡汤，提供可模仿的行动框架。`},
+  {hotAnalysis:`🔥 爆款标题：
 容易心软的女孩，这辈子要吃的亏，我帮你总结好了
 
 📌 原文精华：
@@ -1046,8 +847,7 @@ const douyinPool = [
 【金句】你帮别人找了那么多借口，谁来替你心疼你自己
 【召唤】引导评论区分享「你因为心软吃过最大的亏」
 
-📊 数据表现：点赞57w+，评论6.8w，转发23w，收藏27w`,
-    myCopy: `【边界感】
+📊 数据表现：点赞57w+，评论6.8w，转发23w，收藏27w`,myCopy:`【边界感】
 
 我以前有个同学，经常找我借笔记。
 
@@ -1090,10 +890,8 @@ const douyinPool = [
 容易心软的女孩，善良是好事。
 但善良要有牙齿。
 
-🎬 创作说明：用「借笔记→考试前索取→拒绝后对方说风凉话」递进展现心软被利用的过程。借助「带教老师教的话」提升专业可信度。「善良要有牙齿」金句收尾，简洁有力。整体节奏紧凑，适合40-50秒口播。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「借笔记→考试前索取→拒绝后对方说风凉话」递进展现心软被利用的过程。借助「带教老师教的话」提升专业可信度。「善良要有牙齿」金句收尾，简洁有力。整体节奏紧凑，适合40-50秒口播。`},
+  {hotAnalysis:`🔥 爆款标题：
 让你变丑的不是长相，是你对自己的嫌弃
 
 📌 原文精华：
@@ -1106,8 +904,7 @@ const douyinPool = [
 【金句】你照镜子时不是在看你长什么样，是在找哪里不够好
 【召唤】引导做「对镜微笑30天挑战」
 
-📊 数据表现：点赞66w+，评论7.5w，转发24w，收藏29w`,
-    myCopy: `【容貌焦虑】
+📊 数据表现：点赞66w+，评论7.5w，转发24w，收藏29w`,myCopy:`【容貌焦虑】
 
 我从小到大都不喜欢拍照。
 
@@ -1151,10 +948,8 @@ const douyinPool = [
 
 一定有。
 
-🎬 创作说明：用「躲镜头」「舍友发现眼睛好看」「从不正眼看自己」三个细节层层推进，从自卑到觉醒的转折自然流畅。借助舍友视角提供「外人眼中的你」的对比，增强说服力。结尾「不好看就不好看吧，但至少我在看镜头」真实有力量，不强行正能量。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「躲镜头」「舍友发现眼睛好看」「从不正眼看自己」三个细节层层推进，从自卑到觉醒的转折自然流畅。借助舍友视角提供「外人眼中的你」的对比，增强说服力。结尾「不好看就不好看吧，但至少我在看镜头」真实有力量，不强行正能量。`},
+  {hotAnalysis:`🔥 爆款标题：
 不删除不拉黑不联系，是我对你最大的尊重
 
 📌 原文精华：
@@ -1167,8 +962,7 @@ const douyinPool = [
 【金句】他在你的通讯录里，但你不会再点开
 【召唤】引导分享「你是怎么放下的」
 
-📊 数据表现：点赞44w+，评论5.5w，转发17w，收藏21w`,
-    myCopy: `【情绪管理】
+📊 数据表现：点赞44w+，评论5.5w，转发17w，收藏21w`,myCopy:`【情绪管理】
 
 分手的时候，我做过所有傻事。
 
@@ -1207,10 +1001,8 @@ const douyinPool = [
 别急。
 有一天你也会读完那本书的。
 
-🎬 创作说明：用「拉黑加回」「回收站翻记录」「发小作文又后悔」还原分手后真实状态，不美化不回避。用「读完一本书」的比喻定义「放下」，比直接说「释怀」更有画面感。结尾克制，不催促不教育，体现「陪伴式」口播风格。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「拉黑加回」「回收站翻记录」「发小作文又后悔」还原分手后真实状态，不美化不回避。用「读完一本书」的比喻定义「放下」，比直接说「释怀」更有画面感。结尾克制，不催促不教育，体现「陪伴式」口播风格。`},
+  {hotAnalysis:`🔥 爆款标题：
 我爸妈没教我的事，我自己学会了
 
 📌 原文精华：
@@ -1223,8 +1015,7 @@ const douyinPool = [
 【金句】学校不教，父母不会，只能自己一点点学
 【召唤】引导评论区列「你需要补的一课」
 
-📊 数据表现：点赞58w+，评论9.2w，转发26w，收藏33w`,
-    myCopy: `【自我成长】
+📊 数据表现：点赞58w+，评论9.2w，转发26w，收藏33w`,myCopy:`【自我成长】
 
 上了大学以后，我发现我有好多东西不会。
 
@@ -1267,10 +1058,8 @@ const douyinPool = [
 
 慢一点没关系。
 
-🎬 创作说明：从「大学后发现很多事不会」的普遍体验切入，用「传统家庭只教三件事」概括家庭教育缺失。借助医院实习场景中「姐姐提问」的正面榜样，提供成长方向。结尾「从说让我想想开始」给出最小行动单元，降低行动门槛。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：从「大学后发现很多事不会」的普遍体验切入，用「传统家庭只教三件事」概括家庭教育缺失。借助医院实习场景中「姐姐提问」的正面榜样，提供成长方向。结尾「从说让我想想开始」给出最小行动单元，降低行动门槛。`},
+  {hotAnalysis:`🔥 爆款标题：
 25岁以后才明白：朋友不是用来倾诉的
 
 📌 原文精华：
@@ -1283,8 +1072,7 @@ const douyinPool = [
 【金句】倾诉是消耗，分享才是滋养
 【召唤】引导分享「你和朋友最舒服的相处方式」
 
-📊 数据表现：点赞36w+，评论3.2w，转发11w，收藏15w`,
-    myCopy: `【友谊】
+📊 数据表现：点赞36w+，评论3.2w，转发11w，收藏15w`,myCopy:`【友谊】
 
 我以前觉得，好朋友就是那种——
 
@@ -1325,10 +1113,8 @@ const douyinPool = [
 友谊不是你用来接住眼泪的碗。
 是一起往前走的路。
 
-🎬 创作说明：用「连续抱怨→收到敷衍回复→反思」的完整故事线呈现认知转变。「先说一件开心的事」给出可操作的小方法，不空谈道理。结尾金句用「碗vs路」比喻简洁有力。整体节奏适合40-50秒口播。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「连续抱怨→收到敷衍回复→反思」的完整故事线呈现认知转变。「先说一件开心的事」给出可操作的小方法，不空谈道理。结尾金句用「碗vs路」比喻简洁有力。整体节奏适合40-50秒口播。`},
+  {hotAnalysis:`🔥 爆款标题：
 别再把「我不够好」当谦虚，那是慢性毒药
 
 📌 原文精华：
@@ -1341,8 +1127,7 @@ const douyinPool = [
 【金句】你说什么，你就会信什么
 【召唤】引导做「一周不自我贬低挑战」
 
-📊 数据表现：点赞47w+，评论4.1w，转发16w，收藏22w`,
-    myCopy: `【自我对话】
+📊 数据表现：点赞47w+，评论4.1w，转发16w，收藏22w`,myCopy:`【自我对话】
 
 上周技能操作考试，静脉输液。
 
@@ -1384,10 +1169,8 @@ const douyinPool = [
 如果你也习惯说「我不行」，
 今天试一次，说「谢谢」。
 
-🎬 创作说明：用护理技能考试「静脉输液」场景建立专业人设可信度。借助「老师说技术没问题」的客观评价打破自我贬低。「不说没有啦说谢谢」给出极简行动方案，适合普通女生模仿。整体节奏自然，从事件→反思→改变，层层推进。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用护理技能考试「静脉输液」场景建立专业人设可信度。借助「老师说技术没问题」的客观评价打破自我贬低。「不说没有啦说谢谢」给出极简行动方案，适合普通女生模仿。整体节奏自然，从事件→反思→改变，层层推进。`},
+  {hotAnalysis:`🔥 爆款标题：
 30岁以后才看懂的真相：你的善良必须带点锋芒
 
 📌 原文精华：
@@ -1400,8 +1183,7 @@ const douyinPool = [
 【金句】你的每一次无原则退让，都是在告诉对方你可以再过分一点
 【召唤】引导分享「你第一次带锋芒的经历」
 
-📊 数据表现：点赞63w+，评论5.9w，转发22w，收藏26w`,
-    myCopy: `【善良的边界】
+📊 数据表现：点赞63w+，评论5.9w，转发22w，收藏26w`,myCopy:`【善良的边界】
 
 实习的时候，我跟的带教老师是个很温柔的人。
 
@@ -1438,10 +1220,8 @@ const douyinPool = [
 
 缺一个都不行。
 
-🎬 创作说明：用护理实习场景中的「带教老师榜样」自然呈现核心观点，真实且有说服力。通过「第一第二第三」的分点表达展示什么是「有边界的沟通」。结尾「底色vs铠甲」比喻简洁有力量。借助实习场景强化护理人设，一举两得。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用护理实习场景中的「带教老师榜样」自然呈现核心观点，真实且有说服力。通过「第一第二第三」的分点表达展示什么是「有边界的沟通」。结尾「底色vs铠甲」比喻简洁有力量。借助实习场景强化护理人设，一举两得。`},
+  {hotAnalysis:`🔥 爆款标题：
 那些看起来不合群的人，后来都过得不错
 
 📌 原文精华：
@@ -1454,8 +1234,7 @@ const douyinPool = [
 【金句】你以为你在融入，其实你在稀释自己
 【召唤】引导分享「你享受独处的时刻」
 
-📊 数据表现：点赞39w+，评论3.4w，转发13w，收藏17w`,
-    myCopy: `【社交恐惧】
+📊 数据表现：点赞39w+，评论3.4w，转发13w，收藏17w`,myCopy:`【社交恐惧】
 
 我其实挺怕聚会的。
 
@@ -1496,10 +1275,8 @@ const douyinPool = [
 不合群不一定是坏事。
 可能只是你还没找到对的那群人。
 
-🎬 创作说明：用「班级聚餐→不去→看电影吃辣条」还原大学生真实选择，不美化独处也不贬低社交。观点温和中立——「不是不去，是只去想去的」，符合普通人设的渐进改变。整体语速可放慢，营造「一个人的舒适感」氛围。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「班级聚餐→不去→看电影吃辣条」还原大学生真实选择，不美化独处也不贬低社交。观点温和中立——「不是不去，是只去想去的」，符合普通人设的渐进改变。整体语速可放慢，营造「一个人的舒适感」氛围。`},
+  {hotAnalysis:`🔥 爆款标题：
 不敢谈钱的女生，我劝你早点学会这件事
 
 📌 原文精华：
@@ -1512,8 +1289,7 @@ const douyinPool = [
 【金句】钱是成年人世界最诚实的语言
 【召唤】引导做「下次敢谈价」承诺
 
-📊 数据表现：点赞51w+，评论4.7w，转发18w，收藏23w`,
-    myCopy: `【谈钱不可耻】
+📊 数据表现：点赞51w+，评论4.7w，转发18w，收藏23w`,myCopy:`【谈钱不可耻】
 
 我做过一件很傻的事。
 
@@ -1558,10 +1334,8 @@ const douyinPool = [
 你的时间值钱。
 记住这句话。
 
-🎬 创作说明：用「免费补课一学期→不敢要钱→妈妈点醒」的完整故事线，借助妈妈的口说出核心观点，比直接说教更自然。给出「先谈好报酬」的具体行动，降低执行门槛。结合护理学生做家教/陪诊的副业场景，人设统一。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「免费补课一学期→不敢要钱→妈妈点醒」的完整故事线，借助妈妈的口说出核心观点，比直接说教更自然。给出「先谈好报酬」的具体行动，降低执行门槛。结合护理学生做家教/陪诊的副业场景，人设统一。`},
+  {hotAnalysis:`🔥 爆款标题：
 一个女生最好的状态：稳
 
 📌 原文精华：
@@ -1574,8 +1348,7 @@ const douyinPool = [
 【金句】你知道你是谁，所以别人的来来去去，只是路过
 【召唤】引导分享「你觉得自己最稳的时刻」
 
-📊 数据表现：点赞70w+，评论6.1w，转发27w，收藏30w`,
-    myCopy: `【内核稳定】
+📊 数据表现：点赞70w+，评论6.1w，转发27w，收藏30w`,myCopy:`【内核稳定】
 
 我以前是一个特别容易被影响的人。
 
@@ -1616,10 +1389,8 @@ const douyinPool = [
 不是没有风浪。
 是风浪来了，你还站得住。
 
-🎬 创作说明：用「别人一句话想一整天」「刷视频情绪被带着走」还原情绪不稳定状态。借助医院实习中「癌症老太太看树」的震撼画面，提供强大情感冲击。结尾「不是没有风浪，是风浪来了还站得住」重新定义「稳」，精准有力量。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「别人一句话想一整天」「刷视频情绪被带着走」还原情绪不稳定状态。借助医院实习中「癌症老太太看树」的震撼画面，提供强大情感冲击。结尾「不是没有风浪，是风浪来了还站得住」重新定义「稳」，精准有力量。`},
+  {hotAnalysis:`🔥 爆款标题：
 我决定不再做「乖乖女」的那一年
 
 📌 原文精华：
@@ -1632,8 +1403,7 @@ const douyinPool = [
 【金句】你唯独忘了让你自己满意
 【召唤】引导分享「你从哪一刻开始不做乖乖女」
 
-📊 数据表现：点赞55w+，评论7.8w，转发24w，收藏29w`,
-    myCopy: `【觉醒】
+📊 数据表现：点赞55w+，评论7.8w，转发24w，收藏29w`,myCopy:`【觉醒】
 
 从小到大，所有人对我的评价都是——
 
@@ -1682,10 +1452,8 @@ const douyinPool = [
 
 我今天开始，不穿了。
 
-🎬 创作说明：用「选专业听爸爸的→想去见习被阻拦→第一次反抗」的成长弧线展现觉醒过程。细节具体（攒路费、手抖、爸爸的回复），真实可信。结尾「乖乖女是一个让你忘了自己是谁的壳」比喻精准，收束有力。适合做系列开篇。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「选专业听爸爸的→想去见习被阻拦→第一次反抗」的成长弧线展现觉醒过程。细节具体（攒路费、手抖、爸爸的回复），真实可信。结尾「乖乖女是一个让你忘了自己是谁的壳」比喻精准，收束有力。适合做系列开篇。`},
+  {hotAnalysis:`🔥 爆款标题：
 拒绝焦虑最好的方法：把「我应该」换成「我选择」
 
 📌 原文精华：
@@ -1698,8 +1466,7 @@ const douyinPool = [
 【金句】把应该换成选择，你就拿回了人生的方向盘
 【召唤】引导做「一句话改写练习」
 
-📊 数据表现：点赞48w+，评论4.3w，转发20w，收藏25w`,
-    myCopy: `【减少焦虑】
+📊 数据表现：点赞48w+，评论4.3w，转发20w，收藏25w`,myCopy:`【减少焦虑】
 
 前段时间我特别焦虑。
 
@@ -1736,10 +1503,8 @@ const douyinPool = [
 
 感觉不一样。
 
-🎬 创作说明：从护理大二学生面临的现实压力（考证、实习、毕业）切入，真实可感。用「备忘录写句子」的小细节展现认知转变过程。给出具体可操作的「我选择」句式替换练习，让观众可以立刻模仿。结尾引导互动自然。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：从护理大二学生面临的现实压力（考证、实习、毕业）切入，真实可感。用「备忘录写句子」的小细节展现认知转变过程。给出具体可操作的「我选择」句式替换练习，让观众可以立刻模仿。结尾引导互动自然。`},
+  {hotAnalysis:`🔥 爆款标题：
 如果你总觉得自己不够努力，请看完这个视频
 
 📌 原文精华：
@@ -1752,8 +1517,7 @@ const douyinPool = [
 【金句】每天背10个单词是努力，准时睡觉也是努力
 【召唤】引导分享「你今天做的一件小事」
 
-📊 数据表现：点赞59w+，评论5.6w，转发21w，收藏27w`,
-    myCopy: `【努力焦虑】
+📊 数据表现：点赞59w+，评论5.6w，转发21w，收藏27w`,myCopy:`【努力焦虑】
 
 有段时间我特别自责。
 
@@ -1798,10 +1562,8 @@ const douyinPool = [
 别用别人的尺子量自己。
 你的节奏就是最好的节奏。
 
-🎬 创作说明：用「舍友对比→发现真相」的反转结构揭示「努力≠熬时间」。结合护理学生学习场景，真实可信。结尾「你的节奏就是最好的节奏」温柔收束，不贩卖焦虑，传递「持续比拼命重要」的价值观。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「舍友对比→发现真相」的反转结构揭示「努力≠熬时间」。结合护理学生学习场景，真实可信。结尾「你的节奏就是最好的节奏」温柔收束，不贩卖焦虑，传递「持续比拼命重要」的价值观。`},
+  {hotAnalysis:`🔥 爆款标题：
 一个女生开始变强的征兆：她不再解释自己
 
 📌 原文精华：
@@ -1814,8 +1576,7 @@ const douyinPool = [
 【金句】你的人生不是一道论述题，不需要论证给任何人看
 【召唤】引导分享「你最不想解释的一件事」
 
-📊 数据表现：点赞62w+，评论5.4w，转发26w，收藏28w`,
-    myCopy: `【不解释】
+📊 数据表现：点赞62w+，评论5.4w，转发26w，收藏28w`,myCopy:`【不解释】
 
 过年回家，亲戚问我：
 学的什么专业？
@@ -1858,10 +1619,8 @@ const douyinPool = [
 
 够了。
 
-🎬 创作说明：用「过年亲戚追问」的经典场景引出话题，贴近生活。通过「以前会解释→这次说我喜欢」的对比展现成长。结尾「试试只说三个字：我喜欢」给出极简行动方案。整体节奏明快，不拖沓，适合40-50秒口播。`,
-  },
-  {
-    hotAnalysis: `🔥 爆款标题：
+🎬 创作说明：用「过年亲戚追问」的经典场景引出话题，贴近生活。通过「以前会解释→这次说我喜欢」的对比展现成长。结尾「试试只说三个字：我喜欢」给出极简行动方案。整体节奏明快，不拖沓，适合40-50秒口播。`},
+  {hotAnalysis:`🔥 爆款标题：
 自律不是早上六点起，是你答应自己的事都做到了
 
 📌 原文精华：
@@ -1874,8 +1633,7 @@ const douyinPool = [
 【金句】自律不是你做了多少别人看得到的事，而是你对自己有多诚实
 【召唤】引导分享「你今天兑现的一个小承诺」
 
-📊 数据表现：点赞43w+，评论3.9w，转发15w，收藏20w`,
-    myCopy: `【自律】
+📊 数据表现：点赞43w+，评论3.9w，转发15w，收藏20w`,myCopy:`【自律】
 
 我以前特别羡慕那些自律的人。
 
@@ -1917,26 +1675,23 @@ const douyinPool = [
 
 做到了，你就是自律的人。
 
-🎬 创作说明：用「五点钟闹钟失败→降低目标→坚持三个月过四级」的真实故事线，展现从「模仿他人自律」到「找到自己节奏」的过程。「二十个单词五分钟」极低门槛，让观众觉得「我也可以」。结合护理学生四级考试场景，人设统一。`,
-  }
+🎬 创作说明：用「五点钟闹钟失败→降低目标→坚持三个月过四级」的真实故事线，展现从「模仿他人自律」到「找到自己节奏」的过程。「二十个单词五分钟」极低门槛，让观众觉得「我也可以」。结合护理学生四级考试场景，人设统一。`}
 ];
-function getTodayDouyinIndex(){ const s=new Date('2026-07-27'); s.setHours(0,0,0,0); const t=new Date(); t.setHours(0,0,0,0); const d=Math.floor((t-s)/(24*60*60*1000)); return ((d%douyinPool.length)+douyinPool.length)%douyinPool.length; }
-let dyIdx=getTodayDouyinIndex();
-function renderDouyin(){ if(!douyinPool.length)return; const item=douyinPool[dyIdx]; document.getElementById('dy-analysis').innerHTML=item.hotAnalysis; document.getElementById('dy-my-copy').innerHTML=item.myCopy; const auto=dyIdx===getTodayDouyinIndex(); document.getElementById('dy-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换中')+' · 当前第'+(dyIdx+1)+'/'+douyinPool.length+'组 · 每天0点自动更新下一组'); }
-function refreshDouyin(){ dyIdx=(dyIdx+1)%douyinPool.length; showToast('🔄 切换到第'+(dyIdx+1)+'组！'); renderDouyin(); }
-function copyDouyin(){ navigator.clipboard.writeText(document.getElementById('dy-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 复制失败，请手动复制')); }
+function getTodayDYIndex(){const s=new Date('2026-07-27');s.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);const d=Math.floor((t-s)/(24*60*60*1000));return((d%douyinPool.length)+douyinPool.length)%douyinPool.length}
+let dyIdx=getTodayDYIndex();
+function renderDouyin(){if(!douyinPool.length)return;const it=douyinPool[dyIdx];document.getElementById('dy-analysis').innerHTML=it.hotAnalysis;document.getElementById('dy-my-copy').innerHTML=it.myCopy;const auto=dyIdx===getTodayDYIndex();document.getElementById('dy-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(dyIdx+1)+'/'+douyinPool.length+'组 · 每天0点自动更新')}
+function refreshDouyin(){dyIdx=(dyIdx+1)%douyinPool.length;showToast('🔄 切换到第'+(dyIdx+1)+'组！');renderDouyin()}
+function copyDouyin(){navigator.clipboard.writeText(document.getElementById('dy-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 请手动复制'))}
 
-// ===== 板块3: 小红书文案 =====
-const xhsPool = [
-  {
-    hotAnalysis: `【爆款标题】"原来独居女生真的可以慢慢把自己养好"
+// ===== 小红书 =====
+const xhsPool=[
+  {hotAnalysis:`【爆款标题】"原来独居女生真的可以慢慢把自己养好"
 【内容摘要】分享独居一年来的变化：从外卖依赖到学会做饭、从熬夜到早起、从焦虑到自洽，用before/after对比呈现成长轨迹
 【标题钩子】用"原来...真的可以"制造反差感，"独居女生"精准圈定目标人群，"慢慢把自己养好"引发情感共鸣
 【排版逻辑】短句分行+emoji分段，每段不超过3行，大量留白营造呼吸感，关键句加粗强调
 【图文氛围】暖色调居家照片，书桌/厨房/窗边场景，干净整洁的日系滤镜，传递"一个人也可以很好"的氛围
 【收藏点赞核心】情感共鸣+实用干货双重驱动，独居女生群体强烈认同，对比图增加可信度，文案金句可截图分享
-【数据表现】点赞3.2w+ 收藏2.8w+ 评论1800+`,
-    myCopy: `独居女生的夜晚routine🌙 慢慢把自己养好
+【数据表现】点赞3.2w+ 收藏2.8w+ 评论1800+`,myCopy:`独居女生的夜晚routine🌙 慢慢把自己养好
 
 下课回到小屋
 换上舒服的睡衣
@@ -1955,17 +1710,14 @@ const xhsPool = [
 原来好好照顾自己
 就是最好的成长方式
 
-#独居生活 #女生成长 #治愈日常 #慢慢变好 #护理生日常`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"建议所有女生：把自己当成女儿重新养一遍"
+#独居生活 #女生成长 #治愈日常 #慢慢变好 #护理生日常`},
+  {hotAnalysis:`【爆款标题】"建议所有女生：把自己当成女儿重新养一遍"
 【内容摘要】提出"重新养育自己"的概念，列举具体做法：给自己买小时候想要但没得到的东西、允许自己犯错、不再苛责自己、学会温柔对待自己
 【标题钩子】"建议所有女生"制造权威感和紧迫感，"当成女儿重新养一遍"概念新颖且戳中童年缺失的痛点
 【排版逻辑】数字列表+emoji编号，每一条用一句话概括+一句细节展开，视觉节奏感强
 【图文氛围】柔和粉色系配图，手写字体/便签纸风格，营造被温柔对待的感觉
 【收藏点赞核心】心理学概念+可执行清单，既提供情绪价值又给出行动指南，适合反复阅读和分享
-【数据表现】点赞5.6w+ 收藏4.2w+ 评论3200+`,
-    myCopy: `我在用这5件小事 重新把自己养一遍🌷
+【数据表现】点赞5.6w+ 收藏4.2w+ 评论3200+`,myCopy:`我在用这5件小事 重新把自己养一遍🌷
 
 ① 给自己买一束花💐
 不需要理由 路过花店就带一束回家
@@ -1985,17 +1737,14 @@ const xhsPool = [
 你也要记得
 好好爱这个正在努力长大的自己呀
 
-#女生成长 #爱自己 #自我提升 #治愈系 #重新养自己一遍`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"坚持早起的第100天，我好像换了一个人"
+#女生成长 #爱自己 #自我提升 #治愈系 #重新养自己一遍`},
+  {hotAnalysis:`【爆款标题】"坚持早起的第100天，我好像换了一个人"
 【内容摘要】记录100天早起带来的变化：皮肤变好、心态平稳、做事效率翻倍、拥有了"掌控感"，附每日早起时间线
 【标题钩子】"第100天"数字锚定制造仪式感，"好像换了一个人"用夸张表达勾起好奇心
 【排版逻辑】时间线叙事+对比呈现，早起前vs早起后分两栏对比，视觉冲击力强
 【图文氛围】清晨阳光洒在书桌上的照片，咖啡杯+笔记本+闹钟，暖黄调温馨氛围
 【收藏点赞核心】数字打卡型内容自带传播力，时间线模板可直接复用，结果导向的真实变化最有说服力
-【数据表现】点赞4.8w+ 收藏3.5w+ 评论2500+`,
-    myCopy: `护理生的5:30早起日常🌅 掌控生活真的会上瘾
+【数据表现】点赞4.8w+ 收藏3.5w+ 评论2500+`,myCopy:`护理生的5:30早起日常🌅 掌控生活真的会上瘾
 
 ⏰ 5:30 闹钟响 不赖床直接起
 🧘 5:40 铺好瑜伽垫 做15分钟晨间拉伸
@@ -2011,17 +1760,14 @@ const xhsPool = [
 清晨这两个小时 是我给自己的礼物
 安静 从容 只属于我
 
-#早起打卡 #自律生活 #护理生 #女生成长 #晨间日常`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"原来情绪稳定，是一个人最好的风水"
+#早起打卡 #自律生活 #护理生 #女生成长 #晨间日常`},
+  {hotAnalysis:`【爆款标题】"原来情绪稳定，是一个人最好的风水"
 【内容摘要】分享从情绪波动到逐渐平静的心路历程，给出5个保持情绪稳定的方法：降低期待、课题分离、接纳情绪、转移注意力、写情绪日记
 【标题钩子】"原来...是最好的风水"制造认知刷新感，"情绪稳定"是近年高热度关键词
 【排版逻辑】金句开场→痛点描述→方法分条→金句收尾，环环相扣的阅读体验
 【图文氛围】简约干净的米白色调，配自然风景或安静角落的照片，传递平和治愈感
 【收藏点赞核心】情绪管理是普适痛点，方法具体可执行，金句适合截图保存反复观看
-【数据表现】点赞6.1w+ 收藏5.3w+ 评论4100+`,
-    myCopy: `一个人住了半年才明白的事：情绪稳定太重要了🌿
+【数据表现】点赞6.1w+ 收藏5.3w+ 评论4100+`,myCopy:`一个人住了半年才明白的事：情绪稳定太重要了🌿
 
 以前的我
 会因为室友一句话想一整天
@@ -2041,17 +1787,14 @@ const xhsPool = [
 
 温柔地接住自己 比什么都重要
 
-#情绪管理 #女生成长 #独居生活 #治愈系 #情绪稳定`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"普通女生的书桌布置，治愈了我所有的不开心"
+#情绪管理 #女生成长 #独居生活 #治愈系 #情绪稳定`},
+  {hotAnalysis:`【爆款标题】"普通女生的书桌布置，治愈了我所有的不开心"
 【内容摘要】展示改造书桌的过程和成果，从杂乱到整洁温馨，分享平价好物清单和布置思路
 【标题钩子】"普通女生"降低距离感，"治愈不开心"直击情绪痛点，书桌是独居生活的高频场景
 【排版逻辑】改造前后对比→好物分类推荐→布置小tips，图文搭配引导阅读节奏
 【图文氛围】精心布置的书桌特写，串灯/香薰/手账/鲜花/文具，暖调温馨的ins风
 【收藏点赞核心】视觉冲击力强+平价好物信息量大，收藏率极高，书桌布置是可复制的模板型内容
-【数据表现】点赞7.2w+ 收藏6.8w+ 评论3900+`,
-    myCopy: `预算200r 把宿舍书桌改造成治愈小角落✨
+【数据表现】点赞7.2w+ 收藏6.8w+ 评论3900+`,myCopy:`预算200r 把宿舍书桌改造成治愈小角落✨
 
 新学期换了上床下桌
 终于拥有自己的小空间啦
@@ -2069,17 +1812,14 @@ const xhsPool = [
 打开台灯 点上香薰
 就觉得 一个人的生活也很美好呀
 
-#书桌改造 #宿舍改造 #独居生活 #护理生 #治愈角落`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"劝所有女生：不要把任何人当成你的精神支柱"
+#书桌改造 #宿舍改造 #独居生活 #护理生 #治愈角落`},
+  {hotAnalysis:`【爆款标题】"劝所有女生：不要把任何人当成你的精神支柱"
 【内容摘要】讲述从依赖他人到精神独立的过程，核心观点：安全感只能自己给，精神寄托放在任何人身上都会失望
 【标题钩子】"劝所有女生"强势开场制造关注，"精神支柱"戳中很多女生在感情/友谊中的依赖心态
 【排版逻辑】故事引入→痛点共鸣→观点输出→金句收尾，层层递进引导读者代入
 【图文氛围】简约冷淡风配图，纯色背景+手写文字卡片，传递独立清醒的气质
 【收藏点赞核心】观点戳中当代女性的核心焦虑，金句密集适合截图分享，引发评论区大量讨论
-【数据表现】点赞8.5w+ 收藏5.1w+ 评论6700+`,
-    myCopy: `20岁才明白的事：不要期待任何人来拯救你💭
+【数据表现】点赞8.5w+ 收藏5.1w+ 评论6700+`,myCopy:`20岁才明白的事：不要期待任何人来拯救你💭
 
 小时候总幻想有一个盖世英雄
 后来发现
@@ -2097,17 +1837,14 @@ const xhsPool = [
 但这种"靠自己"的踏实感
 是任何人都给不了的安全感
 
-#女生成长 #清醒三观 #精神独立 #独居生活 #自我提升`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"那些看起来高级的女生，都在偷偷做这6件事"
+#女生成长 #清醒三观 #精神独立 #独居生活 #自我提升`},
+  {hotAnalysis:`【爆款标题】"那些看起来高级的女生，都在偷偷做这6件事"
 【内容摘要】分享提升气质的6个日常习惯：阅读、体态管理、精简社交、情绪不外露、持续学习、好好穿衣
 【标题钩子】"看起来高级"精准锚定女生审美追求，"偷偷做"制造信息差和好奇心
 【排版逻辑】数字清单型，每条配一句话解释+一个具体做法，阅读节奏轻快
 【图文氛围】法式简约风配图，质感面料/书页/咖啡/鲜花，低饱和度高级感色调
 【收藏点赞核心】"变高级"是女生群体刚需，清单式内容收藏率高，每条都可单独实践
-【数据表现】点赞4.3w+ 收藏5.7w+ 评论2800+`,
-    myCopy: `普通女生如何看起来很"贵"？6个不花钱的习惯💫
+【数据表现】点赞4.3w+ 收藏5.7w+ 评论2800+`,myCopy:`普通女生如何看起来很"贵"？6个不花钱的习惯💫
 
 ① 说话放慢语速
 不急不躁 让别人感受到你的从容
@@ -2130,17 +1867,14 @@ const xhsPool = [
 
 我们都可以 慢慢靠近自己喜欢的样子
 
-#女生成长 #气质养成 #自我提升 #慢慢变好 #普通女生`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"独居半年后我才发现：孤独不是惩罚，是礼物"
+#女生成长 #气质养成 #自我提升 #慢慢变好 #普通女生`},
+  {hotAnalysis:`【爆款标题】"独居半年后我才发现：孤独不是惩罚，是礼物"
 【内容摘要】重新定义"孤独"——从害怕独处到享受独处，分享独居带来的自我认知提升和内心的丰盈感
 【标题钩子】"独居半年"时间节点引发好奇，"孤独不是惩罚是礼物"认知反转吸引点击
 【排版逻辑】认知变化的时间线叙事，从"害怕"到"接受"到"享受"三阶段递进
 【图文氛围】独处场景的摄影：窗边看书、一个人做饭、泡澡、看夕阳，安静温柔的氛围
 【收藏点赞核心】重新定义孤独的概念提供情绪价值，独居群体的强烈认同感驱动互动
-【数据表现】点赞5.9w+ 收藏4.6w+ 评论3500+`,
-    myCopy: `一个人住之后 我终于不怕孤独了🌙
+【数据表现】点赞5.9w+ 收藏4.6w+ 评论3500+`,myCopy:`一个人住之后 我终于不怕孤独了🌙
 
 以前觉得孤独很可怕
 一个人吃饭尴尬
@@ -2162,17 +1896,14 @@ const xhsPool = [
 这样的时光 不是孤独
 是和自己好好相处的礼物
 
-#独居生活 #女生成长 #享受独处 #治愈系 #一个人也要好好生活`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"戒掉手机后，我的人生好像开挂了"
+#独居生活 #女生成长 #享受独处 #治愈系 #一个人也要好好生活`},
+  {hotAnalysis:`【爆款标题】"戒掉手机后，我的人生好像开挂了"
 【内容摘要】记录戒掉手机成瘾的过程和变化：注意力恢复、睡眠质量提升、多了大量自由时间、焦虑感下降，附具体操作方法
 【标题钩子】"戒掉手机"击中当代人的普遍痛点，"人生开挂"夸张表达制造期待感
 【排版逻辑】问题描述→解决方案→变化结果，逻辑清晰可操作性强
 【图文氛围】放下手机的生活场景：手写笔记、户外散步、手作、看书，真实自然的生活感
 【收藏点赞核心】手机成瘾是全民痛点，提供的方法具体可执行，收藏后反复参考
-【数据表现】点赞9.3w+ 收藏8.7w+ 评论5200+`,
-    myCopy: `一个普通女生的数字戒断实验📵 效果惊人
+【数据表现】点赞9.3w+ 收藏8.7w+ 评论5200+`,myCopy:`一个普通女生的数字戒断实验📵 效果惊人
 
 每天使用手机8h+的护理生本人
 决定给自己做一次"数字戒断"
@@ -2193,17 +1924,14 @@ const xhsPool = [
 原来不是生活无聊
 是手机偷走了我的注意力
 
-#自律生活 #戒掉手机 #女生成长 #自我提升 #慢慢变好`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"突然就悟了：变好的过程都不太舒服"
+#自律生活 #戒掉手机 #女生成长 #自我提升 #慢慢变好`},
+  {hotAnalysis:`【爆款标题】"突然就悟了：变好的过程都不太舒服"
 【内容摘要】分享成长过程中那些"不舒服但值得"的瞬间，核心观点：成长就是不断突破舒适区，所有看起来轻松的好结果背后都有咬牙坚持的时刻
 【标题钩子】"突然就悟了"制造顿悟感，"变好的过程都不太舒服"是戳中大多数人的真相
 【排版逻辑】观点抛出→个人经历佐证→普适化总结→激励性收尾，情绪层层堆叠
 【图文氛围】运动/学习/工作的真实场景，不刻意美化的记录感，真实最有力量
 【收藏点赞核心】真相型内容自带传播力，"不舒服=在变好"的正向认知提供情绪价值
-【数据表现】点赞6.7w+ 收藏4.3w+ 评论4100+`,
-    myCopy: `坚持不下去的时候 就告诉自己：不舒服就是在变好🌱
+【数据表现】点赞6.7w+ 收藏4.3w+ 评论4100+`,myCopy:`坚持不下去的时候 就告诉自己：不舒服就是在变好🌱
 
 学护理真的不轻松
 背书背到崩溃 实操练到手抖
@@ -2222,17 +1950,14 @@ const xhsPool = [
 别怕慢 怕的是停在原地
 我们一起 慢慢走
 
-#女生成长 #自律生活 #护理生日常 #慢慢变好 #坚持`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"二十几岁，请把自己当成一个品牌来经营"
+#女生成长 #自律生活 #护理生日常 #慢慢变好 #坚持`},
+  {hotAnalysis:`【爆款标题】"二十几岁，请把自己当成一个品牌来经营"
 【内容摘要】提出"个人品牌"概念在生活中的应用：形象管理、能力积累、社交口碑、情绪价值输出，具体可执行的日常行动清单
 【标题钩子】"当成品牌来经营"概念新颖，"二十几岁"精准圈定年轻女性，品牌化思维符合当下趋势
 【排版逻辑】概念解释→维度拆解→行动清单，结构化强，适合收藏反复阅读
 【图文氛围】简约职场风，干净利落的排版，传递专业感和向上生长的能量
 【收藏点赞核心】框架型内容收藏率极高，可操作性强，长期有效的内容资产
-【数据表现】点赞4.5w+ 收藏6.2w+ 评论2100+`,
-    myCopy: `20岁的普通女生 开始把自己当成品牌来经营🌸
+【数据表现】点赞4.5w+ 收藏6.2w+ 评论2100+`,myCopy:`20岁的普通女生 开始把自己当成品牌来经营🌸
 
 🏷️ 形象管理
 不一定要多漂亮 但要干净得体
@@ -2254,17 +1979,14 @@ const xhsPool = [
 是一天一天经营出来的
 你值得被好好对待 包括被自己
 
-#女生成长 #自我提升 #个人品牌 #慢慢变好 #护理生`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"后来我才知道：真正厉害的人，都把情绪调成了静音模式"
+#女生成长 #自我提升 #个人品牌 #慢慢变好 #护理生`},
+  {hotAnalysis:`【爆款标题】"后来我才知道：真正厉害的人，都把情绪调成了静音模式"
 【内容摘要】分享从"爱倾诉"到"学会沉默"的转变，核心观点：真正成熟的标志是不再把情绪挂在脸上，而是默默消化然后继续往前走
 【标题钩子】"后来我才知道"制造认知更新感，"情绪调成静音模式"比喻生动易记
 【排版逻辑】前后对比叙事，用具体场景展现变化，金句密度高
 【图文氛围】极简冷淡风，大面积留白，黑白灰主色调，传递沉稳克制的气质
 【收藏点赞核心】情绪管理是长期热门话题，金句可截图传播，引发评论区共鸣讨论
-【数据表现】点赞7.8w+ 收藏5.4w+ 评论4800+`,
-    myCopy: `一个人独居后 我学会了把情绪调成静音🌙
+【数据表现】点赞7.8w+ 收藏5.4w+ 评论4800+`,myCopy:`一个人独居后 我学会了把情绪调成静音🌙
 
 以前遇到一点事就想找人倾诉
 发朋友圈 发消息 恨不得全世界都知道
@@ -2282,17 +2004,14 @@ const xhsPool = [
 安静地处理好自己的情绪
 是成年人最顶级的自律
 
-#情绪管理 #女生成长 #独居生活 #自律 #慢慢变好`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"大学四年，我靠这3个方法实现了逆袭"
+#情绪管理 #女生成长 #独居生活 #自律 #慢慢变好`},
+  {hotAnalysis:`【爆款标题】"大学四年，我靠这3个方法实现了逆袭"
 【内容摘要】分享从普通学生到优秀毕业生的成长路径：目标拆解法、时间块管理、复利思维，每个方法配具体案例
 【标题钩子】"大学四年"时间跨度制造信任感，"逆袭"是学生群体高关注词，"3个方法"控制信息量降低阅读门槛
 【排版逻辑】方法分条→案例佐证→可执行步骤，框架清晰适合笔记型收藏
 【图文氛围】学习场景：图书馆、笔记、计划本、咖啡，学院风滤镜，传递踏实努力的气息
 【收藏点赞核心】方法论型内容收藏价值高，可迁移应用到不同场景，学生群体刚需
-【数据表现】点赞5.2w+ 收藏7.1w+ 评论2900+`,
-    myCopy: `护理生的大二逆袭计划📋 普通女孩也能闪闪发光
+【数据表现】点赞5.2w+ 收藏7.1w+ 评论2900+`,myCopy:`护理生的大二逆袭计划📋 普通女孩也能闪闪发光
 
 📌 方法一：把大目标拆成小任务
 比如"学好解剖学"→每天背20个解剖名词→每周画一张结构图→每月做一次自测
@@ -2310,17 +2029,14 @@ const xhsPool = [
 不追求一步登天
 只追求每天比昨天好一点点
 
-#学习打卡 #护理生 #女生成长 #大学生活 #逆袭计划`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"真心建议：不要把精力花在不值得的人身上"
+#学习打卡 #护理生 #女生成长 #大学生活 #逆袭计划`},
+  {hotAnalysis:`【爆款标题】"真心建议：不要把精力花在不值得的人身上"
 【内容摘要】分享从"讨好型人格"到"学会筛选关系"的转变，核心观点：成年人的社交是做减法，把有限的精力和温柔留给值得的人
 【标题钩子】"真心建议"增加真诚感和权威感，"不值得的人"戳中人际关系中的普遍消耗痛点
 【排版逻辑】故事引入→痛点共鸣→价值观输出→行动建议，有温度的说理型内容
 【图文氛围】自然光拍摄，独处/读书/喝茶场景，传递"精简社交后更自在"的状态
 【收藏点赞核心】社交关系是女生群体高频痛点，"断舍离"概念可迁移到人际关系，金句传播性强
-【数据表现】点赞6.4w+ 收藏4.9w+ 评论5300+`,
-    myCopy: `大二开始 我学会了给朋友圈做减法🤍
+【数据表现】点赞6.4w+ 收藏4.9w+ 评论5300+`,myCopy:`大二开始 我学会了给朋友圈做减法🤍
 
 以前总觉得朋友越多越好
 拼命融入各种圈子
@@ -2339,17 +2055,14 @@ const xhsPool = [
 把温柔留给对的人
 一个人也没关系 至少不累
 
-#女生成长 #社交断舍离 #清醒三观 #独居生活 #人际关系`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"那些突然想通的瞬间，治愈了我所有的内耗"
+#女生成长 #社交断舍离 #清醒三观 #独居生活 #人际关系`},
+  {hotAnalysis:`【爆款标题】"那些突然想通的瞬间，治愈了我所有的内耗"
 【内容摘要】收集生活中突然想通的瞬间合集：别人怎么看你跟你没关系、不完美才是常态、比较是偷走快乐的小偷……每条一句话+简短解读
 【标题钩子】"突然想通的瞬间"唤起读者自身经历，"内耗"是当代年轻人高频痛点
 【排版逻辑】语录式排列，每条独立成段，视觉轻盈适合碎片化阅读
 【图文氛围】生活细节摄影：阳光透过窗帘、雨滴在窗户、猫咪睡觉、热茶冒气，温柔松弛
 【收藏点赞核心】每一条都是金句，可单独截图传播，合集形式收藏率高，情绪共鸣强
-【数据表现】点赞8.9w+ 收藏7.6w+ 评论5600+`,
-    myCopy: `最近突然想通的7件事 整个人都轻松了🕊️
+【数据表现】点赞8.9w+ 收藏7.6w+ 评论5600+`,myCopy:`最近突然想通的7件事 整个人都轻松了🕊️
 
 1. 别人怎么看你 跟你没有关系
 你的人生 不需要活给别人看
@@ -2374,17 +2087,14 @@ const xhsPool = [
 
 晚安 今天也辛苦啦
 
-#治愈系 #停止内耗 #女生成长 #独居生活 #温柔文案`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"普通女生的护肤routine，不贵但很有效"
+#治愈系 #停止内耗 #女生成长 #独居生活 #温柔文案`},
+  {hotAnalysis:`【爆款标题】"普通女生的护肤routine，不贵但很有效"
 【内容摘要】分享平价护肤流程和理念：精简护肤、了解成分、防晒第一、不盲目跟风，附早晚routine和好物清单
 【标题钩子】"普通女生"降低门槛，"不贵但有效"戳中预算有限群体的核心需求
 【排版逻辑】护肤理念→早晚流程→好物清单→避坑tips，信息结构化适合收藏
 【图文氛围】梳妆台/浴室场景，护肤品整齐排列，干净清爽的日系风格
 【收藏点赞核心】护肤是女生刚需话题，平价推荐信息量大，流程可直接复制
-【数据表现】点赞4.1w+ 收藏5.9w+ 评论3200+`,
-    myCopy: `护理生的精简护肤思路🧴 皮肤越来越好了
+【数据表现】点赞4.1w+ 收藏5.9w+ 评论3200+`,myCopy:`护理生的精简护肤思路🧴 皮肤越来越好了
 
 学护理之后才知道
 皮肤需要的真的不多
@@ -2405,17 +2115,14 @@ const xhsPool = [
 好好护肤不是为了取悦谁
 是喜欢镜子里的自己呀
 
-#精简护肤 #护肤routine #学生党护肤 #女生成长 #护理生`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"30天自我重启计划：用一个月的时间，把自己从泥潭里拉出来"
+#精简护肤 #护肤routine #学生党护肤 #女生成长 #护理生`},
+  {hotAnalysis:`【爆款标题】"30天自我重启计划：用一个月的时间，把自己从泥潭里拉出来"
 【内容摘要】30天分阶段自我重建计划：第1-10天调整作息饮食，第11-20天恢复学习和运动，第21-30天建立新习惯，每阶段有具体目标和打卡项
 【标题钩子】"30天"时间锚定降低执行压力，"自我重启"概念新颖，"从泥潭里拉出来"画面感强戳中低谷期人群
 【排版逻辑】阶段划分+每日行动清单，表格化呈现清晰直观，适合打印执行
 【图文氛围】打卡表格/手账/运动记录，真实记录过程感，不完美但真诚
 【收藏点赞核心】完整可执行的30天计划收藏率极高，分阶段设计降低执行难度
-【数据表现】点赞7.5w+ 收藏9.2w+ 评论4600+`,
-    myCopy: `一个月把自己从低谷拉回来 我的重启计划📝
+【数据表现】点赞7.5w+ 收藏9.2w+ 评论4600+`,myCopy:`一个月把自己从低谷拉回来 我的重启计划📝
 
 🌱 第一周：先让身体恢复正常
 · 每天12点前睡觉 7点起床
@@ -2439,17 +2146,14 @@ const xhsPool = [
 · 奖励自己一份小礼物
 
 任何时候重新开始都不晚
-#自律生活 #重启计划 #女生成长 #慢慢变好 #治愈系`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"女生一定要有自己的房间，哪怕只是租的"
+#自律生活 #重启计划 #女生成长 #慢慢变好 #治愈系`},
+  {hotAnalysis:`【爆款标题】"女生一定要有自己的房间，哪怕只是租的"
 【内容摘要】分享拥有独立空间后的心理变化：从被他人节奏影响到完全掌控自己的生活，独立空间=独立人格的物理基础
 【标题钩子】"一定要有"强势观点输出，"哪怕只是租的"降低门槛，伍尔夫经典观点引发现代共鸣
 【排版逻辑】观点抛出→个人经历→深层解读→价值升华，有思想深度的生活类内容
 【图文氛围】小而美的出租屋：阳光、绿植、整洁床铺、书桌，温馨真实的独居场景
 【收藏点赞核心】击中年轻女性对独立空间的渴望，情绪价值+观点价值双高
-【数据表现】点赞5.8w+ 收藏4.4w+ 评论3800+`,
-    myCopy: `搬出来住之后才懂：女生真的需要一个属于自己的空间🏠
+【数据表现】点赞5.8w+ 收藏4.4w+ 评论3800+`,myCopy:`搬出来住之后才懂：女生真的需要一个属于自己的空间🏠
 
 租的小单间不大 不到20平
 但每一件东西都是我自己选的
@@ -2470,17 +2174,14 @@ const xhsPool = [
 是独立的开始
 也是好好爱自己的第一步
 
-#独居生活 #女生成长 #出租屋改造 #独立女性 #一个人的生活`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"后来才明白：慢慢来，是一种诚意"
+#独居生活 #女生成长 #出租屋改造 #独立女性 #一个人的生活`},
+  {hotAnalysis:`【爆款标题】"后来才明白：慢慢来，是一种诚意"
 【内容摘要】反思快节奏时代下的焦虑，核心观点：愿意花时间慢慢做好一件事、慢慢了解一个人、慢慢变好，本身就是一种珍贵的态度
 【标题钩子】"后来才明白"认知升级感，"慢慢来是诚意"观点新颖且治愈，反内卷情绪共鸣
 【排版逻辑】金句开场→现象观察→价值观输出→温柔收尾，全篇金句密度极高
 【图文氛围】慢生活场景：手冲咖啡、手写信、缝纫、养花、散步，胶片质感温暖复古
 【收藏点赞核心】反焦虑情绪精准击中当代年轻人痛点，金句密集传播性强
-【数据表现】点赞9.8w+ 收藏6.3w+ 评论7100+`,
-    myCopy: `这个时代太快了 但我想慢一点🌿
+【数据表现】点赞9.8w+ 收藏6.3w+ 评论7100+`,myCopy:`这个时代太快了 但我想慢一点🌿
 
 不急着变厉害
 不急着找到答案
@@ -2499,17 +2200,14 @@ const xhsPool = [
 慢慢来的诚意
 是对自己最大的温柔
 
-#慢慢来 #治愈系 #女生成长 #反焦虑 #独居生活`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"坚持写感恩日记100天后，我变了一个人"
+#慢慢来 #治愈系 #女生成长 #反焦虑 #独居生活`},
+  {hotAnalysis:`【爆款标题】"坚持写感恩日记100天后，我变了一个人"
 【内容摘要】分享感恩日记的写法和对心态的改变：从关注"缺什么"到关注"有什么"，列出具体记录示例和写作模板
 【标题钩子】"100天"数字仪式感，"变了一个人"反差感强，感恩日记是热门自我提升工具
 【排版逻辑】为什么开始→怎么写→变化是什么→模板分享，完整闭环
 【图文氛围】手账/日记本特写，手写字迹，贴纸和胶带装饰，温暖手作感
 【收藏点赞核心】感恩日记模板可直接套用，正能量内容传播力强
-【数据表现】点赞5.4w+ 收藏6.6w+ 评论2700+`,
-    myCopy: `写感恩日记的第45天 生活真的在变好📔
+【数据表现】点赞5.4w+ 收藏6.6w+ 评论2700+`,myCopy:`写感恩日记的第45天 生活真的在变好📔
 
 每天的格式很简单：
 📝 今天感恩的三件小事
@@ -2533,17 +2231,14 @@ const xhsPool = [
 生活其实没变 但我看生活的眼光变了
 原来每一天都有值得被记住的美好
 
-#感恩日记 #女生成长 #自律生活 #治愈系 #慢慢变好`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"突然就放下了：不再向任何人证明自己"
+#感恩日记 #女生成长 #自律生活 #治愈系 #慢慢变好`},
+  {hotAnalysis:`【爆款标题】"突然就放下了：不再向任何人证明自己"
 【内容摘要】分享从"证明者心态"到"自我认可"的转变，核心观点：当你不再需要向任何人证明自己的时候，才是真正自由的开始
 【标题钩子】"突然就放下了"制造顿悟感，"不再证明自己"戳中讨好型人格和内耗者的核心痛点
 【排版逻辑】从具体场景切入→心理剖析→认知转变→自由宣言，层层深入的觉醒叙事
 【图文氛围】自由开阔的场景：天空、大海、山顶、田野，大景别传递"放下后的开阔"
 【收藏点赞核心】观点击中当代年轻人的精神困境，自由宣言式金句传播力强
-【数据表现】点赞8.2w+ 收藏5.7w+ 评论6200+`,
-    myCopy: `最近学会了一件很重要的事：不需要向任何人证明自己🕊️
+【数据表现】点赞8.2w+ 收藏5.7w+ 评论6200+`,myCopy:`最近学会了一件很重要的事：不需要向任何人证明自己🕊️
 
 不需要证明你很努力
 不需要证明你过得很好
@@ -2560,17 +2255,14 @@ const xhsPool = [
 我做我的月亮
 不需要借谁的光
 
-#女生成长 #清醒三观 #自我接纳 #治愈系 #独居生活`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"每天冥想10分钟，三个月后我的变化让室友都惊讶"
+#女生成长 #清醒三观 #自我接纳 #治愈系 #独居生活`},
+  {hotAnalysis:`【爆款标题】"每天冥想10分钟，三个月后我的变化让室友都惊讶"
 【内容摘要】分享冥想入门方法和坚持后的变化：焦虑减轻、专注力提升、睡眠改善、情绪更稳定，附新手冥想指南
 【标题钩子】"10分钟"低门槛降低尝试成本，"三个月"时间可信度，"室友都惊讶"社交证明
 【排版逻辑】冥想是什么→怎么开始→坚持的变化→常见问题解答，入门科普+个人体验结合
 【图文氛围】冥想角落：瑜伽垫、蜡烛、绿植、清晨阳光，极简安静的空间感
 【收藏点赞核心】冥想入门指南型内容收藏率高，可操作性强，身心健康类长期热门
-【数据表现】点赞4.7w+ 收藏5.3w+ 评论2400+`,
-    myCopy: `护理生自用的晨间冥想指南🧘‍♀️ 每天只要10分钟
+【数据表现】点赞4.7w+ 收藏5.3w+ 评论2400+`,myCopy:`护理生自用的晨间冥想指南🧘‍♀️ 每天只要10分钟
 
 一开始也觉得冥想很玄
 直到期末焦虑到失眠才尝试
@@ -2590,17 +2282,14 @@ const xhsPool = [
 不一定要盘腿 不一定要焚香
 找一个舒服的姿势 闭上眼睛就好
 
-#冥想入门 #自律生活 #治愈系 #女生成长 #护理生日常`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"我用了两年时间，把自己从自卑里一点一点捞出来"
+#冥想入门 #自律生活 #治愈系 #女生成长 #护理生日常`},
+  {hotAnalysis:`【爆款标题】"我用了两年时间，把自己从自卑里一点一点捞出来"
 【内容摘要】分享从重度自卑到自我接纳的心路历程，具体方法：停止自我攻击、练习自我肯定、建立小成就正反馈、接受不完美的自己
 【标题钩子】"两年时间"真实可信，"从自卑里捞出来"画面感强，自卑是广泛存在的心理痛点
 【排版逻辑】现状描述→转折点→具体方法→现在的状态，完整的成长叙事
 【图文氛围】从暗调到亮调的渐变配图，象征从自卑到自信的过程，人物局部（手、背影）不露脸
 【收藏点赞核心】自卑治愈是长期热门话题，方法可执行，真诚的个人经历最打动人
-【数据表现】点赞8.7w+ 收藏6.1w+ 评论5400+`,
-    myCopy: `从自卑到自洽 普通女孩用了两年🌷
+【数据表现】点赞8.7w+ 收藏6.1w+ 评论5400+`,myCopy:`从自卑到自洽 普通女孩用了两年🌷
 
 以前的我：
 不敢在人多的时候说话
@@ -2627,17 +2316,14 @@ const xhsPool = [
 现在的我 依然不完美
 但我开始喜欢这个不完美的自己了
 
-#女生成长 #自卑到自信 #自我接纳 #慢慢变好 #治愈系`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"女生最顶级的自律：及时止损"
+#女生成长 #自卑到自信 #自我接纳 #慢慢变好 #治愈系`},
+  {hotAnalysis:`【爆款标题】"女生最顶级的自律：及时止损"
 【内容摘要】讨论在感情、工作、社交中"及时止损"的重要性，给出判断标准和行动指南，核心观点：沉没成本不是成本，继续消耗才是
 【标题钩子】"最顶级的自律"提升高度，"及时止损"经济学概念应用于生活场景新颖有力
 【排版逻辑】场景分类→判断标准→止损指南→金句收尾，理性与感性结合的实用内容
 【图文氛围】极简冷淡风，黑白灰+一个亮色点缀，传递果断克制的态度
 【收藏点赞核心】"止损"概念实用性强，适用场景广泛，金句传播力强
-【数据表现】点赞7.1w+ 收藏5.8w+ 评论4900+`,
-    myCopy: `20岁最重要的觉醒：在任何关系里 都要学会及时止损🖤
+【数据表现】点赞7.1w+ 收藏5.8w+ 评论4900+`,myCopy:`20岁最重要的觉醒：在任何关系里 都要学会及时止损🖤
 
 什么情况下该止损：
 
@@ -2657,17 +2343,14 @@ const xhsPool = [
 及时止损不是绝情
 是终于学会了保护自己
 
-#女生成长 #清醒三观 #及时止损 #自我提升 #人际关系`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"我的周末独居vlog：不社交不消费，一个人也闪闪发光"
+#女生成长 #清醒三观 #及时止损 #自我提升 #人际关系`},
+  {hotAnalysis:`【爆款标题】"我的周末独居vlog：不社交不消费，一个人也闪闪发光"
 【内容摘要】记录一个零消费零社交的周末：打扫卫生、做饭、看书、运动、看一部电影、早睡，展示低欲望高质量独处生活
 【标题钩子】"不社交不消费"反消费主义吸引关注，"闪闪发光"制造反差
 【排版逻辑】时间线叙事，从早到晚流水账式记录，真实感和陪伴感强
 【图文氛围】周末宅家场景：阳光、床铺、厨房、书、咖啡，日系清新生活感
 【收藏点赞核心】低消费生活方式的共鸣，独居vlog型内容陪伴感强
-【数据表现】点赞5.5w+ 收藏4.1w+ 评论3100+`,
-    myCopy: `零消费周末记录📝 一个人宅在家也太快乐了
+【数据表现】点赞5.5w+ 收藏4.1w+ 评论3100+`,myCopy:`零消费周末记录📝 一个人宅在家也太快乐了
 
 ☀️ 9:00 自然醒 不设闹钟
 拉开窗帘让阳光进来
@@ -2695,17 +2378,14 @@ const xhsPool = [
 不花钱 不社交
 但这一天 我真的好快乐
 
-#独居生活 #周末日常 #低消费生活 #治愈系 #女生成长`,
-  },
-  {
-    hotAnalysis: `【爆款标题】"我发现了一个很绝的心态：允许一切发生"
+#独居生活 #周末日常 #低消费生活 #治愈系 #女生成长`},
+  {hotAnalysis:`【爆款标题】"我发现了一个很绝的心态：允许一切发生"
 【内容摘要】分享"允许一切发生"心态带来的变化：不再对抗不可控的事情，不再预设灾难性结果，学会臣服和接受，反而获得了真正的自由
 【标题钩子】"很绝的心态"口语化表达拉近距离，"允许一切发生"是当下热门的心灵疗愈概念
 【排版逻辑】概念解释→实践体验→前后对比→金句总结，层层深入
 【图文氛围】自然元素：流水、落叶、云朵、月光，传递顺应自然的哲学感
 【收藏点赞核心】心理学概念生活化应用，情绪价值极高，金句适合反复阅读
-【数据表现】点赞8.4w+ 收藏6.9w+ 评论4300+`,
-    myCopy: `学会"允许一切发生"之后 我整个人都松弛了🌊
+【数据表现】点赞8.4w+ 收藏6.9w+ 评论4300+`,myCopy:`学会"允许一切发生"之后 我整个人都松弛了🌊
 
 允许计划被打乱
 允许自己偶尔做不到
@@ -2727,113 +2407,17 @@ const xhsPool = [
 松弛感不是什么都不在乎
 是尽力之后的不强求
 
-#治愈系 #松弛感 #女生成长 #允许一切发生 #慢慢变好`,
-  }
+#治愈系 #松弛感 #女生成长 #允许一切发生 #慢慢变好`}
 ];
-function getTodayXHSIndex(){ const s=new Date('2026-07-27'); s.setHours(0,0,0,0); const t=new Date(); t.setHours(0,0,0,0); const d=Math.floor((t-s)/(24*60*60*1000)); return ((d%xhsPool.length)+xhsPool.length)%xhsPool.length; }
+function getTodayXHSIndex(){const s=new Date('2026-07-27');s.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);const d=Math.floor((t-s)/(24*60*60*1000));return((d%xhsPool.length)+xhsPool.length)%xhsPool.length}
 let xhsIdx=getTodayXHSIndex();
-function renderXHS(){ if(!xhsPool.length)return; const item=xhsPool[xhsIdx]; document.getElementById('xhs-analysis').innerHTML=item.hotAnalysis; document.getElementById('xhs-my-copy').innerHTML=item.myCopy; const auto=xhsIdx===getTodayXHSIndex(); document.getElementById('xhs-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换中')+' · 当前第'+(xhsIdx+1)+'/'+xhsPool.length+'组 · 每天0点自动更新'); }
-function refreshXHS(){ xhsIdx=(xhsIdx+1)%xhsPool.length; showToast('🔄 切换到第'+(xhsIdx+1)+'组！'); renderXHS(); }
-function copyXHS(){ navigator.clipboard.writeText(document.getElementById('xhs-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 复制失败')); }
-
-// ===== 板块4: 英语四级 =====
-const studyPlan=[
-  {day:'周一',icon:'📚',theme:'词汇+听力',task:'背10词\n听1段短对话'},
-  {day:'周二',icon:'🎧',theme:'听力+口语',task:'精听短对话\n跟读模仿'},
-  {day:'周三',icon:'📖',theme:'阅读+词汇',task:'仔细阅读\n长难句+新词'},
-  {day:'周四',icon:'✍️',theme:'写作+翻译',task:'模板句型\n翻译5句'},
-  {day:'周五',icon:'🔄',theme:'翻译+拼写',task:'语法复习\n拼写训练'},
-  {day:'周六',icon:'📝',theme:'真题模考',task:'计时模考\n查漏补缺'},
-  {day:'周日',icon:'🎯',theme:'复盘总结',task:'错题回顾\n薄弱强化'},
-];
-const allWords=[
-  [{en:'abandon',phonetic:'/əˈbændən/',pos:'v.',cn:'放弃；抛弃',ex:'Don\'t abandon your dreams.',exCn:'不要放弃你的梦想。'},
-   {en:'available',phonetic:'/əˈveɪləbl/',pos:'adj.',cn:'可用的；有空的',ex:'Is the room available?',exCn:'这个房间有空吗？'},
-   {en:'benefit',phonetic:'/ˈbenɪfɪt/',pos:'n./v.',cn:'好处；受益',ex:'Exercise benefits health.',exCn:'运动有益健康。'},
-   {en:'challenge',phonetic:'/ˈtʃælɪndʒ/',pos:'n./v.',cn:'挑战',ex:'Life is full of challenges.',exCn:'生活充满挑战。'},
-   {en:'communicate',phonetic:'/kəˈmjuːnɪkeɪt/',pos:'v.',cn:'交流；沟通',ex:'We communicate by phone.',exCn:'我们通过电话交流。'},
-   {en:'concern',phonetic:'/kənˈsɜːn/',pos:'n./v.',cn:'关心；担忧',ex:'This concerns all of us.',exCn:'这关系到我们所有人。'},
-   {en:'determine',phonetic:'/dɪˈtɜːmɪn/',pos:'v.',cn:'决定；确定',ex:'Hard work determines success.',exCn:'努力决定成功。'},
-   {en:'efficient',phonetic:'/ɪˈfɪʃnt/',pos:'adj.',cn:'高效的',ex:'This method is efficient.',exCn:'这个方法高效。'},
-   {en:'emphasis',phonetic:'/ˈemfəsɪs/',pos:'n.',cn:'重点；强调',ex:'Put emphasis on practice.',exCn:'把重点放在练习上。'},
-   {en:'familiar',phonetic:'/fəˈmɪliər/',pos:'adj.',cn:'熟悉的',ex:'I am familiar with this.',exCn:'我对这个很熟悉。'}],
-  [{en:'generally',phonetic:'/ˈdʒenərəli/',pos:'adv.',cn:'通常；一般地',ex:'Generally, it rains in spring.',exCn:'通常春天会下雨。'},
-   {en:'ignore',phonetic:'/ɪɡˈnɔːr/',pos:'v.',cn:'忽视；不理',ex:'Don\'t ignore the warning.',exCn:'不要忽视警告。'},
-   {en:'impact',phonetic:'/ˈɪmpækt/',pos:'n./v.',cn:'影响；冲击',ex:'The impact was huge.',exCn:'影响非常大。'},
-   {en:'interpret',phonetic:'/ɪnˈtɜːprɪt/',pos:'v.',cn:'解释；翻译',ex:'How do you interpret this?',exCn:'你怎么解释这个？'},
-   {en:'maintain',phonetic:'/meɪnˈteɪn/',pos:'v.',cn:'维持；保持',ex:'Maintain a good habit.',exCn:'保持好习惯。'},
-   {en:'obvious',phonetic:'/ˈɒbviəs/',pos:'adj.',cn:'明显的',ex:'The answer is obvious.',exCn:'答案很明显。'},
-   {en:'particular',phonetic:'/pəˈtɪkjələr/',pos:'adj.',cn:'特别的；特定的',ex:'Is there a particular reason?',exCn:'有特别的原因吗？'},
-   {en:'quality',phonetic:'/ˈkwɒləti/',pos:'n.',cn:'质量；品质',ex:'Focus on quality.',exCn:'关注质量。'},
-   {en:'recognize',phonetic:'/ˈrekəɡnaɪz/',pos:'v.',cn:'认出；识别',ex:'I recognize her voice.',exCn:'我认出了她的声音。'},
-   {en:'significant',phonetic:'/sɪɡˈnɪfɪkənt/',pos:'adj.',cn:'重要的；显著的',ex:'A significant change.',exCn:'重要的变化。'}],
-  [{en:'approach',phonetic:'/əˈprəʊtʃ/',pos:'n./v.',cn:'方法；接近',ex:'We need a new approach.',exCn:'需要一个新方法。'},
-   {en:'assume',phonetic:'/əˈsjuːm/',pos:'v.',cn:'假设；承担',ex:'Don\'t assume anything.',exCn:'不要假设。'},
-   {en:'achieve',phonetic:'/əˈtʃiːv/',pos:'v.',cn:'实现；达到',ex:'Achieve your goals.',exCn:'实现你的目标。'},
-   {en:'contribute',phonetic:'/kənˈtrɪbjuːt/',pos:'v.',cn:'贡献；捐献',ex:'Everyone should contribute.',exCn:'每个人都应贡献。'},
-   {en:'distinguish',phonetic:'/dɪˈstɪŋɡwɪʃ/',pos:'v.',cn:'区分；辨别',ex:'Can you distinguish them?',exCn:'你能区分吗？'},
-   {en:'establish',phonetic:'/ɪˈstæblɪʃ/',pos:'v.',cn:'建立；设立',ex:'Establish relationships.',exCn:'建立关系。'},
-   {en:'investigate',phonetic:'/ɪnˈvestɪɡeɪt/',pos:'v.',cn:'调查；研究',ex:'Investigate this matter.',exCn:'调查这件事。'},
-   {en:'perspective',phonetic:'/pəˈspektɪv/',pos:'n.',cn:'视角；观点',ex:'A new perspective.',exCn:'新视角。'},
-   {en:'relevant',phonetic:'/ˈreləvənt/',pos:'adj.',cn:'相关的',ex:'Is this relevant?',exCn:'这相关吗？'},
-   {en:'strategy',phonetic:'/ˈstrætədʒi/',pos:'n.',cn:'策略；战略',ex:'A better strategy.',exCn:'更好的策略。'}],
-  [{en:'apparent',phonetic:'/əˈpærənt/',pos:'adj.',cn:'明显的',ex:'The problem is apparent.',exCn:'问题很明显。'},
-   {en:'circumstance',phonetic:'/ˈsɜːkəmstəns/',pos:'n.',cn:'情况；环境',ex:'Under any circumstance.',exCn:'在任何情况下。'},
-   {en:'consequence',phonetic:'/ˈkɒnsɪkwəns/',pos:'n.',cn:'后果；结果',ex:'Think about consequences.',exCn:'考虑后果。'},
-   {en:'demonstrate',phonetic:'/ˈdemənstreɪt/',pos:'v.',cn:'证明；展示',ex:'Demonstrate how it works.',exCn:'展示怎么运作。'},
-   {en:'eliminate',phonetic:'/ɪˈlɪmɪneɪt/',pos:'v.',cn:'消除；排除',ex:'Eliminate distractions.',exCn:'消除干扰。'},
-   {en:'fundamental',phonetic:'/ˌfʌndəˈmentl/',pos:'adj.',cn:'基本的；根本的',ex:'A fundamental principle.',exCn:'基本原则。'},
-   {en:'indicate',phonetic:'/ˈɪndɪkeɪt/',pos:'v.',cn:'表明；指示',ex:'Data indicates a trend.',exCn:'数据表明趋势。'},
-   {en:'precise',phonetic:'/prɪˈsaɪs/',pos:'adj.',cn:'精确的',ex:'Be precise.',exCn:'要精确。'},
-   {en:'sufficient',phonetic:'/səˈfɪʃnt/',pos:'adj.',cn:'足够的',ex:'Is it sufficient?',exCn:'够吗？'},
-   {en:'voluntary',phonetic:'/ˈvɒləntəri/',pos:'adj.',cn:'自愿的',ex:'A voluntary activity.',exCn:'志愿活动。'}],
-  [{en:'acquire',phonetic:'/əˈkwaɪər/',pos:'v.',cn:'获得；学到',ex:'Acquire new skills.',exCn:'学到新技能。'},
-   {en:'adapt',phonetic:'/əˈdæpt/',pos:'v.',cn:'适应；改编',ex:'Adapt to changes.',exCn:'适应变化。'},
-   {en:'attitude',phonetic:'/ˈætɪtjuːd/',pos:'n.',cn:'态度；看法',ex:'A positive attitude.',exCn:'积极的态度。'},
-   {en:'budget',phonetic:'/ˈbʌdʒɪt/',pos:'n./v.',cn:'预算；规划',ex:'Stick to your budget.',exCn:'按预算执行。'},
-   {en:'capable',phonetic:'/ˈkeɪpəbl/',pos:'adj.',cn:'有能力的',ex:'She is capable.',exCn:'她有能力。'},
-   {en:'conscious',phonetic:'/ˈkɒnʃəs/',pos:'adj.',cn:'意识到的',ex:'Be conscious of health.',exCn:'注意健康。'},
-   {en:'domestic',phonetic:'/dəˈmestɪk/',pos:'adj.',cn:'国内的；家庭的',ex:'Domestic flights.',exCn:'国内航班。'},
-   {en:'essential',phonetic:'/ɪˈsenʃl/',pos:'adj.',cn:'必要的',ex:'Sleep is essential.',exCn:'睡眠是必要的。'},
-   {en:'implement',phonetic:'/ˈɪmplɪment/',pos:'v.',cn:'实施；执行',ex:'Implement the plan.',exCn:'执行计划。'},
-   {en:'perspective',phonetic:'/pəˈspektɪv/',pos:'n.',cn:'视角；观点',ex:'Change perspective.',exCn:'改变视角。'}],
-  [{en:'advantage',phonetic:'/ədˈvɑːntɪdʒ/',pos:'n.',cn:'优势；好处',ex:'Take advantage.',exCn:'利用优势。'},
-   {en:'consider',phonetic:'/kənˈsɪdər/',pos:'v.',cn:'考虑；认为',ex:'Consider all options.',exCn:'考虑所有选项。'},
-   {en:'describe',phonetic:'/dɪˈskraɪb/',pos:'v.',cn:'描述',ex:'Describe the scene.',exCn:'描述场景。'},
-   {en:'evaluate',phonetic:'/ɪˈvæljueɪt/',pos:'v.',cn:'评估',ex:'Evaluate progress.',exCn:'评估进步。'},
-   {en:'influence',phonetic:'/ˈɪnfluəns/',pos:'n./v.',cn:'影响',ex:'Parents influence children.',exCn:'父母影响孩子。'},
-   {en:'occupy',phonetic:'/ˈɒkjupaɪ/',pos:'v.',cn:'占据',ex:'Work occupies my time.',exCn:'工作占据时间。'},
-   {en:'prevent',phonetic:'/prɪˈvent/',pos:'v.',cn:'防止',ex:'Prevent diseases.',exCn:'预防疾病。'},
-   {en:'recommend',phonetic:'/ˌrekəˈmend/',pos:'v.',cn:'推荐',ex:'I recommend this.',exCn:'我推荐这个。'},
-   {en:'solve',phonetic:'/sɒlv/',pos:'v.',cn:'解决',ex:'Solve this problem.',exCn:'解决问题。'},
-   {en:'tradition',phonetic:'/trəˈdɪʃn/',pos:'n.',cn:'传统',ex:'Follow tradition.',exCn:'遵循传统。'}],
-  [{en:'acknowledge',phonetic:'/əkˈnɒlɪdʒ/',pos:'v.',cn:'承认',ex:'Acknowledge mistakes.',exCn:'承认错误。'},
-   {en:'compare',phonetic:'/kəmˈpeər/',pos:'v.',cn:'比较',ex:'Don\'t compare to others.',exCn:'不要和别人比。'},
-   {en:'confident',phonetic:'/ˈkɒnfɪdənt/',pos:'adj.',cn:'自信的',ex:'Be confident.',exCn:'要自信。'},
-   {en:'develop',phonetic:'/dɪˈveləp/',pos:'v.',cn:'发展',ex:'Develop potential.',exCn:'发展潜力。'},
-   {en:'identify',phonetic:'/aɪˈdentɪfaɪ/',pos:'v.',cn:'识别',ex:'Identify key points.',exCn:'识别关键点。'},
-   {en:'motivation',phonetic:'/ˌməʊtɪˈveɪʃn/',pos:'n.',cn:'动力',ex:'Find motivation.',exCn:'找到动力。'},
-   {en:'progress',phonetic:'/ˈprəʊɡres/',pos:'n./v.',cn:'进步',ex:'You are making progress.',exCn:'你在进步。'},
-   {en:'reflect',phonetic:'/rɪˈflekt/',pos:'v.',cn:'反思',ex:'Reflect on your week.',exCn:'回顾一周。'},
-   {en:'strengthen',phonetic:'/ˈstreŋθn/',pos:'v.',cn:'加强',ex:'Strengthen weak areas.',exCn:'加强薄弱项。'},
-   {en:'ultimate',phonetic:'/ˈʌltɪmət/',pos:'adj.',cn:'最终的',ex:'The ultimate goal is CET-4.',exCn:'最终目标是通过四级。'}],
-];
-let currentSpellWord=null;
-function renderStudyPlan(){ const wd=getWeekday(), idx=wd===0?6:wd-1; document.getElementById('study-week').innerHTML=studyPlan.map((d,i)=>`<div class="day-card ${i===idx?'today':''}"><div class="day-label">${d.icon}</div><div class="day-title">${d.day}</div><div class="day-theme">${d.theme}</div><div class="day-task">${d.task.replace(/\n/g,'<br>')}</div></div>`).join(''); }
-function renderWords(){ const wd=getWeekday(), idx=wd===0?6:wd-1, tw=allWords[idx], k=getTodayKey(); document.getElementById('word-day-label').textContent='Day '+idx+'（'+studyPlan[idx].day+'·'+studyPlan[idx].theme+'）'; document.getElementById('words-grid').innerHTML=tw.map((w,i)=>{const m=localStorage.getItem(k+'-w'+i)=='m';return `<div class="word-card ${m?'mastered':''}" onclick="toggleWord(${i})"><div class="word-top"><span class="word-en">${w.en}</span><span class="word-phonetic">${w.phonetic}</span></div><div><span class="word-pos">${w.pos}</span><span class="word-cn">${w.cn}</span></div><div class="word-example">${w.ex}</div><div class="word-example-cn">${w.exCn}</div><div class="word-actions"><button class="word-btn" onclick="speakW('${w.en}')">🔊听</button><button class="word-btn" onclick="speakW('${w.en}')">🗣️说</button><button class="word-btn" onclick="openSpell(${i})">✍️写</button></div></div>`;}).join(''); updateWordsProgress(); }
-function toggleWord(i){ const k=getTodayKey(); if(localStorage.getItem(k+'-w'+i)=='m'){localStorage.removeItem(k+'-w'+i)}else{localStorage.setItem(k+'-w'+i,'m');showToast('🌸 掌握一个单词！')} renderWords(); }
-function updateWordsProgress(){ const k=getTodayKey(),wd=getWeekday(),idx=wd===0?6:wd-1,c=allWords[idx].filter((_,i)=>localStorage.getItem(k+'-w'+i)=='m').length; document.getElementById('words-progress').textContent='已掌握 '+c+'/10'; document.getElementById('word-badge').textContent=c+'/10'; }
-function speakW(w){ if('speechSynthesis' in window){ const u=new SpeechSynthesisUtterance(w); u.lang='en-US'; u.rate=0.8; speechSynthesis.cancel(); speechSynthesis.speak(u); showToast('🔊 朗读：'+w); } }
-function openSpell(i){ const wd=getWeekday(),idx=wd===0?6:wd-1,w=allWords[idx][i]; currentSpellWord=w; document.getElementById('spell-prompt').textContent='拼写练习 📝'; document.getElementById('spell-hint').textContent='中文提示：'+w.cn+'（'+w.pos+'）· 请输入对应的英文单词'; const inp=document.getElementById('spell-input'); inp.value=''; inp.className='spell-input'; document.getElementById('spell-result').textContent=''; document.getElementById('spell-result').className='spell-result'; document.getElementById('spell-modal').classList.add('show'); setTimeout(()=>inp.focus(),300); }
-function checkSpell(){ const inp=document.getElementById('spell-input'),r=document.getElementById('spell-result'); if(inp.value.trim().toLowerCase()===currentSpellWord.en.toLowerCase()){inp.className='spell-input correct';r.textContent='✅ 正确！';r.className='spell-result ok';showToast('✅ 拼写正确！')}else{inp.className='spell-input wrong';r.textContent='❌ 正确答案：'+currentSpellWord.en;r.className='spell-result no'} }
-function closeSpell(){ document.getElementById('spell-modal').classList.remove('show'); }
-
-// ===== 初始化 =====
-renderTasks(); renderStudyPlan(); renderWords();
+function renderXHS(){if(!xhsPool.length)return;const it=xhsPool[xhsIdx];document.getElementById('xhs-analysis').innerHTML=it.hotAnalysis;document.getElementById('xhs-my-copy').innerHTML=it.myCopy;const auto=xhsIdx===getTodayXHSIndex();document.getElementById('xhs-indicator').textContent='💡 '+((auto?'✅ 今日自动更新':'🔄 手动切换')+' · 当前第'+(xhsIdx+1)+'/'+xhsPool.length+'组 · 每天0点自动更新')}
+function refreshXHS(){xhsIdx=(xhsIdx+1)%xhsPool.length;showToast('🔄 切换到第'+(xhsIdx+1)+'组！');renderXHS()}
+function copyXHS(){navigator.clipboard.writeText(document.getElementById('xhs-my-copy').innerText).then(()=>showToast('📋 文案已复制！')).catch(()=>showToast('📋 请手动复制'))}
 
 // 跨天检测
 let lastDay=getTodayKey();
-setInterval(()=>{const d=getTodayKey(); if(d!==lastDay){lastDay=d; dyIdx=getTodayDouyinIndex(); xhsIdx=getTodayXHSIndex(); renderDouyin(); renderXHS(); renderTasks(); renderWords(); showToast('🌅 新的一天！内容已自动更新~')}},60000);
+setInterval(()=>{const d=getTodayKey();if(d!==lastDay){lastDay=d;dyIdx=getTodayDYIndex();xhsIdx=getTodayXHSIndex();renderDouyin();renderXHS();showToast('🌅 新的一天！内容已自动更新~')}},60000);
 </script>
 </body>
 </html>
